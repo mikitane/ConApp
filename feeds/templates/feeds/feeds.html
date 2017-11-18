@@ -1,0 +1,110 @@
+{% extends 'feeds/base.html' %}
+
+
+
+
+{% block body %}
+
+
+	<div class="row">
+	<div class="col-sm-6 col-sm-offset-3">
+		
+		<h2 class="special-font">Feed</h2>
+		
+	<div class="well" style="border:2px solid #006daf; background-color:#ffffff;">
+	<div id="scroll" class="pre-scrollable well" style="max-height:60vh;border:1px solid #006daf;background-color:#ffffff;overflow-x: hidden;padding-bottom:0">
+		{% for post in postlist %}
+		
+		<div class='container-fluid post-box' style=" border-top:1px solid #006daf;margin-bottom:3px;padding-top:3px;overflow-wrap: break-word;" data-id={{post.id}}>
+		<div class="row">
+		<div class="col-sm-2" style="padding-top:15px;text-align:center">
+		
+		<img src="{{post.user.userprofile.image.url}}" style="border-radius: 50%;height:50px;width:50px">
+		</div>
+		<div class="col-sm-10">
+		<p><b>{{post.header}}</b></p>
+		
+		<p>{{post.text}}</p>
+		<div class="post-info">
+			<a href='/profiles/{{post.user.userprofile.id}}' >{{post.user}}</a><small>  {{post.created}}</small>
+			<div style="float:right;margin-right:50px">
+			<button type="button" class="btn  btn-xs like-count" style="display:inline; margin-left:30px;margin-right:5px" data-id={{post.id}} data-toggle="modal" data-target="#like-modal"></button>
+			<button type="button" class="btn  btn-xs like-button" data-id={{post.id}}><span class="glyphicon glyphicon-thumbs-up" style="margin-right:5px"></span><p style="display:inline"></p></button></div>
+			</div>
+		</div>
+		</div>
+		</div>
+		{% endfor %}
+	</div>	
+	
+	<button class="btn btn-primary" data-toggle="collapse" data-target="#new-post-field" id="write-post-btn"style="margin-top:10px">Write a new post!</button>
+	
+	<div class='collapse' id="new-post-field" style=" border-top:2px solid #006daf;margin-top:15px;" >
+		<div class="container-fluid" style="margin-left:10px;">
+		<h3>Write a post!</h3>
+		<form method='post'>
+		{% csrf_token %}
+		<div class="form-group row">
+			<div class='col-md-6'>
+			{{form.header}}
+			</div>
+		</div>	
+		<div class="form-group row">	
+			<div class='col-md-10' >
+			{{form.text}}
+			</div>
+		</div>
+		<button type="submit" class="btn btn-primary">Post!</button>
+		</form>
+		
+		
+		</div>
+	</div>
+	
+	
+	
+	</div>
+	<br>
+	
+	
+	
+	
+	
+	
+	<div class='container-fluid well well-sm collapse' id="new-post-field" style="border:2px solid #cecece;background-color:#ffffff;box-shadow:10px 10px 5px #91a9b7;height:280px">
+		<div class="container-fluid" style="margin-left:10px">
+		<h3>Write a post!</h3>
+		<form method='post'>
+		{% csrf_token %}
+		<div class="form-group row">
+			<div class='col-md-6'>
+			{{form.header}}
+			</div>
+		</div>	
+		<div class="form-group row">	
+			<div class='col-md-10'>
+			{{form.text}}
+			</div>
+		</div>
+		<button type="submit" id="testbtn" class="btn btn-primary">Post!</button>
+		</form>
+		
+		
+		</div>
+	</div>
+	
+	
+	
+	</div>
+	</div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+
+
+{% endblock %}

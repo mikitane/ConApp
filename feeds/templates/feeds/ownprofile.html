@@ -1,0 +1,25 @@
+{% extends 'feeds/base.html' %}
+
+{% block body %}
+	<div class="container-fluid" style="margin-top:10vh">
+		{% if user.userprofile.image %}
+			<img class="img-responsive center-block" src="{{user.userprofile.image.url}}" style="max-height:240px;width:240px;">
+		{% endif %}
+		<div class="row">
+			<div class="col-md-3"></div>
+			<div class="col-md-6 well"  style="background-color:#ffffff; margin-top:40px">
+			
+				<h1>User: {{user}}</h1>
+			{% block content %}
+				<p><b>Phone: {{user.userprofile.phone}}</b></p>
+				<p><b>Country: {{user.userprofile.country}}</b></p>
+			<form method='get' action={% url 'profile_change'%}>
+			<button type="submit" class="btn btn-primary">Change</button>
+			</form>
+			{% endblock %}
+			</div>
+		</div>
+		</div>
+	
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'feeds/base.html' %}
+
+{% block body %}
+	<div class="container-fluid" style="margin-top:10vh">
+		{% if userprofile.image %}
+			<img class="img-responsive center-block" src="{{userprofile.image.url}}" style="max-height:240px;width:240px;">
+		{% endif %}
+		<div class="row">
+			
+			<div class="col-sm-6 col-sm-offset-3"  >
+				<div class="well" style="background-color:#ffffff; margin-top:40px">
+				<h1>User: {{userprofile.user}}</h1>
+			
+				<p><b>Phone: {{userprofile.phone}}</b></p>
+				<p><b>Country: {{userprofile.country}}</b></p>
+			
+			<button class="btn btn-primary" type="button" data-conuser={{userprofile.user}}
+			data-conuserid={{userprofile.user.id}} id="startconversationbtn" style="margin-top:20px" 
+			data-toggle="modal" data-target="#conversation-modal">Start conversation!</button>
+			</div>
+			
+			</div>
+		</div>
+		</div>
+	
+
+{% endblock %}
