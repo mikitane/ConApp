@@ -940,8 +940,6 @@ module.exports = focusNode;
 "use strict";
 
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _react = __webpack_require__(4);
 
 var _react2 = _interopRequireDefault(_react);
@@ -952,141 +950,9 @@ var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var _sidebar = __webpack_require__(27);
 
+var _chat = __webpack_require__(28);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var SingleChat = function (_React$Component) {
-  _inherits(SingleChat, _React$Component);
-
-  function SingleChat() {
-    _classCallCheck(this, SingleChat);
-
-    return _possibleConstructorReturn(this, (SingleChat.__proto__ || Object.getPrototypeOf(SingleChat)).apply(this, arguments));
-  }
-
-  _createClass(SingleChat, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var id = this.props.chatId;
-      $.ajax({
-        type: 'GET',
-        url: '/messages/' + id + '/api',
-        success: function (messages) {
-
-          var allMessages = messages;
-        }.bind(this)
-      });
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-
-      var currentUser = document.getElementById('grad').getAttribute('data-id');
-      var messageList = [];
-      var messageColors = {};
-      messageColors[currentUser] = 0;
-
-      var color = 1;
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
-
-      try {
-        for (var _iterator = allMessages[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var message = _step.value;
-
-
-          var messageSent = message.created.split('-');
-          var messageSentDate = messageSent[0];
-          var messageSentTime = messageSent[1];
-
-          if (!(message.sender in userMessageColors) && message.sender_username != currentUser) {
-            messageColors[message.sender] = color;
-            color += 1;
-            if (color == 4) {
-              color = 1;
-            }
-          }
-
-          messageList.push(_react2.default.createElement(Message, { text: message.text, sender: message.sender_username,
-            created: messageSentTime, color: messageColors[message.sender],
-            side: message.sender_username == currentUser ? 'right' : 'left' }));
-        }
-      } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator.return) {
-            _iterator.return();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
-      }
-
-      return _react2.default.createElement(
-        'div',
-        null,
-        messageList
-      );
-    }
-  }]);
-
-  return SingleChat;
-}(_react2.default.Component);
-
-var Message = function (_React$Component2) {
-  _inherits(Message, _React$Component2);
-
-  function Message() {
-    _classCallCheck(this, Message);
-
-    return _possibleConstructorReturn(this, (Message.__proto__ || Object.getPrototypeOf(Message)).apply(this, arguments));
-  }
-
-  _createClass(Message, [{
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        'div',
-        { className: 'row', style: 'margin-top:5px;' },
-        _react2.default.createElement(
-          'div',
-          { className: 'col-sm-8 col-sm-offset-4 ', style: 'overflow:auto' },
-          _react2.default.createElement(
-            'div',
-            { className: "bubble " + this.props.side + 'color' + this.props.color },
-            _react2.default.createElement(
-              'p',
-              null,
-              this.props.text,
-              ' '
-            ),
-            _react2.default.createElement(
-              'div',
-              { style: 'float:right' },
-              _react2.default.createElement(
-                'i',
-                null,
-                this.props.created
-              )
-            )
-          )
-        )
-      );
-    }
-  }]);
-
-  return Message;
-}(_react2.default.Component);
 
 _reactDom2.default.render(_react2.default.createElement(_sidebar.ChatsListContent, null), document.getElementById('mySidenav'));
 
@@ -18608,6 +18474,159 @@ var ChatsListContent = exports.ChatsListContent = function (_React$Component3) {
 }(_react2.default.Component);
 
 ;
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(18);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var SingleChat = function (_React$Component) {
+  _inherits(SingleChat, _React$Component);
+
+  function SingleChat() {
+    _classCallCheck(this, SingleChat);
+
+    return _possibleConstructorReturn(this, (SingleChat.__proto__ || Object.getPrototypeOf(SingleChat)).apply(this, arguments));
+  }
+
+  _createClass(SingleChat, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var id = this.props.chatId;
+      $.ajax({
+        type: 'GET',
+        url: '/messages/' + id + '/api',
+        success: function (messages) {
+
+          var allMessages = messages;
+        }.bind(this)
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+
+      var currentUser = document.getElementById('grad').getAttribute('data-id');
+      var messageList = [];
+      var messageColors = {};
+      messageColors[currentUser] = 0;
+
+      var color = 1;
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = allMessages[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var message = _step.value;
+
+
+          var messageSent = message.created.split('-');
+          var messageSentDate = messageSent[0];
+          var messageSentTime = messageSent[1];
+
+          if (!(message.sender in userMessageColors) && message.sender_username != currentUser) {
+            messageColors[message.sender] = color;
+            color += 1;
+            if (color == 4) {
+              color = 1;
+            }
+          }
+
+          messageList.push(_react2.default.createElement(Message, { text: message.text, sender: message.sender_username,
+            created: messageSentTime, color: messageColors[message.sender],
+            side: message.sender_username == currentUser ? 'right' : 'left' }));
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+
+      return _react2.default.createElement(
+        'div',
+        null,
+        messageList
+      );
+    }
+  }]);
+
+  return SingleChat;
+}(_react2.default.Component);
+
+var Message = function (_React$Component2) {
+  _inherits(Message, _React$Component2);
+
+  function Message() {
+    _classCallCheck(this, Message);
+
+    return _possibleConstructorReturn(this, (Message.__proto__ || Object.getPrototypeOf(Message)).apply(this, arguments));
+  }
+
+  _createClass(Message, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { className: 'row', style: 'margin-top:5px;' },
+        _react2.default.createElement(
+          'div',
+          { className: 'col-sm-8 col-sm-offset-4 ', style: 'overflow:auto' },
+          _react2.default.createElement(
+            'div',
+            { className: "bubble " + this.props.side + 'color' + this.props.color },
+            _react2.default.createElement(
+              'p',
+              null,
+              this.props.text,
+              ' '
+            ),
+            _react2.default.createElement(
+              'div',
+              { style: 'float:right' },
+              _react2.default.createElement(
+                'i',
+                null,
+                this.props.created
+              )
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return Message;
+}(_react2.default.Component);
 
 /***/ })
 /******/ ]);
