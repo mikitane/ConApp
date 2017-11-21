@@ -1,11 +1,15 @@
 #scroll {
-   
+
    overflow-y: scroll;
  }
- 
+
  #conbody{
     height:400px;
-    overflow-y:scroll; 
+    overflow-y:scroll;
+}
+
+.list-group{
+  margin: 5px;
 }
 
 .start-group-con {
@@ -31,26 +35,26 @@ display:inline-block;
 	position:relative;
 	min-width:150px;
 	padding:15px;
-	
+
 	display: inline-block;
-	
+
 	border-radius:3px;
-	
-	
+
+
 }
 
 .bubble.color1{
-	
+
 	background-color:rgba(23, 237, 23,0.5);
 }
 
 .bubble.color2{
-	
+
 	background-color:rgba(232, 32, 32,0.5);
 }
 
 .bubble.color3{
-	
+
 	background-color:rgba(244, 241, 26,0.5);
 }
 
@@ -58,55 +62,55 @@ display:inline-block;
 	content:"";
 	display:block;
 	position:absolute;
-	
+
 	top:15px;
 	width:0;
 	height:0;
 	border-top:8px solid transparent;
 	border-bottom:8px solid transparent;
-	
-	
-	
+
+
+
 }
 
 .bubble.right{
 	background-color:rgba(163, 221, 255,0.5);
 	float:right;
-	
+
 }
 
 
 .bubble.right::after {
-	
+
 	right:-14.5px;
 	border-left:15px solid rgba(163, 221, 255,0.5);
 	margin-left:20px;
-	
+
 }
 
 .bubble.left::after {
-	
+
 	left:-14.5px;
 	margin-right:20px;
-	
-	
+
+
 }
 
 .bubble.color1::after{
 	border-right:15px solid rgba(23, 237, 23,0.5);
-	
+
 }
 
 .bubble.color2::after{
 	border-right:15px solid rgba(232, 32, 32,0.5);
-	
+
 }
 
 .bubble.color3::after{
 	border-right:15px solid rgba(244, 241, 26,0.5) ;
-	
+
 }
- 
+
  /* The side navigation menu */
 .sidenav {
     height: 100%; /* 100% Full-height */
@@ -118,9 +122,9 @@ display:inline-block;
     background-color: #111; /* Black*/
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 60px; /* Place content 60px from the top */
-  
+
 	transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
-	
+
 }
 
 /* The navigation menu links */
@@ -157,7 +161,7 @@ display:inline-block;
 @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
-} 
+}
 
 .nav.navbar-nav li a {
     color: white;
@@ -174,13 +178,13 @@ display:inline-block;
   background: linear-gradient(to right, rgba(4, 100, 244,0.9),rgba(0,160,255,0.5),rgba(0,160,255,0.4),rgba(0,160,255,0.5), rgba(4, 100, 244,0.9)); /*Standard*/
 }
 
-/*  background: linear-gradient(to right, rgba(0,160,255,0.9),rgba(0,160,255,0.5),rgba(0,160,255,0.2),rgba(0,160,255,0.5), rgba(0,160,255,0.9)); /*Standard*/ 
-/* background: linear-gradient(to right, rgb(4, 28, 244,0.9),rgba(0,160,255,0.7),rgba(0,160,255,0.5),rgba(0,160,255,0.7), rgb(4, 28, 244,0.9)); /*Standard*/ 
+/*  background: linear-gradient(to right, rgba(0,160,255,0.9),rgba(0,160,255,0.5),rgba(0,160,255,0.2),rgba(0,160,255,0.5), rgba(0,160,255,0.9)); /*Standard*/
+/* background: linear-gradient(to right, rgb(4, 28, 244,0.9),rgba(0,160,255,0.7),rgba(0,160,255,0.5),rgba(0,160,255,0.7), rgb(4, 28, 244,0.9)); /*Standard*/
 
 
 #scroll::-webkit-scrollbar{
 	width:8px;
-	
+
 }
 #scroll::-webkit-scrollbar-thumb{
 	border-radius:10px;
@@ -201,12 +205,11 @@ display:inline-block;
 .special-font{
 	/*font-family: 'Vollkorn SC', serif;*/
 	font-family: 'Comfortaa', cursive;
-	
+
 }
 
 .modal-body {
 	overflow-y:scroll;
-	
-	
-}
 
+
+}

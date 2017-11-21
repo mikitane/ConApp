@@ -10,7 +10,7 @@ class UserProfile(models.Model):
     description = models.CharField(default='', max_length=100)
     country = models.CharField(max_length=20,default='',blank=True)
     image = models.ImageField(upload_to='profile_image',blank=True,
-                              default=os.path.join(settings.MEDIA_ROOT,'feeds/profile_image/1.png'))
+                              default='feeds/profile_image/1.png')
 
     def __str__(self):
         return str(self.user)
