@@ -7,7 +7,9 @@ class App extends React.Component {
 
   render(){
     return(
+      <div>
       <Body></Body>
+      </div>
     )
   }
 }
@@ -16,6 +18,7 @@ class App extends React.Component {
 
 
 ReactDOM.render(
+
   <App></App>,
   document.getElementById('root')
 );

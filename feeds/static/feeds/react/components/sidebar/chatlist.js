@@ -1,20 +1,20 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-
+import SingleChatButton from './chatopenbutton.js'
 
 // Consists all the sidebar content
-export class ChatsList extends React.Component {
+class ChatsList extends React.Component {
 
   render() {
 
     const privateChats = [];
     const groupChats = [];
-    let currentUser = document.getElementById('grad').getAttribute('data-id')
+    var currentUser = 'miika'
 
     for (let chat of this.props.chats) {
 
       if (chat.participants.length < 3) {
-        let currentUser = document.getElementById('grad').getAttribute('data-id')
+
         for (let participant of chat.participants){
           if (participant.user != currentUser){
             var chatName = participant.user
@@ -22,9 +22,11 @@ export class ChatsList extends React.Component {
           }
         }
         privateChats.push(<SingleChatButton name={chatName}
-                          image={chatImage} key={chat.id} chatId={chat.id}></SingleChatButton>)
+          image={chatImage} key={chat.id}
+          chatId={chat.id} chatOpen = {this.props.openChat}></SingleChatButton>)
       } else {
-        groupChats.push(<SingleChatButton name={chat.name} key={chat.id} chatId={chat.id}></SingleChatButton>)
+        groupChats.push(<SingleChatButton name={chat.name} key={chat.id}
+          chatId={chat.id} chatOpen = {this.props.openChat}></SingleChatButton>)
       }
     }
       return (
@@ -49,7 +51,7 @@ export class ChatsList extends React.Component {
 
 
 // Gets all conversations from API
-export class ChatsListContent extends React.Component{
+export default class ChatsListContent extends React.Component{
 
   constructor(props){
     super(props)
@@ -71,7 +73,7 @@ export class ChatsListContent extends React.Component{
 
   render(){
     return(
-      <ChatsList chats={this.state.chats}></ChatsList>
+      <ChatsList chats={this.state.chats} openChat={this.props.openChat}></ChatsList>
     )
   }
 };
