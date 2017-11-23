@@ -1,16 +1,21 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {SingleChatButton, ChatsList, ChatsListContent} from './components/sidebar.js'
-import {Message,SingleChat} from './components/chat.js'
+import Body from './components/body.js'
 
 
+class App extends React.Component {
 
-
+  render(){
+    return(
+      <Body></Body>
+    )
+  }
+}
 
 
 
 
 ReactDOM.render(
-  <ChatsListContent></ChatsListContent>,
-  document.getElementById('mySidenav')
+  <App></App>,
+  document.getElementById('root')
 );

@@ -13,7 +13,7 @@ from feeds.serializers import PostLikeSerializer
 
 
 class FeedsView(TemplateView):
-    template_name = 'feeds/feeds.html'
+    template_name = 'feeds/index.html'
     
     # Gets every post from db and sends them to the template.
     def get(self, request):
