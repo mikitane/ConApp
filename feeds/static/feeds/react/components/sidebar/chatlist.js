@@ -23,16 +23,16 @@ class ChatsList extends React.Component {
         }
         privateChats.push(<SingleChatButton name={chatName}
           image={chatImage} key={chat.id}
-          chatId={chat.id} chatOpen = {this.props.openChat}></SingleChatButton>)
+          chatId={chat.id} openChat={this.props.openChat}></SingleChatButton>)
       } else {
         groupChats.push(<SingleChatButton name={chat.name} key={chat.id}
-          chatId={chat.id} chatOpen = {this.props.openChat}></SingleChatButton>)
+          chatId={chat.id} openChat={this.props.openChat}></SingleChatButton>)
       }
     }
       return (
         <div>
           <a href="javascript:void(0)" id="close-sidebar-button"
-              className="closebtn">&times;</a>
+              className="closebtn" onClick={this.props.toggleSidebar}>&times;</a>
           <div className="list-group">
           <h2 className="special-font">Chats:</h2>
           {privateChats}
@@ -73,7 +73,7 @@ export default class ChatsListContent extends React.Component{
 
   render(){
     return(
-      <ChatsList chats={this.state.chats} openChat={this.props.openChat}></ChatsList>
+      <ChatsList toggleSidebar = {this.props.toggleSidebar} chats={this.state.chats} openChat={this.props.openChat}></ChatsList>
     )
   }
 };

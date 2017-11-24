@@ -1,1 +1,2 @@
 feeds/static/feeds/node_modules
+*.sqlite3
