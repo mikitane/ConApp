@@ -3,3 +3,4 @@ feeds/static/feeds/node_modules
 *.sql
 conversationapp/settings_secret.py
 db.sqlite3
+feeds/static/feeds/react
