@@ -1,0 +1,5 @@
+feeds/static/feeds/node_modules
+*.sqlite
+*.sql
+conversationapp/settings_secret.py
+db.sqlite3
