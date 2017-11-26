@@ -12,8 +12,9 @@ export default class Sidebar extends React.Component {
     }
 
       return (
-        <div style={sidebarWidth}className="sidenav" >
-          <ChatsListContent toggleSidebar = {this.props.toggleSidebar}
+        <div style={sidebarWidth} className="sidenav" >
+          <ChatsListContent openCreateNewGroupChat={this.props.openCreateNewGroupChat}
+            toggleSidebar = {this.props.toggleSidebar}
             openChat = {this.props.openChat}></ChatsListContent>
     	 </div>
       )

@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import SingleChatButton from './chatopenbutton.js'
+import NewGroupChatButton from './newgroupchatbutton.js'
 
 // Consists all the sidebar content
 class ChatsList extends React.Component {
@@ -36,7 +37,15 @@ class ChatsList extends React.Component {
           <div className="list-group">
           <h2 className="special-font">Chats:</h2>
           {privateChats}
-          <h2 className="special-font">Group Chats:</h2>
+
+			    <div>
+            <h2 className="special-font" style={{display:'inline'}}>Group chats:</h2>
+            <NewGroupChatButton
+              openCreateNewGroupChat={this.props.openCreateNewGroupChat}>
+            </NewGroupChatButton>
+			    </div>
+
+
           {groupChats}
         </div>
         </div>
@@ -73,7 +82,9 @@ export default class ChatsListContent extends React.Component{
 
   render(){
     return(
-      <ChatsList toggleSidebar = {this.props.toggleSidebar} chats={this.state.chats} openChat={this.props.openChat}></ChatsList>
+      <ChatsList openCreateNewGroupChat={this.props.openCreateNewGroupChat}
+         toggleSidebar = {this.props.toggleSidebar} chats={this.state.chats}
+         openChat={this.props.openChat}></ChatsList>
     )
   }
 };

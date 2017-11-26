@@ -12,8 +12,8 @@ export default class SingleChatButton extends React.Component{
 
   render(){
     return (
-      <button className="list-group-item con-button" data-toggle="modal"
-         data-target="#conversation-modal" onClick={this.openNewChat.bind(this)}>
+      <button className="list-group-item con-button" 
+          onClick={this.openNewChat.bind(this)}>
          {this.props.image &&
            <img className="conversation-image" src={this.props.image}></img>
          }

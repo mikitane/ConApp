@@ -1,23 +1,30 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {Modal} from 'react-bootstrap'
-import SingleChat from './chat.js'
+import ChatContent from './chat/chatcontent.js'
+import NewGroupChatContent from './newgroupchat/newgroupchatcontent.js'
 
 
-export default class ModalCustom extends React.Component{
+export default class ModalContent extends React.Component{
   render(){
+
+    let content = null
+    if (this.props.modalContent == 'chat') {
+      content = <ChatContent chatId={this.props.chatId}
+        modalTitle={this.props.modalTitle} modalOpen={this.props.modalOpen}
+        toggleModal={this.props.toggleModal} currentUser={this.props.currentUser}>
+        </ChatContent>
+    } else if (this.props.modalContent == 'likes') {
+
+    } else if (this.props.modalContent == 'newgroupchat') {
+      content = <NewGroupChatContent modalTitle={this.props.modalTitle}
+        modalOpen={this.props.modalOpen}
+      toggleModal={this.props.toggleModal} currentUser={this.props.currentUser}>
+      </NewGroupChatContent>
+
+    }
+
     return(
-      <Modal show={this.props.modalOpen} onHide={this.props.toggleModal}>
-         <Modal.Header closeButton>
-           <Modal.Title>{this.props.modalTitle}</Modal.Title>
-         </Modal.Header>
-         <Modal.Body>
-           <SingleChat chatId={this.props.chatId} currentUser={this.props.currentUser}></SingleChat>
-         </Modal.Body>
-         <Modal.Footer>
-           <button onClick={this.props.toggleModal}>Close</button>
-         </Modal.Footer>
-       </Modal>
-     )
-     }
+        content
+        )
+      }
      }

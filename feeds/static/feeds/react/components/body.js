@@ -20,6 +20,7 @@ export default class Body extends React.Component {
     this.toggleSidebar = this.toggleSidebar.bind(this)
     this.openChat = this.openChat.bind(this)
     this.toggleModal = this.toggleModal.bind(this)
+    this.openCreateNewGroupChat = this.openCreateNewGroupChat.bind(this)
   }
 
   componentDidMount() {
@@ -42,12 +43,21 @@ export default class Body extends React.Component {
   }
 
   openChat(chatId,chatName){
-    this.toggleModal()
     this.setState({
       modalContent:'chat',
       chatId:chatId,
       modalTitle:chatName,
     });
+    this.toggleModal()
+
+  }
+
+  openCreateNewGroupChat() {
+    this.setState({
+      modalContent:'newgroupchat',
+      modalTitle:'Create a new group chat!'
+    })
+    this.toggleModal()
   }
 
   toggleSidebar() {
@@ -66,9 +76,10 @@ export default class Body extends React.Component {
           modalTitle={this.state.modalTitle} modalOpen={this.state.modalOpen}
           toggleModal={this.toggleModal} currentUser={this.state.currentUser}></Main>
 
-        <Sidebar toggleSidebar = {this.toggleSidebar}
+        <Sidebar openCreateNewGroupChat={this.openCreateNewGroupChat}
+          toggleSidebar = {this.toggleSidebar}
            width={this.state.sideBarOpen ? '300px':'0px'}
-           openChat={this.openChat}></Sidebar>
+           openChat={this.openChat} currentUser={this.state.currentUser}></Sidebar>
       </div>
     )
   }
