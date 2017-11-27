@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'feeds',
     'personalmessages',
     'rest_framework',
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -56,6 +57,22 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'conversationapp.urls'
+
+
+redis_host = os.environ.get('REDIS_HOST', 'localhost')
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "asgi_redis.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [(redis_host, 6379)],
+        },
+       "ROUTING": "conversationapp.routing.channel_routing", 
+    },
+}
+
+
+
 
 TEMPLATES = [
     {

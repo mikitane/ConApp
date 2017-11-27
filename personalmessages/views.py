@@ -4,7 +4,6 @@ from rest_framework.views import APIView
 from personalmessages.serializers import PersonalMessageSerializer, ConversationSerializer, UserSerializer
 from personalmessages.models import PersonalMessage, Conversation
 from django.contrib.auth.models import User
-from django.db.models import Q
 from django.core import serializers
 from rest_framework.exceptions import PermissionDenied
 
@@ -12,8 +11,6 @@ from rest_framework.exceptions import PermissionDenied
 class ConversationView(APIView):
     # Sends a list of all conversations which current user is included in.
     def get(self,request,*args,**kwargs):
-        print('JEEJEE')
-        print(request.user)
         conversations = Conversation.objects.filter(participants=request.user)
         serializer = ConversationSerializer(conversations,many=True)
         
@@ -92,6 +89,7 @@ class UserView(APIView):
         users = User.objects.all()
         serializer = UserSerializer(users,many=True)
         return Response(serializer.data)
+
 
 class OwnProfileView(APIView):
     def get(self,request,*args,**kwargs):
