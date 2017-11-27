@@ -21,6 +21,7 @@ export default class ChatContent extends React.Component {
     this.updateMessages()
   }
 
+
   updateMessages() {
     var id = this.props.chatId
     $.ajax({

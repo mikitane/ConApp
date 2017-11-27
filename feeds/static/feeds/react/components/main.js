@@ -9,7 +9,10 @@ export default class Main extends React.Component {
 
       <ModalContent modalContent={this.props.modalContent} chatId={this.props.chatId}
         modalTitle={this.props.modalTitle} modalOpen={this.props.modalOpen}
-        toggleModal={this.props.toggleModal} currentUser={this.props.currentUser}></ModalContent>
+        toggleModal={this.props.toggleModal} currentUser={this.props.currentUser}
+        openChat={this.props.openChat} toggleModal={this.props.toggleModal}>
+          
+        </ModalContent>
 
     )
   }

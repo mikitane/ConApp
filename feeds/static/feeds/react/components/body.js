@@ -74,7 +74,8 @@ export default class Body extends React.Component {
 
         <Main modalContent={this.state.modalContent} chatId={this.state.chatId}
           modalTitle={this.state.modalTitle} modalOpen={this.state.modalOpen}
-          toggleModal={this.toggleModal} currentUser={this.state.currentUser}></Main>
+          toggleModal={this.toggleModal} currentUser={this.state.currentUser}
+          openChat={this.openChat} toggleModal={this.toggleModal}></Main>
 
         <Sidebar openCreateNewGroupChat={this.openCreateNewGroupChat}
           toggleSidebar = {this.toggleSidebar}

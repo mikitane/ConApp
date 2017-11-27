@@ -9,7 +9,7 @@ render() {
     color: 'black'
   };
   return(
-    <Navbar inverse collapseOnSelect>
+    <Navbar fluid inverse collapseOnSelect>
 
        <Navbar.Header>
          <Navbar.Brand>
@@ -25,7 +25,7 @@ render() {
            <NavItem eventKey={1} onClick={this.props.toggleSidebar}>Chats</NavItem>
            <NavDropdown  eventKey={2} title={this.props.currentUser} id="basic-nav-dropdown">
              <MenuItem eventKey={2.1} href="/profile"><p style={menuItemStyle}>Me</p></MenuItem>
-             
+
              <MenuItem eventKey={2.2} href="/logout"><p style={menuItemStyle}>Log out</p></MenuItem>
            </NavDropdown>
          </Nav>

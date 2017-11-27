@@ -35,10 +35,10 @@ class ChatsList extends React.Component {
           <a href="javascript:void(0)" id="close-sidebar-button"
               className="closebtn" onClick={this.props.toggleSidebar}>&times;</a>
           <div className="list-group">
-          <h2 className="special-font">Chats:</h2>
+          <h2 className="special-font" style={{marginBottom:'10px'}}>Chats:</h2>
           {privateChats}
 
-			    <div>
+			    <div style={{marginBottom:'10px'}} >
             <h2 className="special-font" style={{display:'inline'}}>Group chats:</h2>
             <NewGroupChatButton
               openCreateNewGroupChat={this.props.openCreateNewGroupChat}>

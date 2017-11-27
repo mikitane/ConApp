@@ -8,7 +8,7 @@ export default class ModalContent extends React.Component{
   render(){
 
     let content = null
-    if (this.props.modalContent == 'chat') {
+    if (this.props.modalContent == 'chat' && this.props.modalOpen==true) {
       content = <ChatContent chatId={this.props.chatId}
         modalTitle={this.props.modalTitle} modalOpen={this.props.modalOpen}
         toggleModal={this.props.toggleModal} currentUser={this.props.currentUser}>
@@ -18,7 +18,9 @@ export default class ModalContent extends React.Component{
     } else if (this.props.modalContent == 'newgroupchat') {
       content = <NewGroupChatContent modalTitle={this.props.modalTitle}
         modalOpen={this.props.modalOpen}
-      toggleModal={this.props.toggleModal} currentUser={this.props.currentUser}>
+      toggleModal={this.props.toggleModal} currentUser={this.props.currentUser}
+      openChat={this.props.openChat} toggleModal={this.props.toggleModal}>
+
       </NewGroupChatContent>
 
     }
