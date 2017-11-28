@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'feeds',
     'personalmessages',
     'rest_framework',
-    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -69,6 +68,12 @@ CHANNEL_LAYERS = {
         },
        "ROUTING": "conversationapp.routing.channel_routing", 
     },
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
 }
 
 

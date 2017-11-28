@@ -4,8 +4,12 @@ import ReactDOM from 'react-dom'
 export default class SingleChat extends React.Component {
 
 
+
   componentDidUpdate() {
-    this.scrollToBottom()
+    if (this.props.update == 1) {
+      this.scrollToBottom()
+    }
+
   }
 
   scrollToBottom() {

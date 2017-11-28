@@ -9,7 +9,7 @@ render() {
     color: 'black'
   };
   return(
-    <Navbar fluid inverse collapseOnSelect>
+    <Navbar fluid inverse collapseOnSelect className="navbar">
 
        <Navbar.Header>
          <Navbar.Brand>

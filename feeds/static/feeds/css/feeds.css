@@ -1,6 +1,16 @@
-#scroll {
+.navbar {
+  background-color:#011A27;
+  border-color:#011A27;
+}
 
+.feed-posts {
    overflow-y: scroll;
+   height:60vh;
+   border:1px solid #006daf;
+   border-radius:5px;
+   background-color:#ffffff;
+   overflow-x: hidden;
+   padding-bottom:0
  }
 
  #conbody{
@@ -10,6 +20,11 @@
 
 .list-group{
   margin: 5px;
+}
+
+.well.feed {
+  border:2px solid #006daf;
+  background-color:#ffffff;
 }
 
 .start-group-con {
@@ -212,6 +227,33 @@ display:inline-block;
 
 .modal-body {
 	overflow-y:scroll;
+}
 
+.post-box {
+  border-top:1px solid #006daf;
+  margin-bottom:3px;
+  padding-top:3px;
+  overflow-wrap:break-word
+}
 
+.post-image-box {
+  padding-top:15px;
+  text-align:center
+}
+
+.post-image {
+  border-radius:50%;
+  height:50px;
+  width:50px
+}
+
+.like-box {
+  float:right;
+  margin-right:50px
+}
+
+.like-count {
+  display:inline;
+  margin-left:30px;
+  margin-right:5px
 }

@@ -8,17 +8,31 @@ export default class ChatContent extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      allMessages:""
+      allMessages:"",
+      timer:"",
+      update:0,
+
 
     }
     this.sendNewMessage = this.sendNewMessage.bind(this)
     this.updateMessages = this.updateMessages.bind(this)
+
   }
 
 
 
   componentDidMount(){
+
     this.updateMessages()
+
+    var timer = setInterval(this.updateMessages,5000)
+    this.setState({timer:timer})
+
+  }
+
+
+  componentWillUnmount(){
+    clearInterval(this.state.timer)
   }
 
 
@@ -29,9 +43,10 @@ export default class ChatContent extends React.Component {
       url: '/messages/'+id+'/api',
       success: function(messages){
 
-        this.setState({
-          allMessages:messages
-        })
+        this.setState((prevState) => ({
+          allMessages:messages,
+          update: prevState.update + 1
+        }));
 
       }.bind(this)
       });
@@ -65,7 +80,11 @@ export default class ChatContent extends React.Component {
            <Modal.Title>{this.props.modalTitle}</Modal.Title>
          </Modal.Header>
          <Modal.Body style={{overflow:'auto'}}>
-           <SingleChat allMessages={this.state.allMessages} chatId={this.props.chatId} currentUser={this.props.currentUser}></SingleChat>
+           <SingleChat allMessages={this.state.allMessages}
+             chatId={this.props.chatId}
+             currentUser={this.props.currentUser}
+             update={this.state.update}
+             ></SingleChat>
          </Modal.Body>
          <Modal.Footer>
            <NewMessageInput sendNewMessage={this.sendNewMessage}></NewMessageInput>

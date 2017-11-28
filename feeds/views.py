@@ -3,13 +3,14 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import login, logout
 from feeds.models import UserProfile, Post, Like
 from feeds.forms import ProfileForm, PostForm
+from django.contrib.auth.models import User
 
 from django.views.generic import TemplateView
 from django.views.generic.detail import DetailView
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from feeds.serializers import PostLikeSerializer
+from feeds.serializers import PostLikeSerializer,PostSerializer
 
 
 class FeedsView(TemplateView):
@@ -34,26 +35,24 @@ class FeedsView(TemplateView):
             post.save()
             return redirect('feeds')
 
+
+class PostView(APIView):
+    # Sends data of all posts to user.
+    def get(self,request):
+        posts = Post.objects.all()
+        serializer = PostSerializer(posts,many=True)
+
+        return Response(serializer.data)
+    # Creates a new post.
+    def post(self,request):
+        pass
+
 class PostLikeView(APIView):
     # Sends likes of all posts.
     def get(self,request):
         posts = Post.objects.all()
         serializer = PostLikeSerializer(posts,context={'request': request},many=True)
 
-        return Response(serializer.data)
-
-    # Creates a new like.
-    def put(self,request):
-        
-        current_post = Post.objects.get(id=request.data["id"])
-        likes = current_post.get_likes()
-        for like in likes:
-            if like.user == request.user:
-                like.delete()
-                serializer = PostLikeSerializer(current_post,context={'request':request})
-                return Response(serializer.data)
-        Like.objects.create(user=request.user,post=current_post)
-        serializer = PostLikeSerializer(current_post,context={'request':request})
         return Response(serializer.data)                                            
 
 
@@ -65,11 +64,25 @@ class SinglePostLikeView(APIView):
 
         return Response(serializer.data)
 
+    # Creates a new like.
+    def put(self,request,*args,**kwargs):
+        
+        current_post = Post.objects.get(pk=kwargs['pk'])
+        likes = current_post.get_likes()
+        for like in likes:
+            if like.user == request.user:
+                like.delete()
+                serializer = PostLikeSerializer(current_post,context={'request':request})
+                return Response(serializer.data)
+        Like.objects.create(user=request.user,post=current_post)
+        serializer = PostLikeSerializer(current_post,context={'request':request})
+        return Response(serializer.data)
+
 
 
 def profile(request,pk=None):
     if request.user.is_authenticated():
-        profile = UserProfile.objects.get(id=pk)
+        profile = User.objects.get(id=pk).userprofile
         args = {'userprofile':profile}
         if profile == request.user.userprofile:
             return redirect('own_profile')

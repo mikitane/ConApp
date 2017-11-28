@@ -26135,16 +26135,21 @@ var Body = function (_React$Component) {
 
     _this.state = {
       sideBarOpen: false,
+      sidebarNeedsUpdate: false,
       modalContent: false,
       chatId: false,
+      postId: false,
       modalTitle: false,
       modalOpen: false,
       currentUser: ""
+
     };
     _this.toggleSidebar = _this.toggleSidebar.bind(_this);
     _this.openChat = _this.openChat.bind(_this);
     _this.toggleModal = _this.toggleModal.bind(_this);
     _this.openCreateNewGroupChat = _this.openCreateNewGroupChat.bind(_this);
+    _this.openLikeList = _this.openLikeList.bind(_this);
+    _this.updateSidebar = _this.updateSidebar.bind(_this);
     return _this;
   }
 
@@ -26182,6 +26187,16 @@ var Body = function (_React$Component) {
       this.toggleModal();
     }
   }, {
+    key: 'openLikeList',
+    value: function openLikeList(postId) {
+      this.setState({
+        modalContent: 'likes',
+        modalTitle: 'Likes',
+        postId: postId
+      });
+      this.toggleModal();
+    }
+  }, {
     key: 'openCreateNewGroupChat',
     value: function openCreateNewGroupChat() {
       this.setState({
@@ -26195,26 +26210,40 @@ var Body = function (_React$Component) {
     value: function toggleSidebar() {
       this.setState(function (prevState) {
         return {
-          sideBarOpen: !prevState.sideBarOpen
+          sideBarOpen: !prevState.sideBarOpen,
+          sidebarNeedsUpdate: !prevState.sidebarNeedsUpdate
+        };
+      });
+    }
+  }, {
+    key: 'updateSidebar',
+    value: function updateSidebar() {
+      this.setState(function (prevState) {
+        return {
+          sidebarNeedsUpdate: !prevState.sidebarNeedsUpdate
         };
       });
     }
   }, {
     key: 'render',
     value: function render() {
+      var _React$createElement;
+
       return _react2.default.createElement(
         'div',
-        null,
+        { style: { overflowX: 'hidden' } },
         _react2.default.createElement(_navbar2.default, { currentUser: this.state.currentUser,
           toggleSidebar: this.toggleSidebar }),
-        _react2.default.createElement(_main2.default, _defineProperty({ modalContent: this.state.modalContent, chatId: this.state.chatId,
+        _react2.default.createElement(_main2.default, (_React$createElement = { modalContent: this.state.modalContent, chatId: this.state.chatId,
           modalTitle: this.state.modalTitle, modalOpen: this.state.modalOpen,
           toggleModal: this.toggleModal, currentUser: this.state.currentUser,
-          openChat: this.openChat }, 'toggleModal', this.toggleModal)),
+          openChat: this.openChat }, _defineProperty(_React$createElement, 'toggleModal', this.toggleModal), _defineProperty(_React$createElement, 'openLikeList', this.openLikeList), _defineProperty(_React$createElement, 'postId', this.state.postId), _defineProperty(_React$createElement, 'updateSidebar', this.updateSidebar), _React$createElement)),
         _react2.default.createElement(_sidebar2.default, { openCreateNewGroupChat: this.openCreateNewGroupChat,
           toggleSidebar: this.toggleSidebar,
           width: this.state.sideBarOpen ? '300px' : '0px',
-          openChat: this.openChat, currentUser: this.state.currentUser })
+          openChat: this.openChat, currentUser: this.state.currentUser,
+          sidebarNeedsUpdate: this.state.sidebarNeedsUpdate,
+          updateSidebar: this.updateSidebar })
       );
     }
   }]);
@@ -26272,7 +26301,7 @@ var NavbarCustom = function (_React$Component) {
       };
       return _react2.default.createElement(
         _reactBootstrap.Navbar,
-        { fluid: true, inverse: true, collapseOnSelect: true },
+        { fluid: true, inverse: true, collapseOnSelect: true, className: 'navbar' },
         _react2.default.createElement(
           _reactBootstrap.Navbar.Header,
           null,
@@ -38270,7 +38299,9 @@ var Sidebar = function (_React$Component) {
         { style: sidebarWidth, className: 'sidenav' },
         _react2.default.createElement(_chatlist2.default, { openCreateNewGroupChat: this.props.openCreateNewGroupChat,
           toggleSidebar: this.props.toggleSidebar,
-          openChat: this.props.openChat })
+          openChat: this.props.openChat, currentUser: this.props.currentUser,
+          sidebarNeedsUpdate: this.props.sidebarNeedsUpdate,
+          updateSidebar: this.props.updateSidebar })
       );
     }
   }]);
@@ -38333,7 +38364,7 @@ var ChatsList = function (_React$Component) {
 
       var privateChats = [];
       var groupChats = [];
-      var currentUser = 'miika';
+      var currentUser = this.props.currentUser;
 
       var _iteratorNormalCompletion = true;
       var _didIteratorError = false;
@@ -38447,12 +38478,26 @@ var ChatsListContent = function (_React$Component2) {
     var _this2 = _possibleConstructorReturn(this, (ChatsListContent.__proto__ || Object.getPrototypeOf(ChatsListContent)).call(this, props));
 
     _this2.state = { chats: [] };
+    _this2.updateChats = _this2.updateChats.bind(_this2);
     return _this2;
   }
 
   _createClass(ChatsListContent, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      this.updateChats();
+    }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      if (nextProps.sidebarNeedsUpdate == true) {
+        this.updateChats();
+        this.props.updateSidebar();
+      }
+    }
+  }, {
+    key: 'updateChats',
+    value: function updateChats() {
       $.ajax({
         type: 'GET',
         url: '/messages/api',
@@ -38469,7 +38514,7 @@ var ChatsListContent = function (_React$Component2) {
     value: function render() {
       return _react2.default.createElement(ChatsList, { openCreateNewGroupChat: this.props.openCreateNewGroupChat,
         toggleSidebar: this.props.toggleSidebar, chats: this.state.chats,
-        openChat: this.props.openChat });
+        openChat: this.props.openChat, currentUser: this.state.currentUser });
     }
   }]);
 
@@ -38626,6 +38671,10 @@ var _modal = __webpack_require__(295);
 
 var _modal2 = _interopRequireDefault(_modal);
 
+var _feedcontent = __webpack_require__(303);
+
+var _feedcontent2 = _interopRequireDefault(_feedcontent);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -38648,10 +38697,25 @@ var Main = function (_React$Component) {
   _createClass(Main, [{
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(_modal2.default, _defineProperty({ modalContent: this.props.modalContent, chatId: this.props.chatId,
-        modalTitle: this.props.modalTitle, modalOpen: this.props.modalOpen,
-        toggleModal: this.props.toggleModal, currentUser: this.props.currentUser,
-        openChat: this.props.openChat }, 'toggleModal', this.props.toggleModal));
+      var _React$createElement;
+
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(_modal2.default, (_React$createElement = { modalContent: this.props.modalContent, chatId: this.props.chatId,
+          modalTitle: this.props.modalTitle, modalOpen: this.props.modalOpen,
+          toggleModal: this.props.toggleModal, currentUser: this.props.currentUser,
+          openChat: this.props.openChat }, _defineProperty(_React$createElement, 'toggleModal', this.props.toggleModal), _defineProperty(_React$createElement, 'postId', this.props.postId), _defineProperty(_React$createElement, 'updateSidebar', this.props.updateSidebar), _React$createElement)),
+        _react2.default.createElement(
+          'div',
+          { className: 'row' },
+          _react2.default.createElement(
+            'div',
+            { className: 'col-md-4 col-md-offset-4' },
+            _react2.default.createElement(_feedcontent2.default, { openLikeList: this.props.openLikeList })
+          )
+        )
+      );
     }
   }]);
 
@@ -38689,6 +38753,10 @@ var _newgroupchatcontent = __webpack_require__(299);
 
 var _newgroupchatcontent2 = _interopRequireDefault(_newgroupchatcontent);
 
+var _likelist = __webpack_require__(308);
+
+var _likelist2 = _interopRequireDefault(_likelist);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -38717,11 +38785,16 @@ var ModalContent = function (_React$Component) {
         content = _react2.default.createElement(_chatcontent2.default, { chatId: this.props.chatId,
           modalTitle: this.props.modalTitle, modalOpen: this.props.modalOpen,
           toggleModal: this.props.toggleModal, currentUser: this.props.currentUser });
-      } else if (this.props.modalContent == 'likes') {} else if (this.props.modalContent == 'newgroupchat') {
-        content = _react2.default.createElement(_newgroupchatcontent2.default, _defineProperty({ modalTitle: this.props.modalTitle,
+      } else if (this.props.modalContent == 'likes' && this.props.modalOpen == true) {
+        var _React$createElement;
+
+        content = _react2.default.createElement(_likelist2.default, (_React$createElement = { postId: this.props.postId, modalOpen: this.props.modalOpen,
+          toggleModal: this.props.toggleModal }, _defineProperty(_React$createElement, 'modalOpen', this.props.modalOpen), _defineProperty(_React$createElement, 'modalTitle', this.props.modalTitle), _React$createElement));
+      } else if (this.props.modalContent == 'newgroupchat' && this.props.modalOpen == true) {
+        content = _react2.default.createElement(_newgroupchatcontent2.default, { modalTitle: this.props.modalTitle,
           modalOpen: this.props.modalOpen,
           toggleModal: this.props.toggleModal, currentUser: this.props.currentUser,
-          openChat: this.props.openChat }, 'toggleModal', this.props.toggleModal));
+          openChat: this.props.openChat, updateSidebar: this.props.updateSidebar });
       }
 
       return content;
@@ -38781,18 +38854,30 @@ var ChatContent = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (ChatContent.__proto__ || Object.getPrototypeOf(ChatContent)).call(this, props));
 
     _this.state = {
-      allMessages: ""
+      allMessages: "",
+      timer: "",
+      update: 0
 
     };
     _this.sendNewMessage = _this.sendNewMessage.bind(_this);
     _this.updateMessages = _this.updateMessages.bind(_this);
+
     return _this;
   }
 
   _createClass(ChatContent, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+
       this.updateMessages();
+
+      var timer = setInterval(this.updateMessages, 5000);
+      this.setState({ timer: timer });
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      clearInterval(this.state.timer);
     }
   }, {
     key: 'updateMessages',
@@ -38803,8 +38888,11 @@ var ChatContent = function (_React$Component) {
         url: '/messages/' + id + '/api',
         success: function (messages) {
 
-          this.setState({
-            allMessages: messages
+          this.setState(function (prevState) {
+            return {
+              allMessages: messages,
+              update: prevState.update + 1
+            };
           });
         }.bind(this)
       });
@@ -38844,7 +38932,11 @@ var ChatContent = function (_React$Component) {
         _react2.default.createElement(
           _reactBootstrap.Modal.Body,
           { style: { overflow: 'auto' } },
-          _react2.default.createElement(_chat2.default, { allMessages: this.state.allMessages, chatId: this.props.chatId, currentUser: this.props.currentUser })
+          _react2.default.createElement(_chat2.default, { allMessages: this.state.allMessages,
+            chatId: this.props.chatId,
+            currentUser: this.props.currentUser,
+            update: this.state.update
+          })
         ),
         _react2.default.createElement(
           _reactBootstrap.Modal.Footer,
@@ -38901,7 +38993,9 @@ var SingleChat = function (_React$Component) {
   _createClass(SingleChat, [{
     key: 'componentDidUpdate',
     value: function componentDidUpdate() {
-      this.scrollToBottom();
+      if (this.props.update == 1) {
+        this.scrollToBottom();
+      }
     }
   }, {
     key: 'scrollToBottom',
@@ -39242,6 +39336,7 @@ var NewGroupChatContent = function (_React$Component) {
           data: JSON.stringify(info),
           contentType: "application/json",
           success: function (chat) {
+            this.props.updateSidebar();
             this.props.toggleModal();
             this.props.openChat(chat.id, chatName);
           }.bind(this)
@@ -39568,6 +39663,708 @@ var NewGroupChatInput = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = NewGroupChatInput;
+
+/***/ }),
+/* 303 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(9);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _feed = __webpack_require__(304);
+
+var _feed2 = _interopRequireDefault(_feed);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var FeedContent = function (_React$Component) {
+  _inherits(FeedContent, _React$Component);
+
+  function FeedContent(props) {
+    _classCallCheck(this, FeedContent);
+
+    var _this = _possibleConstructorReturn(this, (FeedContent.__proto__ || Object.getPrototypeOf(FeedContent)).call(this, props));
+
+    _this.state = {
+      allPosts: ""
+
+    };
+    _this.updatePosts = _this.updatePosts.bind(_this);
+    return _this;
+  }
+
+  _createClass(FeedContent, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.updatePosts();
+    }
+  }, {
+    key: 'updatePosts',
+    value: function updatePosts() {
+
+      $.ajax({
+        type: 'GET',
+        url: '/posts/api',
+        success: function (posts) {
+          this.setState({
+            allPosts: posts
+          });
+        }.bind(this)
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+
+      return _react2.default.createElement(_feed2.default, { posts: this.state.allPosts, openLikeList: this.props.openLikeList });
+    }
+  }]);
+
+  return FeedContent;
+}(_react2.default.Component);
+
+exports.default = FeedContent;
+
+/***/ }),
+/* 304 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(9);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _post = __webpack_require__(305);
+
+var _post2 = _interopRequireDefault(_post);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Feed = function (_React$Component) {
+  _inherits(Feed, _React$Component);
+
+  function Feed() {
+    _classCallCheck(this, Feed);
+
+    return _possibleConstructorReturn(this, (Feed.__proto__ || Object.getPrototypeOf(Feed)).apply(this, arguments));
+  }
+
+  _createClass(Feed, [{
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate() {
+      this.scrollToBottom();
+    }
+  }, {
+    key: 'scrollToBottom',
+    value: function scrollToBottom() {
+      var node = _reactDom2.default.findDOMNode(this.postsEnd);
+      node.scrollIntoView();
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      var postList = [];
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = this.props.posts[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var post = _step.value;
+
+
+          postList.push(_react2.default.createElement(_post2.default, { key: post.id, post: post, openLikeList: this.props.openLikeList }));
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+
+      return _react2.default.createElement(
+        'div',
+        { className: 'well feed' },
+        _react2.default.createElement(
+          'div',
+          { className: 'feed-posts', id: 'scroll' },
+          postList,
+          _react2.default.createElement('div', { ref: function ref(el) {
+              _this2.postsEnd = el;
+            } })
+        )
+      );
+    }
+  }]);
+
+  return Feed;
+}(_react2.default.Component);
+
+exports.default = Feed;
+
+/***/ }),
+/* 305 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+		value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(9);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _likecontent = __webpack_require__(306);
+
+var _likecontent2 = _interopRequireDefault(_likecontent);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Post = function (_React$Component) {
+		_inherits(Post, _React$Component);
+
+		function Post() {
+				_classCallCheck(this, Post);
+
+				return _possibleConstructorReturn(this, (Post.__proto__ || Object.getPrototypeOf(Post)).apply(this, arguments));
+		}
+
+		_createClass(Post, [{
+				key: 'render',
+				value: function render() {
+
+						return _react2.default.createElement(
+								'div',
+								{ className: 'container-fluid post-box' },
+								_react2.default.createElement(
+										'div',
+										{ className: 'row' },
+										_react2.default.createElement(
+												'div',
+												{ className: 'col-sm-2 post-image-box' },
+												_react2.default.createElement('img', { className: 'post-image', src: this.props.post.image })
+										),
+										_react2.default.createElement(
+												'div',
+												{ className: 'col-sm-10' },
+												_react2.default.createElement(
+														'p',
+														null,
+														_react2.default.createElement(
+																'b',
+																null,
+																this.props.post.header
+														)
+												),
+												_react2.default.createElement(
+														'p',
+														null,
+														this.props.post.text
+												),
+												_react2.default.createElement(
+														'div',
+														{ className: 'post-info' },
+														_react2.default.createElement(
+																'a',
+																{ href: '/profiles/' + this.props.post.user },
+																this.props.post.username
+														),
+														_react2.default.createElement(
+																'small',
+																null,
+																this.props.post.created
+														),
+														_react2.default.createElement(_likecontent2.default, { id: this.props.post.id,
+																openLikeList: this.props.openLikeList })
+												)
+										)
+								)
+						);
+				}
+		}]);
+
+		return Post;
+}(_react2.default.Component);
+
+exports.default = Post;
+
+/***/ }),
+/* 306 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(9);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _like = __webpack_require__(307);
+
+var _like2 = _interopRequireDefault(_like);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var LikeContent = function (_React$Component) {
+  _inherits(LikeContent, _React$Component);
+
+  function LikeContent(props) {
+    _classCallCheck(this, LikeContent);
+
+    var _this = _possibleConstructorReturn(this, (LikeContent.__proto__ || Object.getPrototypeOf(LikeContent)).call(this, props));
+
+    _this.state = {
+      allLikes: { like_set: [], user_in_likes: false }
+    };
+    _this.updateLikes = _this.updateLikes.bind(_this);
+    _this.handleLike = _this.handleLike.bind(_this);
+    _this.handleLikeModal = _this.handleLikeModal.bind(_this);
+    return _this;
+  }
+
+  _createClass(LikeContent, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.updateLikes();
+    }
+  }, {
+    key: 'updateLikes',
+    value: function updateLikes() {
+      var id = this.props.id;
+      $.ajax({
+        type: 'GET',
+        url: '/post/' + id + '/likes/api/',
+        success: function (likes) {
+          this.setState({
+            allLikes: likes
+          });
+        }.bind(this)
+      });
+    }
+  }, {
+    key: 'handleLike',
+    value: function handleLike() {
+      var id = this.props.id;
+      $.ajax({
+        type: 'PUT',
+        url: '/post/' + id + '/likes/api/',
+        success: function (likes) {
+          this.setState({
+            allLikes: likes
+          });
+        }.bind(this)
+      });
+    }
+  }, {
+    key: 'handleLikeModal',
+    value: function handleLikeModal() {
+      this.props.openLikeList(this.props.id);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      console.log(this.state.allLikes);
+
+      return _react2.default.createElement(_like2.default, {
+        likeCount: this.state.allLikes.like_set.length,
+        userInLikes: this.state.allLikes.user_in_likes,
+        handleLike: this.handleLike, handleLikeModal: this.handleLikeModal });
+    }
+  }]);
+
+  return LikeContent;
+}(_react2.default.Component);
+
+exports.default = LikeContent;
+
+/***/ }),
+/* 307 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(9);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Likes = function (_React$Component) {
+  _inherits(Likes, _React$Component);
+
+  function Likes() {
+    _classCallCheck(this, Likes);
+
+    return _possibleConstructorReturn(this, (Likes.__proto__ || Object.getPrototypeOf(Likes)).apply(this, arguments));
+  }
+
+  _createClass(Likes, [{
+    key: 'handleLike',
+    value: function handleLike() {
+      this.props.handleLike();
+    }
+  }, {
+    key: 'handleLikeModal',
+    value: function handleLikeModal() {
+      this.props.handleLikeModal();
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var buttons = "";
+
+      if (this.props.userInLikes) {
+        buttons = _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'button',
+            { type: 'button', className: 'btn  btn-xs like-count',
+              onClick: this.handleLikeModal.bind(this) },
+            this.props.likeCount
+          ),
+          _react2.default.createElement(
+            'button',
+            { type: 'button', className: 'btn btn-xs btn-primary like-button',
+              onClick: this.handleLike.bind(this) },
+            _react2.default.createElement('span', { className: 'glyphicon glyphicon-thumbs-up',
+              style: { marginRight: '5px' } }),
+            _react2.default.createElement(
+              'p',
+              { style: { display: 'inline' } },
+              'Liked'
+            )
+          )
+        );
+      } else {
+        buttons = _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'button',
+            { type: 'button', className: 'btn  btn-xs like-count',
+              onClick: this.handleLikeModal.bind(this) },
+            this.props.likeCount
+          ),
+          _react2.default.createElement(
+            'button',
+            { type: 'button', className: 'btn  btn-xs like-button',
+              onClick: this.handleLike.bind(this) },
+            _react2.default.createElement('span', { className: 'glyphicon glyphicon-thumbs-up',
+              style: { marginRight: '5px' } }),
+            _react2.default.createElement(
+              'p',
+              { style: { display: 'inline' } },
+              'Like'
+            )
+          )
+        );
+      }
+
+      return _react2.default.createElement(
+        'div',
+        { className: 'like-box' },
+        buttons
+      );
+    }
+  }]);
+
+  return Likes;
+}(_react2.default.Component);
+
+exports.default = Likes;
+
+/***/ }),
+/* 308 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(9);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _reactBootstrap = __webpack_require__(61);
+
+var _likeduserbutton = __webpack_require__(309);
+
+var _likeduserbutton2 = _interopRequireDefault(_likeduserbutton);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var LikeListContent = function (_React$Component) {
+  _inherits(LikeListContent, _React$Component);
+
+  function LikeListContent(props) {
+    _classCallCheck(this, LikeListContent);
+
+    var _this = _possibleConstructorReturn(this, (LikeListContent.__proto__ || Object.getPrototypeOf(LikeListContent)).call(this, props));
+
+    _this.state = {
+      allLikes: { like_set: [], user_in_likes: false }
+    };
+    _this.updateLikes = _this.updateLikes.bind(_this);
+    return _this;
+  }
+
+  _createClass(LikeListContent, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.updateLikes();
+    }
+  }, {
+    key: 'updateLikes',
+    value: function updateLikes() {
+      var id = this.props.postId;
+      $.ajax({
+        type: 'GET',
+        url: '/post/' + id + '/likes/api/',
+        success: function (likes) {
+          this.setState({
+            allLikes: likes
+          });
+        }.bind(this)
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var likeList = [];
+      console.log(this.state.allLikes);
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = this.state.allLikes['like_set'][Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var user = _step.value;
+
+          likeList.push(_react2.default.createElement(_likeduserbutton2.default, { key: user.id, id: user.id, image: user.image,
+            name: user.user }));
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+
+      var likeListStyle = {
+        overflowY: 'scroll',
+        overflowX: 'hidden',
+        height: '500px',
+        paddingLeft: '15px',
+        paddingRight: '15px'
+
+      };
+
+      return _react2.default.createElement(
+        _reactBootstrap.Modal,
+        { show: this.props.modalOpen, onHide: this.props.toggleModal },
+        _react2.default.createElement(
+          _reactBootstrap.Modal.Header,
+          { closeButton: true },
+          _react2.default.createElement(
+            _reactBootstrap.Modal.Title,
+            null,
+            this.props.modalTitle
+          )
+        ),
+        _react2.default.createElement(
+          _reactBootstrap.Modal.Body,
+          { style: { overflow: 'auto' } },
+          _react2.default.createElement(
+            'div',
+            { style: likeListStyle },
+            likeList
+          )
+        ),
+        _react2.default.createElement(_reactBootstrap.Modal.Footer, null)
+      );
+    }
+  }]);
+
+  return LikeListContent;
+}(_react2.default.Component);
+
+exports.default = LikeListContent;
+
+/***/ }),
+/* 309 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(9);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var LikedUserButton = function (_React$Component) {
+  _inherits(LikedUserButton, _React$Component);
+
+  function LikedUserButton() {
+    _classCallCheck(this, LikedUserButton);
+
+    return _possibleConstructorReturn(this, (LikedUserButton.__proto__ || Object.getPrototypeOf(LikedUserButton)).apply(this, arguments));
+  }
+
+  _createClass(LikedUserButton, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'a',
+        { className: 'list-group-item con-button',
+          href: '/profiles/' + this.props.id },
+        _react2.default.createElement('img', { className: 'conversation-image', src: this.props.image }),
+        this.props.name
+      );
+    }
+  }]);
+
+  return LikedUserButton;
+}(_react2.default.Component);
+
+exports.default = LikedUserButton;
 
 /***/ })
 /******/ ]);

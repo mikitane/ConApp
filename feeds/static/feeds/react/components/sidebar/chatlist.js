@@ -10,7 +10,7 @@ class ChatsList extends React.Component {
 
     const privateChats = [];
     const groupChats = [];
-    var currentUser = 'miika'
+    var currentUser = this.props.currentUser
 
     for (let chat of this.props.chats) {
 
@@ -65,9 +65,22 @@ export default class ChatsListContent extends React.Component{
   constructor(props){
     super(props)
     this.state = {chats:[]}
+    this.updateChats = this.updateChats.bind(this)
   }
 
   componentDidMount(){
+    this.updateChats()
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.sidebarNeedsUpdate==true) {
+      this.updateChats()
+      this.props.updateSidebar()
+    }
+  }
+
+
+  updateChats() {
     $.ajax({
       type: 'GET',
   		url: '/messages/api',
@@ -78,13 +91,16 @@ export default class ChatsListContent extends React.Component{
         });
       }.bind(this)
     });
+
   }
 
   render(){
     return(
       <ChatsList openCreateNewGroupChat={this.props.openCreateNewGroupChat}
          toggleSidebar = {this.props.toggleSidebar} chats={this.state.chats}
-         openChat={this.props.openChat}></ChatsList>
+         openChat={this.props.openChat} currentUser={this.state.currentUser}>
+
+         </ChatsList>
     )
   }
 };

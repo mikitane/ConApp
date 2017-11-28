@@ -45,6 +45,7 @@ export default class NewGroupChatContent extends React.Component {
         data: JSON.stringify(info),
         contentType: "application/json",
         success: function(chat){
+          this.props.updateSidebar()
           this.props.toggleModal()
           this.props.openChat(chat.id,chatName)
         }.bind(this)
