@@ -11,6 +11,7 @@ export default class FeedContent extends React.Component {
 
     }
     this.updatePosts = this.updatePosts.bind(this)
+    this.sendNewPost = this.sendNewPost.bind(this)
   }
 
   componentDidMount() {
@@ -37,13 +38,16 @@ export default class FeedContent extends React.Component {
 
 		type: 'POST',
 		url: '/posts/api/',
+    dataType:'json',
 		data: JSON.stringify(info),
-		success: function(){
-			this.updatePosts()
+    contentType: "application/json; charset=utf-8",
+		success: function(posts){
+      this.updatePosts()
 
 		}.bind(this)
 
 		});
+
   }
 
 

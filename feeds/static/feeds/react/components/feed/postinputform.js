@@ -14,11 +14,14 @@ export default class PostInputForm extends React.Component {
   }
 
   handleSend() {
-    this.props.sendNewPost(this.state.headerValue,this.state.textValue)
+    if (this.state.headerValue != "" && this.state.textValue != "") {
+      this.props.sendNewPost(this.state.headerValue,this.state.textValue)
     this.setState({
       headerValue:"",
       textValue:""
     })
+  }
+
   }
 
   handleChangeHeader(event) {
@@ -36,11 +39,13 @@ export default class PostInputForm extends React.Component {
     		<h3>Write a post!</h3>
       		<div>
 
-      		<div className="form-group row">
+      		<div className="row">
       			<div className='col-md-6'>
-              <input type="text" className="form-control" value={this.state.headerValue}
+              <div className="form-group has-danger ">
+              <input type="text" className="form-control form-control-danger" id="inputDanger1" value={this.state.headerValue}
                 placeholder="Write a post header!" onChange={this.handleChangeHeader}></input>
       			</div>
+          </div>
       		</div>
       		<div className="form-group row">
       			<div className='col-md-10' >

@@ -46,8 +46,11 @@ class PostView(APIView):
     
     # Creates a new post.
     def post(self,request):
+        print(request.data)
         _data = request.data.copy()
+        print(_data)
         _data['user'] = request.user.id
+        
         serializer = PostSerializer(data=_data)
         if serializer.is_valid():
             serializer.save()
