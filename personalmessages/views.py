@@ -4,7 +4,6 @@ from rest_framework.views import APIView
 from personalmessages.serializers import PersonalMessageSerializer, ConversationSerializer, UserSerializer
 from personalmessages.models import PersonalMessage, Conversation
 from django.contrib.auth.models import User
-from django.db.models import Q
 from django.core import serializers
 from rest_framework.exceptions import PermissionDenied
 
@@ -92,3 +91,17 @@ class UserView(APIView):
         users = User.objects.all()
         serializer = UserSerializer(users,many=True)
         return Response(serializer.data)
+
+
+class OwnProfileView(APIView):
+    def get(self,request,*args,**kwargs):
+        user = request.user
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+
+
+
+
+
+
+    

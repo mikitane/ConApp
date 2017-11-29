@@ -16,5 +16,6 @@ urlpatterns = [
     url(r'^profile/change$', views.profile_change,name='profile_change'),
     url(r'^profiles/(?P<pk>\d+)$',views.profile,name='theprofile'),
     url(r'^post/likes/api/$',views.PostLikeView.as_view()),
+    url(r'^posts/api/$',views.PostView.as_view()),
     url(r'^post/(?P<pk>\d+)/likes/api/$',views.SinglePostLikeView.as_view()),
     ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -11,4 +11,5 @@ urlpatterns = [
     url(r'^api/$',views.ConversationView.as_view() ),
     url(r'^(?P<pk>\d+)/api/$',views.PersonalMessageView.as_view() ),
     url(r'^users/api/$',views.UserView.as_view() ),
+    url(r'^ownprofile/api/$',views.OwnProfileView.as_view() ),
    ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

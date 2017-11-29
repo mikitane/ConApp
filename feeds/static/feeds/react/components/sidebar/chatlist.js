@@ -1,20 +1,21 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-
+import SingleChatButton from './chatopenbutton.js'
+import NewGroupChatButton from './newgroupchatbutton.js'
 
 // Consists all the sidebar content
-export class ChatsList extends React.Component {
+class ChatsList extends React.Component {
 
   render() {
 
     const privateChats = [];
     const groupChats = [];
-    let currentUser = document.getElementById('grad').getAttribute('data-id')
+    var currentUser = this.props.currentUser
 
     for (let chat of this.props.chats) {
 
       if (chat.participants.length < 3) {
-        let currentUser = document.getElementById('grad').getAttribute('data-id')
+
         for (let participant of chat.participants){
           if (participant.user != currentUser){
             var chatName = participant.user
@@ -22,19 +23,29 @@ export class ChatsList extends React.Component {
           }
         }
         privateChats.push(<SingleChatButton name={chatName}
-                          image={chatImage} key={chat.id} chatId={chat.id}></SingleChatButton>)
+          image={chatImage} key={chat.id}
+          chatId={chat.id} openChat={this.props.openChat}></SingleChatButton>)
       } else {
-        groupChats.push(<SingleChatButton name={chat.name} key={chat.id} chatId={chat.id}></SingleChatButton>)
+        groupChats.push(<SingleChatButton name={chat.name} key={chat.id}
+          chatId={chat.id} openChat={this.props.openChat}></SingleChatButton>)
       }
     }
       return (
         <div>
           <a href="javascript:void(0)" id="close-sidebar-button"
-              className="closebtn">&times;</a>
+              className="closebtn" onClick={this.props.toggleSidebar}>&times;</a>
           <div className="list-group">
-          <h2 className="special-font">Chats:</h2>
+          <h2 className="special-font" style={{marginBottom:'10px'}}>Chats:</h2>
           {privateChats}
-          <h2 className="special-font">Group Chats:</h2>
+
+			    <div style={{marginBottom:'10px'}} >
+            <h2 className="special-font" style={{display:'inline'}}>Group chats:</h2>
+            <NewGroupChatButton
+              openCreateNewGroupChat={this.props.openCreateNewGroupChat}>
+            </NewGroupChatButton>
+			    </div>
+
+
           {groupChats}
         </div>
         </div>
@@ -49,14 +60,27 @@ export class ChatsList extends React.Component {
 
 
 // Gets all conversations from API
-export class ChatsListContent extends React.Component{
+export default class ChatsListContent extends React.Component{
 
   constructor(props){
     super(props)
     this.state = {chats:[]}
+    this.updateChats = this.updateChats.bind(this)
   }
 
   componentDidMount(){
+    this.updateChats()
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.sidebarNeedsUpdate==true) {
+      this.updateChats()
+      this.props.updateSidebar()
+    }
+  }
+
+
+  updateChats() {
     $.ajax({
       type: 'GET',
   		url: '/messages/api',
@@ -67,11 +91,16 @@ export class ChatsListContent extends React.Component{
         });
       }.bind(this)
     });
+
   }
 
   render(){
     return(
-      <ChatsList chats={this.state.chats}></ChatsList>
+      <ChatsList openCreateNewGroupChat={this.props.openCreateNewGroupChat}
+         toggleSidebar = {this.props.toggleSidebar} chats={this.state.chats}
+         openChat={this.props.openChat} currentUser={this.state.currentUser}>
+
+         </ChatsList>
     )
   }
 };
