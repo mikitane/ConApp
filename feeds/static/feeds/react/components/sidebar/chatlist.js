@@ -98,7 +98,7 @@ export default class ChatsListContent extends React.Component{
     return(
       <ChatsList openCreateNewGroupChat={this.props.openCreateNewGroupChat}
          toggleSidebar = {this.props.toggleSidebar} chats={this.state.chats}
-         openChat={this.props.openChat} currentUser={this.state.currentUser}>
+         openChat={this.props.openChat} currentUser={this.props.currentUser}>
 
          </ChatsList>
     )

@@ -5,11 +5,16 @@ export default class SingleChat extends React.Component {
 
 
 
-  componentDidUpdate() {
-    if (this.props.update == 1) {
+  componentDidMount() {
+      this.scrollToBottom()
+  }
+
+  componentDidUpdate(prevProps) {
+    var oldCount = prevProps.allMessages.length
+    var newCount = this.props.allMessages.length
+    if (oldCount != newCount) {
       this.scrollToBottom()
     }
-
   }
 
   scrollToBottom() {

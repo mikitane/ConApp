@@ -10,7 +10,7 @@ export default class ChatContent extends React.Component {
     this.state = {
       allMessages:"",
       timer:"",
-      update:0,
+
 
 
     }
@@ -45,7 +45,7 @@ export default class ChatContent extends React.Component {
 
         this.setState((prevState) => ({
           allMessages:messages,
-          update: prevState.update + 1
+
         }));
 
       }.bind(this)
@@ -83,7 +83,7 @@ export default class ChatContent extends React.Component {
            <SingleChat allMessages={this.state.allMessages}
              chatId={this.props.chatId}
              currentUser={this.props.currentUser}
-             update={this.state.update}
+             
              ></SingleChat>
          </Modal.Body>
          <Modal.Footer>

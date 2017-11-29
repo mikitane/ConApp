@@ -11,8 +11,7 @@ from rest_framework.exceptions import PermissionDenied
 class ConversationView(APIView):
     # Sends a list of all conversations which current user is included in.
     def get(self,request,*args,**kwargs):
-        print('JEEJEE')
-        print(request.user)
+        
         conversations = Conversation.objects.filter(participants=request.user)
         serializer = ConversationSerializer(conversations,many=True)
         

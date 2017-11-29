@@ -31,14 +31,30 @@ export default class FeedContent extends React.Component {
       });
   }
 
+  sendNewPost(header,text) {
+    var info = {'header':header,'text':text}
+    $.ajax({
+
+		type: 'POST',
+		url: '/posts/api/',
+		data: JSON.stringify(info),
+		success: function(){
+			this.updatePosts()
+
+		}.bind(this)
+
+		});
+  }
+
 
 
 
   render() {
 
     return(
-      <Feed posts={this.state.allPosts} openLikeList={this.props.openLikeList}>
-        
+      <Feed posts={this.state.allPosts} openLikeList={this.props.openLikeList}
+            sendNewPost={this.sendNewPost}>
+
       </Feed>
 
     )

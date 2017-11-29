@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import login, logout
 from feeds.models import UserProfile, Post, Like
@@ -43,9 +43,21 @@ class PostView(APIView):
         serializer = PostSerializer(posts,many=True)
 
         return Response(serializer.data)
+    
     # Creates a new post.
     def post(self,request):
-        pass
+        _data = request.data.copy()
+        _data['user'] = request.user.id
+        serializer = PostSerializer(data=_data)
+        if serializer.is_valid():
+            serializer.save()
+            
+            posts = Post.objects.all()
+            serializer = PostSerializer(posts,many=True)
+            return Response(serializer.data)
+        else:
+            return HttpResponse('Failed')
+
 
 class PostLikeView(APIView):
     # Sends likes of all posts.

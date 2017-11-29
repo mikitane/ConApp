@@ -26501,7 +26501,7 @@ var Main = function (_React$Component) {
           { className: 'row' },
           _react2.default.createElement(
             'div',
-            { className: 'col-md-4 col-md-offset-4' },
+            { className: 'col-md-6 col-md-offset-3' },
             _react2.default.createElement(_feedcontent2.default, { openLikeList: this.props.openLikeList })
           )
         )
@@ -26645,8 +26645,7 @@ var ChatContent = function (_React$Component) {
 
     _this.state = {
       allMessages: "",
-      timer: "",
-      update: 0
+      timer: ""
 
     };
     _this.sendNewMessage = _this.sendNewMessage.bind(_this);
@@ -26680,8 +26679,8 @@ var ChatContent = function (_React$Component) {
 
           this.setState(function (prevState) {
             return {
-              allMessages: messages,
-              update: prevState.update + 1
+              allMessages: messages
+
             };
           });
         }.bind(this)
@@ -26724,8 +26723,8 @@ var ChatContent = function (_React$Component) {
           { style: { overflow: 'auto' } },
           _react2.default.createElement(_chat2.default, { allMessages: this.state.allMessages,
             chatId: this.props.chatId,
-            currentUser: this.props.currentUser,
-            update: this.state.update
+            currentUser: this.props.currentUser
+
           })
         ),
         _react2.default.createElement(
@@ -38656,9 +38655,16 @@ var SingleChat = function (_React$Component) {
   }
 
   _createClass(SingleChat, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.scrollToBottom();
+    }
+  }, {
     key: 'componentDidUpdate',
-    value: function componentDidUpdate() {
-      if (this.props.update == 1) {
+    value: function componentDidUpdate(prevProps) {
+      var oldCount = prevProps.allMessages.length;
+      var newCount = this.props.allMessages.length;
+      if (oldCount != newCount) {
         this.scrollToBottom();
       }
     }
@@ -39594,10 +39600,26 @@ var FeedContent = function (_React$Component) {
       });
     }
   }, {
+    key: 'sendNewPost',
+    value: function sendNewPost(header, text) {
+      var info = { 'header': header, 'text': text };
+      $.ajax({
+
+        type: 'POST',
+        url: '/posts/api/',
+        data: JSON.stringify(info),
+        success: function () {
+          this.updatePosts();
+        }.bind(this)
+
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
 
-      return _react2.default.createElement(_feed2.default, { posts: this.state.allPosts, openLikeList: this.props.openLikeList });
+      return _react2.default.createElement(_feed2.default, { posts: this.state.allPosts, openLikeList: this.props.openLikeList,
+        sendNewPost: this.sendNewPost });
     }
   }]);
 
@@ -39631,6 +39653,12 @@ var _post = __webpack_require__(304);
 
 var _post2 = _interopRequireDefault(_post);
 
+var _postinputform = __webpack_require__(310);
+
+var _postinputform2 = _interopRequireDefault(_postinputform);
+
+var _reactBootstrap = __webpack_require__(62);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -39642,10 +39670,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Feed = function (_React$Component) {
   _inherits(Feed, _React$Component);
 
-  function Feed() {
+  function Feed(props) {
     _classCallCheck(this, Feed);
 
-    return _possibleConstructorReturn(this, (Feed.__proto__ || Object.getPrototypeOf(Feed)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (Feed.__proto__ || Object.getPrototypeOf(Feed)).call(this, props));
+
+    _this.state = {
+      postInputOpen: false
+    };
+    _this.togglePostInput = _this.togglePostInput.bind(_this);
+    return _this;
   }
 
   _createClass(Feed, [{
@@ -39658,6 +39692,15 @@ var Feed = function (_React$Component) {
     value: function scrollToBottom() {
       var node = _reactDom2.default.findDOMNode(this.postsEnd);
       node.scrollIntoView();
+    }
+  }, {
+    key: 'togglePostInput',
+    value: function togglePostInput() {
+      this.setState(function (prevState) {
+        return {
+          postInputOpen: !prevState.postInputOpen
+        };
+      });
     }
   }, {
     key: 'render',
@@ -39701,6 +39744,25 @@ var Feed = function (_React$Component) {
           _react2.default.createElement('div', { ref: function ref(el) {
               _this2.postsEnd = el;
             } })
+        ),
+        _react2.default.createElement(
+          'div',
+          { style: { marginTop: '10px' } },
+          _react2.default.createElement(
+            'button',
+            { type: 'button', className: 'btn btn-primary',
+              onClick: this.togglePostInput },
+            'Write a new post!'
+          ),
+          _react2.default.createElement(
+            _reactBootstrap.Collapse,
+            { 'in': this.state.postInputOpen },
+            _react2.default.createElement(
+              'div',
+              null,
+              _react2.default.createElement(_postinputform2.default, { sendNewPost: this.props.sendNewPost })
+            )
+          )
         )
       );
     }
@@ -39903,7 +39965,6 @@ var LikeContent = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      console.log(this.state.allLikes);
 
       return _react2.default.createElement(_like2.default, {
         likeCount: this.state.allLikes.like_set.length,
@@ -40234,7 +40295,7 @@ var ChatsListContent = function (_React$Component2) {
     value: function render() {
       return _react2.default.createElement(ChatsList, { openCreateNewGroupChat: this.props.openCreateNewGroupChat,
         toggleSidebar: this.props.toggleSidebar, chats: this.state.chats,
-        openChat: this.props.openChat, currentUser: this.state.currentUser });
+        openChat: this.props.openChat, currentUser: this.props.currentUser });
     }
   }]);
 
@@ -40365,6 +40426,122 @@ var NewGroupChatButton = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = NewGroupChatButton;
+
+/***/ }),
+/* 310 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(10);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var PostInputForm = function (_React$Component) {
+  _inherits(PostInputForm, _React$Component);
+
+  function PostInputForm(props) {
+    _classCallCheck(this, PostInputForm);
+
+    var _this = _possibleConstructorReturn(this, (PostInputForm.__proto__ || Object.getPrototypeOf(PostInputForm)).call(this, props));
+
+    _this.state = {
+      headerValue: "",
+      textValue: ""
+    };
+    _this.handleChangeHeader = _this.handleChangeHeader.bind(_this);
+    _this.handleChangeText = _this.handleChangeText.bind(_this);
+    _this.handleSend = _this.handleSend.bind(_this);
+    return _this;
+  }
+
+  _createClass(PostInputForm, [{
+    key: 'handleSend',
+    value: function handleSend() {
+      this.props.sendNewPost(this.state.headerValue, this.state.textValue);
+      this.setState({
+        headerValue: "",
+        textValue: ""
+      });
+    }
+  }, {
+    key: 'handleChangeHeader',
+    value: function handleChangeHeader(event) {
+      this.setState({ headerValue: event.target.value });
+    }
+  }, {
+    key: 'handleChangeText',
+    value: function handleChangeText(event) {
+      this.setState({ textValue: event.target.value });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+
+      return _react2.default.createElement(
+        'div',
+        { className: 'container-fluid', style: { marginLeft: '10px' } },
+        _react2.default.createElement(
+          'h3',
+          null,
+          'Write a post!'
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'div',
+            { className: 'form-group row' },
+            _react2.default.createElement(
+              'div',
+              { className: 'col-md-6' },
+              _react2.default.createElement('input', { type: 'text', className: 'form-control', value: this.state.headerValue,
+                placeholder: 'Write a post header!', onChange: this.handleChangeHeader })
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'form-group row' },
+            _react2.default.createElement(
+              'div',
+              { className: 'col-md-10' },
+              _react2.default.createElement('textarea', { style: { overflow: 'hidden' }, rows: '3', className: 'form-control', value: this.state.textValue,
+                placeholder: 'Write your post here!', onChange: this.handleChangeText })
+            )
+          ),
+          _react2.default.createElement(
+            'button',
+            { type: 'button', className: 'btn btn-primary', onClick: this.handleSend },
+            'Post!'
+          )
+        )
+      );
+    }
+  }]);
+
+  return PostInputForm;
+}(_react2.default.Component);
+
+exports.default = PostInputForm;
 
 /***/ })
 /******/ ]);

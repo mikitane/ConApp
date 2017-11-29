@@ -51,7 +51,7 @@ export default class LikeContent extends React.Component {
   }
 
   render() {
-    console.log(this.state.allLikes)
+    
 
     return(
       <Likes

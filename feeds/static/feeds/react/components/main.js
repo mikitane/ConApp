@@ -16,7 +16,7 @@ export default class Main extends React.Component {
       </ModalContent>
 
       <div className="row">
-        <div className="col-md-4 col-md-offset-4">
+        <div className="col-md-6 col-md-offset-3">
       <FeedContent openLikeList={this.props.openLikeList}></FeedContent>
         </div>
       </div>
