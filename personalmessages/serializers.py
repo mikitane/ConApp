@@ -17,10 +17,8 @@ class PersonalMessageSerializer(serializers.ModelSerializer):
         fields = ('sender','sender_username','text','created','conversation')
     
 
-
 class ConversationSerializer(serializers.ModelSerializer):
     participants = serializers.SerializerMethodField()
-    
     
     class Meta:
         model = Conversation
@@ -34,9 +32,14 @@ class ConversationSerializer(serializers.ModelSerializer):
                                 'image':participant.userprofile.image.url})
         
         return participants
+
         
 class UserSerializer(serializers.ModelSerializer):
     image = serializers.ReadOnlyField(source='userprofile.image.url')
+    phone = serializers.ReadOnlyField(source='userprofile.phone')
+    country = serializers.ReadOnlyField(source='userprofile.country')
+
     class Meta:
         model = User
-        fields=('id','username','image')
+        fields=('id','username','image','phone','country')
+        

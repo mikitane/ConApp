@@ -107,9 +107,9 @@ def profile(request,pk=None):
         return redirect('/')
         
             
-def home_or_login(request):
+def index(request):
     if request.user.is_authenticated():
-        return redirect('feeds')
+        return render(request,'feeds/index.html')
 
     else:
         return login(request,template_name='feeds/login.html')

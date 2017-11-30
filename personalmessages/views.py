@@ -84,8 +84,14 @@ class PersonalMessageView(APIView):
                 serializer = PersonalMessageSerializer(all_messages,many=True)
                 return Response(serializer.data)
 
-# Sends usernames and id of every user
 class UserView(APIView):
+    def get(self,request,*args,**kwargs):
+        user = User.objects.get(id=kwargs['pk'])
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+
+# Sends usernames and id of every user
+class UsersView(APIView):
     def get(self,request,*args,**kwargs):
         users = User.objects.all()
         serializer = UserSerializer(users,many=True)

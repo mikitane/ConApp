@@ -2,10 +2,12 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import NavbarCustom from './navbar.js'
 import Sidebar from './sidebar/sidebar.js'
-import Main from './main.js'
+import ModalContent from './modal/modal.js'
+import {Switch,Route} from 'react-router-dom'
+import FeedMain from './feedmain.js'
+import ProfileMain from './profilemain.js'
 
-
-export default class Body extends React.Component {
+export default class Root extends React.Component {
 
   constructor(){
     super();
@@ -87,18 +89,24 @@ export default class Body extends React.Component {
     }))
   }
 
+
   render(){
+    console.log(this.props.children)
     return(
       <div style={{overflowX:'hidden'}}>
         <NavbarCustom currentUser = {this.state.currentUser}
           toggleSidebar = {this.toggleSidebar}></NavbarCustom>
 
-        <Main modalContent={this.state.modalContent} chatId={this.state.chatId}
-          modalTitle={this.state.modalTitle} modalOpen={this.state.modalOpen}
-          toggleModal={this.toggleModal} currentUser={this.state.currentUser}
-          openChat={this.openChat} toggleModal={this.toggleModal}
-          openLikeList={this.openLikeList} postId={this.state.postId}
-          updateSidebar={this.updateSidebar}></Main>
+          <div className="row">
+            <div className="col-md-6 col-md-offset-3">
+              <Switch>
+                <Route exact path="/"
+                render={() => <FeedMain openLikeList= {this.openLikeList} />} />
+                <Route path="/profile/:id"
+                render={(props) => <ProfileMain {...this.props} {...props} />}/>
+              </Switch>
+            </div>
+          </div>
 
         <Sidebar openCreateNewGroupChat={this.openCreateNewGroupChat}
           toggleSidebar = {this.toggleSidebar}
@@ -106,6 +114,13 @@ export default class Body extends React.Component {
            openChat={this.openChat} currentUser={this.state.currentUser}
            sidebarNeedsUpdate={this.state.sidebarNeedsUpdate}
            updateSidebar={this.updateSidebar}></Sidebar>
+
+         <ModalContent modalContent={this.state.modalContent} chatId={this.state.chatId}
+           modalTitle={this.state.modalTitle} modalOpen={this.state.modalOpen}
+           currentUser={this.state.currentUser}
+           openChat={this.openChat} toggleModal={this.toggleModal}
+           postId={this.state.postId} updateSidebar={this.updateSidebar}>
+         </ModalContent>
       </div>
     )
   }

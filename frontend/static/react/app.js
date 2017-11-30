@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Body from './components/body.js'
+import { BrowserRouter as Router} from "react-router-dom";
+import Root from './components/root.js'
+
 
 function getCookie(name) {
   var cookieValue = null;
@@ -40,9 +42,15 @@ class App extends React.Component {
 
   render(){
     return(
-      <div>
-      <Body></Body>
-      </div>
+
+      <Router>
+        <div>
+        <Root />
+
+
+        </div>
+      </Router>
+
     )
   }
 }

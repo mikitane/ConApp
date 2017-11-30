@@ -1,5 +1,5 @@
 __pycache__
-feeds/static/feeds/node_modules
+frontend/static/node_modules
 *.sqlite
 *.sql
 conversationapp/settings_secret.py
