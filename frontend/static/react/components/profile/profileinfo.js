@@ -17,6 +17,9 @@ export default class ProfileInfo extends React.Component {
          (<StartChatButton openChat = {this.props.openChat}
                         userId={this.props.userId}
                         userName={this.props.profile.username} />)}
+          <form action={"profile/"+this.props.userId+"/"} method='post'>
+            <button type="submit" class="btn btn-primary">Save</button>
+          </form>
         </div>
     )
   }

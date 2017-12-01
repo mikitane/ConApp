@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import ProfileInfo from './profileinfo.js'
-import ProfileChangeInfo from './profilechange.js'
 import {Switch,Route} from 'react-router-dom'
 
 export default class ProfileMain extends React.Component {
@@ -41,20 +40,12 @@ export default class ProfileMain extends React.Component {
 
       				<div className="well" style={{backgroundColor:'#ffffff',marginTop:'40px'}}>
         				<h1>User: {this.state.profile.username}</h1>
-                <Switch>
-                  <Route exact path="/profile/:id"
-                  render={() =>  <ProfileInfo profile={this.state.profile}
+
+                <ProfileInfo profile={this.state.profile}
                                   currentUser={this.props.currentUser}
-                                  userId={this.props.match.params.id}/>} />
+                                  userId={this.props.match.params.id}
+                                openChat = {this.props.openChat}/>
 
-                  <Route path="/profile/:id/change"
-                  render={() =>
-                  <ProfileChangeInfo
-                    profile={this.state.profile}
-                    currentUser={this.props.currentUser}
-                    userId={this.props.match.params.id} />} />
-
-                </Switch>
               </div>
             </div>
 		      </div>
