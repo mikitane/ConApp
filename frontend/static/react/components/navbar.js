@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {Navbar,Nav,NavItem,NavDropdown,MenuItem} from 'react-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap';
 
 export default class NavbarCustom extends React.Component{
 
@@ -13,20 +14,24 @@ render() {
 
        <Navbar.Header>
          <Navbar.Brand>
+           <LinkContainer to="/">
            <a href="/">ConApp</a>
+         </LinkContainer>
          </Navbar.Brand>
          <Navbar.Toggle />
        </Navbar.Header>
        <Navbar.Collapse>
          <Nav>
-           <NavItem eventKey={1} href="/">Feed</NavItem>
+           <LinkContainer to="/">
+           <NavItem eventKey={1}>Feed</NavItem>
+         </LinkContainer>
          </Nav>
          <Nav pullRight>
-           <NavItem eventKey={1} onClick={this.props.toggleSidebar}>Chats</NavItem>
-           <NavDropdown  eventKey={2} title={this.props.currentUser} id="basic-nav-dropdown">
-             <MenuItem eventKey={2.1} href="/profile"><p style={menuItemStyle}>Me</p></MenuItem>
+           <NavItem eventKey={2} onClick={this.props.toggleSidebar}>Chats</NavItem>
+           <NavDropdown  eventKey={3} title={this.props.currentUser} id="basic-nav-dropdown">
+             <MenuItem eventKey={3.1} href="/profile"><p style={menuItemStyle}>Me</p></MenuItem>
 
-             <MenuItem eventKey={2.2} href="/logout"><p style={menuItemStyle}>Log out</p></MenuItem>
+             <MenuItem eventKey={3.2} href="/logout"><p style={menuItemStyle}>Log out</p></MenuItem>
            </NavDropdown>
          </Nav>
        </Navbar.Collapse>

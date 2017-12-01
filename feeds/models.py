@@ -30,8 +30,8 @@ post_save.connect(create_profile, sender=User)
 
 class Post(models.Model):
     user = models.ForeignKey(User)
-    header = models.CharField(max_length=30,default='')
-    text = models.CharField(max_length=150,default='')
+    header = models.CharField(max_length=35,default='')
+    text = models.CharField(max_length=300,default='')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 

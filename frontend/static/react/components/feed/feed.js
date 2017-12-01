@@ -56,7 +56,7 @@ export default class Feed extends React.Component {
              onClick={this.togglePostInput}>Write a new post!</button>
           <Collapse in={this.state.postInputOpen}>
             <div >
-            <PostInputForm sendNewPost={this.props.sendNewPost}></PostInputForm>
+            <PostInputForm togglePostInput={this.togglePostInput} sendNewPost={this.props.sendNewPost}></PostInputForm>
           </div>
           </Collapse>
         </div>

@@ -43,7 +43,6 @@ export default class FeedContent extends React.Component {
     contentType: "application/json; charset=utf-8",
 		success: function(posts){
       this.updatePosts()
-
 		}.bind(this)
 
 		});

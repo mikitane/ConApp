@@ -1,11 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import StartChatButton from './startnewchatbutton.js'
+import ProfileInfo from './profileinfo.js'
+import ProfileChangeInfo from './profilechange.js'
+import {Switch,Route} from 'react-router-dom'
 
 export default class ProfileMain extends React.Component {
     constructor(props) {
       super(props)
-      
+
       this.state = {profile:false}
       this.updateProfile = this.updateProfile.bind(this)
     }
@@ -39,13 +41,20 @@ export default class ProfileMain extends React.Component {
 
       				<div className="well" style={{backgroundColor:'#ffffff',marginTop:'40px'}}>
         				<h1>User: {this.state.profile.username}</h1>
+                <Switch>
+                  <Route exact path="/profile/:id"
+                  render={() =>  <ProfileInfo profile={this.state.profile}
+                                  currentUser={this.props.currentUser}
+                                  userId={this.props.match.params.id}/>} />
 
-        				<p><b>Phone: {this.state.profile.phone}</b></p>
-        				<p><b>Country: {this.state.profile.country}</b></p>
-          			<StartChatButton openChat = {this.props.openChat}
-                                  userId={this.props.match.params.id}
-                                  userName={this.state.profile.username}>
-                </StartChatButton>
+                  <Route path="/profile/:id/change"
+                  render={() =>
+                  <ProfileChangeInfo
+                    profile={this.state.profile}
+                    currentUser={this.props.currentUser}
+                    userId={this.props.match.params.id} />} />
+
+                </Switch>
               </div>
             </div>
 		      </div>

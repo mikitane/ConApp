@@ -91,7 +91,7 @@ export default class Root extends React.Component {
 
 
   render(){
-    
+
     return(
       <div style={{overflowX:'hidden'}}>
         <NavbarCustom currentUser = {this.state.currentUser}
@@ -104,7 +104,8 @@ export default class Root extends React.Component {
                 render={() => <FeedMain openLikeList= {this.openLikeList} />} />
                 <Route path="/profile/:id"
                 render={(props) => <ProfileMain {...this.props} {...props}
-                  openChat = {this.openChat} />}/>
+                  openChat = {this.openChat} currentUser={this.state.currentUser}/>}
+                  />
               </Switch>
             </div>
           </div>

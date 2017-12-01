@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import LikeContent from './likecontent.js'
-
+import {Link} from 'react-router-dom'
 
 export default class Post extends React.Component {
 
@@ -19,9 +19,10 @@ export default class Post extends React.Component {
 
 		<p>{this.props.post.text}</p>
 		<div className="post-info">
-			<a href={'/profile/'+this.props.post.user} >
+      <Link to={'/profile/'+this.props.post.user}>
+
       {this.props.post.username}
-      </a><small>{this.props.post.created}</small>
+    </Link><small>{this.props.post.created}</small>
       <LikeContent id={this.props.post.id}
         openLikeList={this.props.openLikeList}>
       </LikeContent>

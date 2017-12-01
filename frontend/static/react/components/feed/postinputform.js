@@ -20,13 +20,14 @@ export default class PostInputForm extends React.Component {
 
   handleSend() {
     if (this.state.headerValue != "" && this.state.textValue != ""
-        && this.state.headerValue.length < 31 &&
-        this.state.textValue.length < 151) {
+        && this.state.headerValue.length < 36 &&
+        this.state.textValue.length < 301) {
       this.props.sendNewPost(this.state.headerValue,this.state.textValue)
     this.setState({
       headerValue:"",
       textValue:""
     })
+    this.props.togglePostInput()
   }
 
   }
@@ -39,7 +40,7 @@ export default class PostInputForm extends React.Component {
   }
 
   headerValidation() {
-    if (this.state.headerValue.length < 31) {
+    if (this.state.headerValue.length < 36) {
       return (null)
     } else {
       return ("error")
@@ -47,7 +48,7 @@ export default class PostInputForm extends React.Component {
   }
 
   textValidation() {
-    if (this.state.textValue.length < 151) {
+    if (this.state.textValue.length < 301) {
       return null
     } else {
       return "error"
@@ -55,18 +56,18 @@ export default class PostInputForm extends React.Component {
   }
 
   headerCharsRemaining() {
-    if (this.state.headerValue.length > 29) {
+    if (this.state.headerValue.length > 34) {
       return 0
     } else {
-      return (30 - this.state.headerValue.length)
+      return (35 - this.state.headerValue.length)
     }
   }
 
   textCharsRemaining() {
-    if (this.state.textValue.length > 149) {
+    if (this.state.textValue.length > 299) {
       return 0
     } else {
-      return (150 - this.state.textValue.length)
+      return (300 - this.state.textValue.length)
     }
 
   }
@@ -83,7 +84,7 @@ export default class PostInputForm extends React.Component {
 
             <form>
               <div className="row">
-          			<div className='col-md-6'>
+          			<div className='col-md-8'>
             <FormGroup controlId="formControlsTextarea"
               validationState={this.headerValidation()}>
                 <FormControl type="text"
@@ -93,14 +94,14 @@ export default class PostInputForm extends React.Component {
                 </FormControl>
             </FormGroup>
             </div>
-                <div className='col-md-6'>
+                <div className='col-md-4'>
 
               <HelpBlock>{this.headerCharsRemaining()}</HelpBlock>
 
               </div>
             </div>
               <div className="row">
-          			<div className='col-md-8'>
+          			<div className='col-md-10'>
             <FormGroup controlId="formControlsTextarea"
               validationState={this.textValidation()}>
                 <FormControl style={{resize:"none",overflow:'hidden'}} type="text"
@@ -111,7 +112,7 @@ export default class PostInputForm extends React.Component {
                 </FormControl>
             </FormGroup>
               </div>
-              <div className='col-md-4'>
+              <div className='col-md-2'>
                 <HelpBlock>{this.textCharsRemaining()}</HelpBlock>
               </div>
             </div>
