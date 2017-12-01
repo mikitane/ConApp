@@ -4,8 +4,8 @@ import NavbarCustom from './navbar.js'
 import Sidebar from './sidebar/sidebar.js'
 import ModalContent from './modal/modal.js'
 import {Switch,Route} from 'react-router-dom'
-import FeedMain from './feedmain.js'
-import ProfileMain from './profilemain.js'
+import FeedMain from './feed/feedmain.js'
+import ProfileMain from './profile/profilemain.js'
 
 export default class Root extends React.Component {
 
@@ -91,7 +91,7 @@ export default class Root extends React.Component {
 
 
   render(){
-    console.log(this.props.children)
+    
     return(
       <div style={{overflowX:'hidden'}}>
         <NavbarCustom currentUser = {this.state.currentUser}
@@ -103,7 +103,8 @@ export default class Root extends React.Component {
                 <Route exact path="/"
                 render={() => <FeedMain openLikeList= {this.openLikeList} />} />
                 <Route path="/profile/:id"
-                render={(props) => <ProfileMain {...this.props} {...props} />}/>
+                render={(props) => <ProfileMain {...this.props} {...props}
+                  openChat = {this.openChat} />}/>
               </Switch>
             </div>
           </div>

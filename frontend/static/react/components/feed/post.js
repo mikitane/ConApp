@@ -19,7 +19,7 @@ export default class Post extends React.Component {
 
 		<p>{this.props.post.text}</p>
 		<div className="post-info">
-			<a href={'/profiles/'+this.props.post.user} >
+			<a href={'/profile/'+this.props.post.user} >
       {this.props.post.username}
       </a><small>{this.props.post.created}</small>
       <LikeContent id={this.props.post.id}

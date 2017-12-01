@@ -8,13 +8,15 @@ export default class Feed extends React.Component {
   constructor(props) {
     super(props)
     this.state={
-      postInputOpen:false
+      postInputOpen:false,
     }
     this.togglePostInput = this.togglePostInput.bind(this)
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
+    if (prevProps != this.props) {
     this.scrollToBottom()
+  }
   }
 
   scrollToBottom() {
@@ -26,7 +28,7 @@ export default class Feed extends React.Component {
 
   togglePostInput(){
     this.setState((prevState)=>({
-      postInputOpen: !prevState.postInputOpen
+      postInputOpen: !prevState.postInputOpen,
     }))
 
   }
@@ -42,6 +44,8 @@ export default class Feed extends React.Component {
     }
 
     return(
+      <div className="row">
+        <div className="col-md-10 col-md-offset-1">
         <div className="well feed">
           <div className="feed-posts" id="scroll">
           {postList}
@@ -57,6 +61,8 @@ export default class Feed extends React.Component {
           </Collapse>
         </div>
         </div>
+      </div>
+      </div>
     )
 
 

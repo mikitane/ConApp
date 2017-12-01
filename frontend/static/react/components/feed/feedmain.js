@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import FeedContent from './feed/feedcontent.js'
+import FeedContent from './feedcontent.js'
 
 export default class FeedMain extends React.Component {
 

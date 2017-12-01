@@ -16,7 +16,7 @@ $('#close-sidebar-button').on('click', function(){
 
 // Loads user´s conversations from API to the sidenavbar
 <<<<<<< HEAD
-/*function loadConversations(){
+function loadConversations(){
 =======
 function loadConversations(){
 >>>>>>> 2ef540df59dbc316dae086cddd9c08dc0519fb11

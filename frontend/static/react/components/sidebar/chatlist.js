@@ -85,7 +85,7 @@ export default class ChatsListContent extends React.Component{
       type: 'GET',
   		url: '/messages/api',
   		success: function(conversations){
-        console.log(conversations)
+        
         this.setState({
           chats: conversations
         });

@@ -12,28 +12,13 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from feeds.serializers import PostLikeSerializer,PostSerializer
 
+def index(request):
+    if request.user.is_authenticated():
+        return render(request,'feeds/index.html')
 
-class FeedsView(TemplateView):
-    template_name = 'feeds/index.html'
-    
-    # Gets every post from db and sends them to the template.
-    def get(self, request):
-        if request.user.is_authenticated():
-            queryset = Post.objects.all()
-            form = PostForm()
-            args = {'user':request.user,'form':form,'postlist':queryset}
-            return render(request,self.template_name,args)
-        else:
-            return redirect('home')
-        
-    # Creates a new post and refreshes the site.
-    def post(self, request):
-        form = PostForm(request.POST)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.user = request.user
-            post.save()
-            return redirect('feeds')
+    else:
+        return login(request,template_name='feeds/login.html')
+
 
 
 class PostView(APIView):
@@ -94,33 +79,10 @@ class SinglePostLikeView(APIView):
         return Response(serializer.data)
 
 
-
-def profile(request,pk=None):
-    if request.user.is_authenticated():
-        profile = User.objects.get(id=pk).userprofile
-        args = {'userprofile':profile}
-        if profile == request.user.userprofile:
-            return redirect('own_profile')
-        else:
-            return render(request,'feeds/profile.html',args)
-    else:
-        return redirect('/')
-        
-            
-def index(request):
-    if request.user.is_authenticated():
-        return render(request,'feeds/index.html')
-
-    else:
-        return login(request,template_name='feeds/login.html')
-
-    
-
 def log_out(request):
     logout(request)
     return redirect('home')
     
-
 
 def register(request):
     if request.method =='POST':
@@ -137,13 +99,6 @@ def register(request):
         return render(request,'feeds/reg_form.html',args)
 
 
-def own_profile(request):
-    if request.user.is_authenticated():
-        
-        args = {'user':request.user}
-        return render(request,'feeds/ownprofile.html',args)
-    else:
-        return redirect('/')
 
 def profile_change(request):
     if request.user.is_authenticated():
