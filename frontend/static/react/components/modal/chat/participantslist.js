@@ -19,7 +19,7 @@ export default class ParticipantsList extends React.Component {
   render() {
     return(
       <div style={{marginRight:'30px',display:'inline',float:'right'}}>
-      <DropdownButton bsStyle="success" title="Participants">
+      <DropdownButton bsStyle="primary" title="Participants">
 
         {this.props.chatParticipants.map(this.renderUserLink.bind(this))}
       </DropdownButton>
