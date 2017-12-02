@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 class PostSerializer(serializers.ModelSerializer):
     image = serializers.ReadOnlyField(source='user.userprofile.image.url')
     username = serializers.ReadOnlyField(source='user.username')
-    
+    created = serializers.DateTimeField(format='%d.%m.%Y at %H:%M',required=False, read_only=True)
     class Meta:
         model = Post
         fields = ('user','username','id','header','text','created','image')

@@ -1,7 +1,20 @@
 .navbar {
   background-color:#011A27;
   border-color:#011A27;
+
+
 }
+
+.menuitem {
+  background-color:white;
+
+}
+
+.menuitem p {
+  color:black
+}
+
+
 
 .feed-posts {
    overflow-y: scroll;
@@ -12,6 +25,8 @@
    overflow-x: hidden;
    padding-bottom:0
  }
+
+ 
 
  #conbody{
     height:400px;

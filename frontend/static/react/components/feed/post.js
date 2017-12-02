@@ -19,7 +19,7 @@ export default class Post extends React.Component {
 
 		<p>{this.props.post.text}</p>
 		<div className="post-info">
-      <Link to={'/profile/'+this.props.post.user}>
+      <Link to={'/profile/'+this.props.post.user} style={{marginRight:'5px'}}>
 
       {this.props.post.username}
     </Link><small>{this.props.post.created}</small>

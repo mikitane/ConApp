@@ -13,13 +13,10 @@ export default class ProfileInfo extends React.Component {
       <p><b>Phone: {this.props.profile.phone}</b></p>
       <p><b>Country: {this.props.profile.country}</b></p>
       {this.props.currentUser == this.props.profile.username ?
-         (<ChangeProfileInfoButton/>):
+         (<ChangeProfileInfoButton userId={this.props.userId}/>):
          (<StartChatButton openChat = {this.props.openChat}
                         userId={this.props.userId}
                         userName={this.props.profile.username} />)}
-          <form action={"profile/"+this.props.userId+"/"} method='post'>
-            <button type="submit" class="btn btn-primary">Save</button>
-          </form>
         </div>
     )
   }

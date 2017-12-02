@@ -1,7 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import ProfileInfo from './profileinfo.js'
+import ProfileChange from './profilechange.js'
 import {Switch,Route} from 'react-router-dom'
+
 
 export default class ProfileMain extends React.Component {
     constructor(props) {
@@ -9,6 +11,7 @@ export default class ProfileMain extends React.Component {
 
       this.state = {profile:false}
       this.updateProfile = this.updateProfile.bind(this)
+      this.saveProfileChanges = this.saveProfileChanges.bind(this)
     }
 
     componentDidMount() {
@@ -29,6 +32,32 @@ export default class ProfileMain extends React.Component {
         });
       }
 
+    saveProfileChanges(phone,country,image) {
+      var id = this.props.match.params.id
+      var fd = new FormData();
+      if (image != "") {
+        fd.append('image',image);
+      }
+      fd.append('phone',phone)
+      fd.append('country',country)
+
+      $.ajax({
+        url: '/messages/user/'+id+'/api/',
+        data: fd,
+        processData:false,
+        contentType:false,
+        type: 'POST',
+
+        success: function(profile){
+          this.setState({
+            profile:profile
+          })
+
+
+        }.bind(this)
+        });
+    }
+
     render() {
       return(
         <div className="row">
@@ -40,12 +69,19 @@ export default class ProfileMain extends React.Component {
 
       				<div className="well" style={{backgroundColor:'#ffffff',marginTop:'40px'}}>
         				<h1>User: {this.state.profile.username}</h1>
-
-                <ProfileInfo profile={this.state.profile}
-                                  currentUser={this.props.currentUser}
-                                  userId={this.props.match.params.id}
-                                openChat = {this.props.openChat}/>
-
+                <Switch>
+                  <Route exact path="/profile/:id"
+                  render={() => <ProfileInfo profile={this.state.profile}
+                                    currentUser={this.props.currentUser}
+                                    userId={this.props.match.params.id}
+                                  openChat = {this.props.openChat}/> } />
+                  <Route exact path="/profile/:id/change"
+                  render={() => <ProfileChange profile={this.state.profile}
+                                    currentUser={this.props.currentUser}
+                                    userId={this.props.match.params.id}
+                                  saveProfileChanges={this.saveProfileChanges}
+                                  />} />
+                </Switch>
               </div>
             </div>
 		      </div>

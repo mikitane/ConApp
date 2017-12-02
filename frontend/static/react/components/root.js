@@ -20,6 +20,7 @@ export default class Root extends React.Component {
       modalTitle:false,
       modalOpen:false,
       currentUser:"",
+      currentUserId:"",
 
     };
     this.toggleSidebar = this.toggleSidebar.bind(this)
@@ -36,7 +37,8 @@ export default class Root extends React.Component {
   		url: '/messages/ownprofile/api',
   		success: function(ownprofile){
         this.setState({
-          currentUser: ownprofile.username
+          currentUser: ownprofile.username,
+          currentUserId:ownprofile.id
         });
       }.bind(this)
     });
@@ -95,7 +97,8 @@ export default class Root extends React.Component {
     return(
       <div style={{overflowX:'hidden'}}>
         <NavbarCustom currentUser = {this.state.currentUser}
-          toggleSidebar = {this.toggleSidebar}></NavbarCustom>
+          toggleSidebar = {this.toggleSidebar}
+          currentUserId={this.state.currentUserId}></NavbarCustom>
 
           <div className="row">
             <div className="col-md-6 col-md-offset-3">

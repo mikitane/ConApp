@@ -1,8 +1,9 @@
 from django.shortcuts import render, HttpResponse
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from personalmessages.serializers import PersonalMessageSerializer, ConversationSerializer, UserSerializer
+from personalmessages.serializers import PersonalMessageSerializer,ConversationSerializer,UserSerializer,UserProfileSerializer
 from personalmessages.models import PersonalMessage, Conversation
+from feeds.models import UserProfile
 from django.contrib.auth.models import User
 from django.core import serializers
 from rest_framework.exceptions import PermissionDenied
@@ -85,16 +86,26 @@ class PersonalMessageView(APIView):
                 return Response(serializer.data)
 
 class UserView(APIView):
+    
     def get(self,request,*args,**kwargs):
-        user = User.objects.get(id=kwargs['pk'])
-        serializer = UserSerializer(user)
+        _user = User.objects.get(id=kwargs['pk'])
+        userprofile = UserProfile.objects.get(user=_user)
+        serializer = UserProfileSerializer(userprofile)
         return Response(serializer.data)
+    
+    def post(self,request,*args,**kwargs):
+        _user = User.objects.get(id=request.user.id)
+        userprofile = UserProfile.objects.get(user=_user)
+        serializer = UserProfileSerializer(userprofile,data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
 
 # Sends usernames and id of every user
 class UsersView(APIView):
     def get(self,request,*args,**kwargs):
-        users = User.objects.all()
-        serializer = UserSerializer(users,many=True)
+        users = UserProfile.objects.all()
+        serializer = UserProfileSerializer(users,many=True)
         return Response(serializer.data)
 
 

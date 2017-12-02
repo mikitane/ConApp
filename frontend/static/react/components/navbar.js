@@ -7,31 +7,41 @@ export default class NavbarCustom extends React.Component{
 
 render() {
   const menuItemStyle = {
-    color: 'black'
+    backgroundColorcolor: 'black'
   };
   return(
     <Navbar fluid inverse collapseOnSelect className="navbar">
 
        <Navbar.Header>
+
          <Navbar.Brand>
            <LinkContainer to="/">
-           <a href="/">ConApp</a>
-         </LinkContainer>
+              <a>ConApp</a>
+            </LinkContainer>
          </Navbar.Brand>
+
          <Navbar.Toggle />
        </Navbar.Header>
+
        <Navbar.Collapse>
-         <Nav>
-           <LinkContainer to="/">
-           <NavItem eventKey={1}>Feed</NavItem>
+         <Nav >
+           <LinkContainer to="/" activeClassName="navitem">
+           <NavItem eventKey={1} >Feed</NavItem>
          </LinkContainer>
          </Nav>
          <Nav pullRight>
            <NavItem eventKey={2} onClick={this.props.toggleSidebar}>Chats</NavItem>
-           <NavDropdown  eventKey={3} title={this.props.currentUser} id="basic-nav-dropdown">
-             <MenuItem eventKey={3.1} href="/profile"><p style={menuItemStyle}>Me</p></MenuItem>
+           <NavDropdown eventKey={3} title={this.props.currentUser} id="basic-nav-dropdown">
 
-             <MenuItem eventKey={3.2} href="/logout"><p style={menuItemStyle}>Log out</p></MenuItem>
+             <MenuItem className="menuitem" eventKey={3.1}
+               href={"/profile/"+this.props.currentUserId}>
+               <p>Me</p>
+             </MenuItem>
+
+             <MenuItem className="menuitem" eventKey={3.2} href="/logout">
+             <p >Log out</p>
+           </MenuItem>
+
            </NavDropdown>
          </Nav>
        </Navbar.Collapse>

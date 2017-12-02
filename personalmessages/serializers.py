@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from personalmessages.models import PersonalMessage, Conversation
+from feeds.models import UserProfile
 from django.contrib.auth.models import User
 
 
@@ -42,4 +43,22 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields=('id','username','image','phone','country')
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    id = serializers.ReadOnlyField(source='user.id')
+    username = serializers.ReadOnlyField(source='user.username')
+    
+
+    class Meta:
+        model = UserProfile
+        fields=('id','username','image','phone','country')
+
+    def update(self,instance,validated_data):
+        print('serializer test1')
+        instance.phone = validated_data.get('phone',instance.phone)
+        instance.country = validated_data.get('country',instance.country)
+        instance.image = validated_data.get('image',instance.image)
+        instance.save()
+        print('serializer test2')
+        return instance
         

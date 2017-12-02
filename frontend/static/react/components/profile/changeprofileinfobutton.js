@@ -8,8 +8,8 @@ export default class ChangeProfileInfoButton extends React.Component {
   render() {
     return(
 
-      <a className="btn btn-primary"
-         style={{marginTop:'20px'}} href="/profile/change" >Change profile info</a>
+      <Link to={"/profile/"+this.props.userId+"/change"}><button className="btn btn-primary"
+         style={{marginTop:'20px'}} >Update profile info</button></Link>
 
     )
   }
