@@ -10,7 +10,7 @@ class UserProfile(models.Model):
     description = models.CharField(default='', max_length=100)
     country = models.CharField(max_length=20,default='',blank=True)
     image = models.ImageField(upload_to='profile_image',blank=True,
-                              default=os.path.join(settings.MEDIA_ROOT,'feeds/profile_image/1.png'))
+                              default='feeds/profile_image/1.png')
 
     def __str__(self):
         return str(self.user)
@@ -30,8 +30,8 @@ post_save.connect(create_profile, sender=User)
 
 class Post(models.Model):
     user = models.ForeignKey(User)
-    header = models.CharField(max_length=30,default='')
-    text = models.CharField(max_length=150,default='')
+    header = models.CharField(max_length=35,default='')
+    text = models.CharField(max_length=300,default='')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 

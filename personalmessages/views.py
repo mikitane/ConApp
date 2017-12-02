@@ -1,10 +1,10 @@
 from django.shortcuts import render, HttpResponse
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from personalmessages.serializers import PersonalMessageSerializer, ConversationSerializer, UserSerializer
+from personalmessages.serializers import PersonalMessageSerializer,ConversationSerializer,UserSerializer,UserProfileSerializer
 from personalmessages.models import PersonalMessage, Conversation
+from feeds.models import UserProfile
 from django.contrib.auth.models import User
-from django.db.models import Q
 from django.core import serializers
 from rest_framework.exceptions import PermissionDenied
 
@@ -12,6 +12,7 @@ from rest_framework.exceptions import PermissionDenied
 class ConversationView(APIView):
     # Sends a list of all conversations which current user is included in.
     def get(self,request,*args,**kwargs):
+        
         conversations = Conversation.objects.filter(participants=request.user)
         serializer = ConversationSerializer(conversations,many=True)
         
@@ -84,9 +85,39 @@ class PersonalMessageView(APIView):
                 serializer = PersonalMessageSerializer(all_messages,many=True)
                 return Response(serializer.data)
 
-# Sends usernames and id of every user
 class UserView(APIView):
+    
     def get(self,request,*args,**kwargs):
-        users = User.objects.all()
-        serializer = UserSerializer(users,many=True)
+        _user = User.objects.get(id=kwargs['pk'])
+        userprofile = UserProfile.objects.get(user=_user)
+        serializer = UserProfileSerializer(userprofile)
         return Response(serializer.data)
+    
+    def post(self,request,*args,**kwargs):
+        _user = User.objects.get(id=request.user.id)
+        userprofile = UserProfile.objects.get(user=_user)
+        serializer = UserProfileSerializer(userprofile,data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+
+# Sends usernames and id of every user
+class UsersView(APIView):
+    def get(self,request,*args,**kwargs):
+        users = UserProfile.objects.all()
+        serializer = UserProfileSerializer(users,many=True)
+        return Response(serializer.data)
+
+
+class OwnProfileView(APIView):
+    def get(self,request,*args,**kwargs):
+        user = request.user
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+
+
+
+
+
+
+    
