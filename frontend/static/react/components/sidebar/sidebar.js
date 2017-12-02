@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import ChatsListContent from './chatlist.js'
+import ChatsListContent from './chatlistcontent.js'
 
 
 export default class Sidebar extends React.Component {

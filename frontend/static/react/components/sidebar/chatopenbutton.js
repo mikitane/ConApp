@@ -7,7 +7,7 @@ import ReactDOM from 'react-dom'
 export default class SingleChatButton extends React.Component{
 
   openNewChat(){
-    this.props.openChat(this.props.chatId,this.props.name)
+    this.props.openChat(this.props.chatId,this.props.name,this.props.chat.participants)
   }
 
   render(){
