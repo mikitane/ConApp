@@ -1493,50 +1493,6 @@ module.exports = exports['default'];
 
 /***/ }),
 /* 24 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var anObject = __webpack_require__(30);
-var IE8_DOM_DEFINE = __webpack_require__(110);
-var toPrimitive = __webpack_require__(73);
-var dP = Object.defineProperty;
-
-exports.f = __webpack_require__(31) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
-  anObject(O);
-  P = toPrimitive(P, true);
-  anObject(Attributes);
-  if (IE8_DOM_DEFINE) try {
-    return dP(O, P, Attributes);
-  } catch (e) { /* empty */ }
-  if ('get' in Attributes || 'set' in Attributes) throw TypeError('Accessors not supported!');
-  if ('value' in Attributes) O[P] = Attributes.value;
-  return O;
-};
-
-
-/***/ }),
-/* 25 */
-/***/ (function(module, exports) {
-
-var hasOwnProperty = {}.hasOwnProperty;
-module.exports = function (it, key) {
-  return hasOwnProperty.call(it, key);
-};
-
-
-/***/ }),
-/* 26 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// to indexed object, toObject with fallback for non-array-like ES3 strings
-var IObject = __webpack_require__(113);
-var defined = __webpack_require__(75);
-module.exports = function (it) {
-  return IObject(defined(it));
-};
-
-
-/***/ }),
-/* 27 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1592,6 +1548,50 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var anObject = __webpack_require__(30);
+var IE8_DOM_DEFINE = __webpack_require__(110);
+var toPrimitive = __webpack_require__(73);
+var dP = Object.defineProperty;
+
+exports.f = __webpack_require__(31) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
+  anObject(O);
+  P = toPrimitive(P, true);
+  anObject(Attributes);
+  if (IE8_DOM_DEFINE) try {
+    return dP(O, P, Attributes);
+  } catch (e) { /* empty */ }
+  if ('get' in Attributes || 'set' in Attributes) throw TypeError('Accessors not supported!');
+  if ('value' in Attributes) O[P] = Attributes.value;
+  return O;
+};
+
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports) {
+
+var hasOwnProperty = {}.hasOwnProperty;
+module.exports = function (it, key) {
+  return hasOwnProperty.call(it, key);
+};
+
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// to indexed object, toObject with fallback for non-array-like ES3 strings
+var IObject = __webpack_require__(113);
+var defined = __webpack_require__(75);
+module.exports = function (it) {
+  return IObject(defined(it));
+};
 
 
 /***/ }),
@@ -1889,7 +1889,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var dP = __webpack_require__(24);
+var dP = __webpack_require__(25);
 var createDesc = __webpack_require__(42);
 module.exports = __webpack_require__(31) ? function (object, key, value) {
   return dP.f(object, key, createDesc(1, value));
@@ -4420,8 +4420,8 @@ module.exports = Object.create || function create(O, Properties) {
 /* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var def = __webpack_require__(24).f;
-var has = __webpack_require__(25);
+var def = __webpack_require__(25).f;
+var has = __webpack_require__(26);
 var TAG = __webpack_require__(18)('toStringTag');
 
 module.exports = function (it, tag, stat) {
@@ -4444,7 +4444,7 @@ var global = __webpack_require__(22);
 var core = __webpack_require__(17);
 var LIBRARY = __webpack_require__(83);
 var wksExt = __webpack_require__(86);
-var defineProperty = __webpack_require__(24).f;
+var defineProperty = __webpack_require__(25).f;
 module.exports = function (name) {
   var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
   if (name.charAt(0) != '_' && !(name in $Symbol)) defineProperty($Symbol, name, { value: wksExt.f(name) });
@@ -6346,8 +6346,8 @@ module.exports = function (it) {
 /* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var has = __webpack_require__(25);
-var toIObject = __webpack_require__(26);
+var has = __webpack_require__(26);
+var toIObject = __webpack_require__(27);
 var arrayIndexOf = __webpack_require__(200)(false);
 var IE_PROTO = __webpack_require__(77)('IE_PROTO');
 
@@ -6423,7 +6423,7 @@ var LIBRARY = __webpack_require__(83);
 var $export = __webpack_require__(21);
 var redefine = __webpack_require__(117);
 var hide = __webpack_require__(29);
-var has = __webpack_require__(25);
+var has = __webpack_require__(26);
 var Iterators = __webpack_require__(45);
 var $iterCreate = __webpack_require__(205);
 var setToStringTag = __webpack_require__(85);
@@ -6516,9 +6516,9 @@ exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
 
 var pIE = __webpack_require__(44);
 var createDesc = __webpack_require__(42);
-var toIObject = __webpack_require__(26);
+var toIObject = __webpack_require__(27);
 var toPrimitive = __webpack_require__(73);
-var has = __webpack_require__(25);
+var has = __webpack_require__(26);
 var IE8_DOM_DEFINE = __webpack_require__(110);
 var gOPD = Object.getOwnPropertyDescriptor;
 
@@ -6682,7 +6682,7 @@ module.exports = { "default": __webpack_require__(230), __esModule: true };
 /***/ (function(module, exports, __webpack_require__) {
 
 var getKeys = __webpack_require__(43);
-var toIObject = __webpack_require__(26);
+var toIObject = __webpack_require__(27);
 var isEnum = __webpack_require__(44).f;
 module.exports = function (isEntries) {
   return function (it) {
@@ -10042,7 +10042,7 @@ var _propTypes = __webpack_require__(4);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactRouterDom = __webpack_require__(27);
+var _reactRouterDom = __webpack_require__(24);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10196,7 +10196,7 @@ var _reactDom = __webpack_require__(9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _reactRouterDom = __webpack_require__(27);
+var _reactRouterDom = __webpack_require__(24);
 
 var _root = __webpack_require__(193);
 
@@ -31182,17 +31182,17 @@ var _sidebar = __webpack_require__(336);
 
 var _sidebar2 = _interopRequireDefault(_sidebar);
 
-var _modal = __webpack_require__(340);
+var _modal = __webpack_require__(341);
 
 var _modal2 = _interopRequireDefault(_modal);
 
-var _reactRouterDom = __webpack_require__(27);
+var _reactRouterDom = __webpack_require__(24);
 
-var _feedmain = __webpack_require__(350);
+var _feedmain = __webpack_require__(351);
 
 var _feedmain2 = _interopRequireDefault(_feedmain);
 
-var _profilemain = __webpack_require__(357);
+var _profilemain = __webpack_require__(358);
 
 var _profilemain2 = _interopRequireDefault(_profilemain);
 
@@ -31221,7 +31221,8 @@ var Root = function (_React$Component) {
       modalTitle: false,
       modalOpen: false,
       currentUser: "",
-      currentUserId: ""
+      currentUserId: "",
+      chatParticipants: ""
 
     };
     _this.toggleSidebar = _this.toggleSidebar.bind(_this);
@@ -31259,11 +31260,12 @@ var Root = function (_React$Component) {
     }
   }, {
     key: 'openChat',
-    value: function openChat(chatId, chatName) {
+    value: function openChat(chatId, chatName, participants) {
       this.setState({
         modalContent: 'chat',
         chatId: chatId,
-        modalTitle: chatName
+        modalTitle: chatName,
+        chatParticipants: participants
       });
       this.toggleModal();
     }
@@ -31348,7 +31350,9 @@ var Root = function (_React$Component) {
           modalTitle: this.state.modalTitle, modalOpen: this.state.modalOpen,
           currentUser: this.state.currentUser,
           openChat: this.openChat, toggleModal: this.toggleModal,
-          postId: this.state.postId, updateSidebar: this.updateSidebar })
+          postId: this.state.postId, updateSidebar: this.updateSidebar,
+          chatParticipants: this.state.chatParticipants,
+          toggleSidebar: this.toggleSidebar })
       );
     }
   }]);
@@ -31606,7 +31610,7 @@ module.exports = !$assign || __webpack_require__(41)(function () {
 
 // false -> Array#indexOf
 // true  -> Array#includes
-var toIObject = __webpack_require__(26);
+var toIObject = __webpack_require__(27);
 var toLength = __webpack_require__(114);
 var toAbsoluteIndex = __webpack_require__(201);
 module.exports = function (IS_INCLUDES) {
@@ -31704,7 +31708,7 @@ module.exports = function (Constructor, NAME, next) {
 /* 206 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var dP = __webpack_require__(24);
+var dP = __webpack_require__(25);
 var anObject = __webpack_require__(30);
 var getKeys = __webpack_require__(43);
 
@@ -31732,7 +31736,7 @@ module.exports = document && document.documentElement;
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
-var has = __webpack_require__(25);
+var has = __webpack_require__(26);
 var toObject = __webpack_require__(81);
 var IE_PROTO = __webpack_require__(77)('IE_PROTO');
 var ObjectProto = Object.prototype;
@@ -31780,7 +31784,7 @@ for (var i = 0; i < DOMIterables.length; i++) {
 var addToUnscopables = __webpack_require__(211);
 var step = __webpack_require__(212);
 var Iterators = __webpack_require__(45);
-var toIObject = __webpack_require__(26);
+var toIObject = __webpack_require__(27);
 
 // 22.1.3.4 Array.prototype.entries()
 // 22.1.3.13 Array.prototype.keys()
@@ -31853,7 +31857,7 @@ module.exports = __webpack_require__(17).Symbol;
 
 // ECMAScript 6 symbols shim
 var global = __webpack_require__(22);
-var has = __webpack_require__(25);
+var has = __webpack_require__(26);
 var DESCRIPTORS = __webpack_require__(31);
 var $export = __webpack_require__(21);
 var redefine = __webpack_require__(117);
@@ -31868,13 +31872,13 @@ var wksDefine = __webpack_require__(87);
 var enumKeys = __webpack_require__(217);
 var isArray = __webpack_require__(218);
 var anObject = __webpack_require__(30);
-var toIObject = __webpack_require__(26);
+var toIObject = __webpack_require__(27);
 var toPrimitive = __webpack_require__(73);
 var createDesc = __webpack_require__(42);
 var _create = __webpack_require__(84);
 var gOPNExt = __webpack_require__(219);
 var $GOPD = __webpack_require__(119);
-var $DP = __webpack_require__(24);
+var $DP = __webpack_require__(25);
 var $keys = __webpack_require__(43);
 var gOPD = $GOPD.f;
 var dP = $DP.f;
@@ -32092,8 +32096,8 @@ setToStringTag(global.JSON, 'JSON', true);
 
 var META = __webpack_require__(51)('meta');
 var isObject = __webpack_require__(40);
-var has = __webpack_require__(25);
-var setDesc = __webpack_require__(24).f;
+var has = __webpack_require__(26);
+var setDesc = __webpack_require__(25).f;
 var id = 0;
 var isExtensible = Object.isExtensible || function () {
   return true;
@@ -32182,7 +32186,7 @@ module.exports = Array.isArray || function isArray(arg) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
-var toIObject = __webpack_require__(26);
+var toIObject = __webpack_require__(27);
 var gOPN = __webpack_require__(118).f;
 var toString = {}.toString;
 
@@ -34720,7 +34724,7 @@ module.exports = function (it) {
 
 "use strict";
 
-var $defineProperty = __webpack_require__(24);
+var $defineProperty = __webpack_require__(25);
 var createDesc = __webpack_require__(42);
 
 module.exports = function (object, index, value) {
@@ -42839,9 +42843,9 @@ var _reactDom = __webpack_require__(9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _chatlist = __webpack_require__(337);
+var _chatlistcontent = __webpack_require__(337);
 
-var _chatlist2 = _interopRequireDefault(_chatlist);
+var _chatlistcontent2 = _interopRequireDefault(_chatlistcontent);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -42871,7 +42875,7 @@ var Sidebar = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { style: sidebarWidth, className: 'sidenav' },
-        _react2.default.createElement(_chatlist2.default, { openCreateNewGroupChat: this.props.openCreateNewGroupChat,
+        _react2.default.createElement(_chatlistcontent2.default, { openCreateNewGroupChat: this.props.openCreateNewGroupChat,
           toggleSidebar: this.props.toggleSidebar,
           openChat: this.props.openChat, currentUser: this.props.currentUser,
           sidebarNeedsUpdate: this.props.sidebarNeedsUpdate,
@@ -42906,11 +42910,100 @@ var _reactDom = __webpack_require__(9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _chatopenbutton = __webpack_require__(338);
+var _chatlist = __webpack_require__(338);
+
+var _chatlist2 = _interopRequireDefault(_chatlist);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+// Gets all conversations from API
+var ChatsListContent = function (_React$Component) {
+  _inherits(ChatsListContent, _React$Component);
+
+  function ChatsListContent(props) {
+    _classCallCheck(this, ChatsListContent);
+
+    var _this = _possibleConstructorReturn(this, (ChatsListContent.__proto__ || Object.getPrototypeOf(ChatsListContent)).call(this, props));
+
+    _this.state = { chats: [] };
+    _this.updateChats = _this.updateChats.bind(_this);
+    return _this;
+  }
+
+  _createClass(ChatsListContent, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.updateChats();
+    }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      if (nextProps.sidebarNeedsUpdate == true) {
+        this.updateChats();
+        this.props.updateSidebar();
+      }
+    }
+  }, {
+    key: 'updateChats',
+    value: function updateChats() {
+      $.ajax({
+        type: 'GET',
+        url: '/messages/api',
+        success: function (conversations) {
+
+          this.setState({
+            chats: conversations
+          });
+        }.bind(this)
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(_chatlist2.default, { openCreateNewGroupChat: this.props.openCreateNewGroupChat,
+        toggleSidebar: this.props.toggleSidebar, chats: this.state.chats,
+        openChat: this.props.openChat, currentUser: this.props.currentUser });
+    }
+  }]);
+
+  return ChatsListContent;
+}(_react2.default.Component);
+
+exports.default = ChatsListContent;
+;
+
+/***/ }),
+/* 338 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(9);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _chatopenbutton = __webpack_require__(339);
 
 var _chatopenbutton2 = _interopRequireDefault(_chatopenbutton);
 
-var _newgroupchatbutton = __webpack_require__(339);
+var _newgroupchatbutton = __webpack_require__(340);
 
 var _newgroupchatbutton2 = _interopRequireDefault(_newgroupchatbutton);
 
@@ -42979,12 +43072,14 @@ var ChatsList = function (_React$Component) {
               }
             }
 
-            privateChats.push(_react2.default.createElement(_chatopenbutton2.default, { name: chatName,
+            privateChats.push(_react2.default.createElement(_chatopenbutton2.default, { chat: chat,
+              name: chatName,
               image: chatImage, key: chat.id,
               chatId: chat.id, openChat: this.props.openChat }));
           } else {
             groupChats.push(_react2.default.createElement(_chatopenbutton2.default, { name: chat.name, key: chat.id,
-              chatId: chat.id, openChat: this.props.openChat }));
+              chatId: chat.id, openChat: this.props.openChat,
+              chat: chat }));
           }
         }
       } catch (err) {
@@ -43022,7 +43117,7 @@ var ChatsList = function (_React$Component) {
           privateChats,
           _react2.default.createElement(
             'div',
-            { style: { marginBottom: '10px' } },
+            { style: { marginBottom: '10px', marginTop: '10px' } },
             _react2.default.createElement(
               'h2',
               { className: 'special-font', style: { display: 'inline' } },
@@ -43040,66 +43135,10 @@ var ChatsList = function (_React$Component) {
   return ChatsList;
 }(_react2.default.Component);
 
-// Gets all conversations from API
-
-
-var ChatsListContent = function (_React$Component2) {
-  _inherits(ChatsListContent, _React$Component2);
-
-  function ChatsListContent(props) {
-    _classCallCheck(this, ChatsListContent);
-
-    var _this2 = _possibleConstructorReturn(this, (ChatsListContent.__proto__ || Object.getPrototypeOf(ChatsListContent)).call(this, props));
-
-    _this2.state = { chats: [] };
-    _this2.updateChats = _this2.updateChats.bind(_this2);
-    return _this2;
-  }
-
-  _createClass(ChatsListContent, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      this.updateChats();
-    }
-  }, {
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
-      if (nextProps.sidebarNeedsUpdate == true) {
-        this.updateChats();
-        this.props.updateSidebar();
-      }
-    }
-  }, {
-    key: 'updateChats',
-    value: function updateChats() {
-      $.ajax({
-        type: 'GET',
-        url: '/messages/api',
-        success: function (conversations) {
-
-          this.setState({
-            chats: conversations
-          });
-        }.bind(this)
-      });
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(ChatsList, { openCreateNewGroupChat: this.props.openCreateNewGroupChat,
-        toggleSidebar: this.props.toggleSidebar, chats: this.state.chats,
-        openChat: this.props.openChat, currentUser: this.props.currentUser });
-    }
-  }]);
-
-  return ChatsListContent;
-}(_react2.default.Component);
-
-exports.default = ChatsListContent;
-;
+exports.default = ChatsList;
 
 /***/ }),
-/* 338 */
+/* 339 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43140,7 +43179,7 @@ var SingleChatButton = function (_React$Component) {
   _createClass(SingleChatButton, [{
     key: 'openNewChat',
     value: function openNewChat() {
-      this.props.openChat(this.props.chatId, this.props.name);
+      this.props.openChat(this.props.chatId, this.props.name, this.props.chat.participants);
     }
   }, {
     key: 'render',
@@ -43161,7 +43200,7 @@ var SingleChatButton = function (_React$Component) {
 exports.default = SingleChatButton;
 
 /***/ }),
-/* 339 */
+/* 340 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43221,7 +43260,7 @@ var NewGroupChatButton = function (_React$Component) {
 exports.default = NewGroupChatButton;
 
 /***/ }),
-/* 340 */
+/* 341 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43241,15 +43280,15 @@ var _reactDom = __webpack_require__(9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _chatcontent = __webpack_require__(341);
+var _chatcontent = __webpack_require__(342);
 
 var _chatcontent2 = _interopRequireDefault(_chatcontent);
 
-var _newgroupchatcontent = __webpack_require__(344);
+var _newgroupchatcontent = __webpack_require__(345);
 
 var _newgroupchatcontent2 = _interopRequireDefault(_newgroupchatcontent);
 
-var _likelist = __webpack_require__(348);
+var _likelist = __webpack_require__(349);
 
 var _likelist2 = _interopRequireDefault(_likelist);
 
@@ -43280,7 +43319,9 @@ var ModalContent = function (_React$Component) {
       if (this.props.modalContent == 'chat' && this.props.modalOpen == true) {
         content = _react2.default.createElement(_chatcontent2.default, { chatId: this.props.chatId,
           modalTitle: this.props.modalTitle, modalOpen: this.props.modalOpen,
-          toggleModal: this.props.toggleModal, currentUser: this.props.currentUser });
+          toggleModal: this.props.toggleModal, currentUser: this.props.currentUser,
+          chatParticipants: this.props.chatParticipants,
+          toggleSidebar: this.props.toggleSidebar });
       } else if (this.props.modalContent == 'likes' && this.props.modalOpen == true) {
         var _React$createElement;
 
@@ -43303,7 +43344,7 @@ var ModalContent = function (_React$Component) {
 exports.default = ModalContent;
 
 /***/ }),
-/* 341 */
+/* 342 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43325,13 +43366,17 @@ var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var _reactBootstrap = __webpack_require__(28);
 
-var _chat = __webpack_require__(342);
+var _chat = __webpack_require__(343);
 
 var _chat2 = _interopRequireDefault(_chat);
 
-var _sendmessage = __webpack_require__(343);
+var _sendmessage = __webpack_require__(344);
 
 var _sendmessage2 = _interopRequireDefault(_sendmessage);
+
+var _participantslist = __webpack_require__(364);
+
+var _participantslist2 = _interopRequireDefault(_participantslist);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -43421,12 +43466,18 @@ var ChatContent = function (_React$Component) {
           _react2.default.createElement(
             _reactBootstrap.Modal.Title,
             null,
-            this.props.modalTitle
+            _react2.default.createElement(
+              'p',
+              { style: { display: 'inline' } },
+              this.props.modalTitle
+            ),
+            _react2.default.createElement(_participantslist2.default, { chatParticipants: this.props.chatParticipants,
+              toggleModal: this.props.toggleModal, toggleSidebar: this.props.toggleSidebar })
           )
         ),
         _react2.default.createElement(
           _reactBootstrap.Modal.Body,
-          { style: { overflow: 'auto' } },
+          { style: { overflow: 'auto', height: '70vh' } },
           _react2.default.createElement(_chat2.default, { allMessages: this.state.allMessages,
             chatId: this.props.chatId,
             currentUser: this.props.currentUser
@@ -43448,7 +43499,7 @@ var ChatContent = function (_React$Component) {
 exports.default = ChatContent;
 
 /***/ }),
-/* 342 */
+/* 343 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43570,9 +43621,7 @@ var SingleChat = function (_React$Component) {
       }
 
       var messageListStyle = {
-        overflowY: 'scroll',
         overflowX: 'hidden',
-        height: '500px',
         paddingLeft: '15px',
         paddingRight: '15px',
         marginLeft: '10px',
@@ -43661,7 +43710,7 @@ var Message = function (_React$Component2) {
 }(_react2.default.Component);
 
 /***/ }),
-/* 343 */
+/* 344 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43750,7 +43799,7 @@ var NewMessageInput = function (_React$Component) {
 exports.default = NewMessageInput;
 
 /***/ }),
-/* 344 */
+/* 345 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43772,11 +43821,11 @@ var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var _reactBootstrap = __webpack_require__(28);
 
-var _userselection = __webpack_require__(345);
+var _userselection = __webpack_require__(346);
 
 var _userselection2 = _interopRequireDefault(_userselection);
 
-var _creategroupchat = __webpack_require__(347);
+var _creategroupchat = __webpack_require__(348);
 
 var _creategroupchat2 = _interopRequireDefault(_creategroupchat);
 
@@ -43898,7 +43947,7 @@ var NewGroupChatContent = function (_React$Component) {
 exports.default = NewGroupChatContent;
 
 /***/ }),
-/* 345 */
+/* 346 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43918,7 +43967,7 @@ var _reactDom = __webpack_require__(9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _userselectbutton = __webpack_require__(346);
+var _userselectbutton = __webpack_require__(347);
 
 var _userselectbutton2 = _interopRequireDefault(_userselectbutton);
 
@@ -43997,7 +44046,7 @@ var UserSelection = function (_React$Component) {
 exports.default = UserSelection;
 
 /***/ }),
-/* 346 */
+/* 347 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44078,7 +44127,7 @@ var UserSelectionButton = function (_React$Component) {
 exports.default = UserSelectionButton;
 
 /***/ }),
-/* 347 */
+/* 348 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44167,7 +44216,7 @@ var NewGroupChatInput = function (_React$Component) {
 exports.default = NewGroupChatInput;
 
 /***/ }),
-/* 348 */
+/* 349 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44189,7 +44238,7 @@ var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var _reactBootstrap = __webpack_require__(28);
 
-var _likeduserbutton = __webpack_require__(349);
+var _likeduserbutton = __webpack_require__(350);
 
 var _likeduserbutton2 = _interopRequireDefault(_likeduserbutton);
 
@@ -44307,7 +44356,7 @@ var LikeListContent = function (_React$Component) {
 exports.default = LikeListContent;
 
 /***/ }),
-/* 349 */
+/* 350 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44350,7 +44399,7 @@ var LikedUserButton = function (_React$Component) {
       return _react2.default.createElement(
         'a',
         { className: 'list-group-item con-button',
-          href: '/profiles/' + this.props.id },
+          href: '/profile/' + this.props.id },
         _react2.default.createElement('img', { className: 'conversation-image', src: this.props.image }),
         this.props.name
       );
@@ -44363,7 +44412,7 @@ var LikedUserButton = function (_React$Component) {
 exports.default = LikedUserButton;
 
 /***/ }),
-/* 350 */
+/* 351 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44383,7 +44432,7 @@ var _reactDom = __webpack_require__(9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _feedcontent = __webpack_require__(351);
+var _feedcontent = __webpack_require__(352);
 
 var _feedcontent2 = _interopRequireDefault(_feedcontent);
 
@@ -44417,7 +44466,7 @@ var FeedMain = function (_React$Component) {
 exports.default = FeedMain;
 
 /***/ }),
-/* 351 */
+/* 352 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44437,7 +44486,7 @@ var _reactDom = __webpack_require__(9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _feed = __webpack_require__(352);
+var _feed = __webpack_require__(353);
 
 var _feed2 = _interopRequireDefault(_feed);
 
@@ -44517,7 +44566,7 @@ var FeedContent = function (_React$Component) {
 exports.default = FeedContent;
 
 /***/ }),
-/* 352 */
+/* 353 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44537,11 +44586,11 @@ var _reactDom = __webpack_require__(9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _post = __webpack_require__(353);
+var _post = __webpack_require__(354);
 
 var _post2 = _interopRequireDefault(_post);
 
-var _postinputform = __webpack_require__(356);
+var _postinputform = __webpack_require__(357);
 
 var _postinputform2 = _interopRequireDefault(_postinputform);
 
@@ -44672,7 +44721,7 @@ var Feed = function (_React$Component) {
 exports.default = Feed;
 
 /***/ }),
-/* 353 */
+/* 354 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44692,11 +44741,11 @@ var _reactDom = __webpack_require__(9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _likecontent = __webpack_require__(354);
+var _likecontent = __webpack_require__(355);
 
 var _likecontent2 = _interopRequireDefault(_likecontent);
 
-var _reactRouterDom = __webpack_require__(27);
+var _reactRouterDom = __webpack_require__(24);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -44775,7 +44824,7 @@ var Post = function (_React$Component) {
 exports.default = Post;
 
 /***/ }),
-/* 354 */
+/* 355 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44795,7 +44844,7 @@ var _reactDom = __webpack_require__(9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _like = __webpack_require__(355);
+var _like = __webpack_require__(356);
 
 var _like2 = _interopRequireDefault(_like);
 
@@ -44879,7 +44928,7 @@ var LikeContent = function (_React$Component) {
 exports.default = LikeContent;
 
 /***/ }),
-/* 355 */
+/* 356 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44993,7 +45042,7 @@ var Likes = function (_React$Component) {
 exports.default = Likes;
 
 /***/ }),
-/* 356 */
+/* 357 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45187,7 +45236,7 @@ var PostInputForm = function (_React$Component) {
 exports.default = PostInputForm;
 
 /***/ }),
-/* 357 */
+/* 358 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45207,15 +45256,15 @@ var _reactDom = __webpack_require__(9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _profileinfo = __webpack_require__(358);
+var _profileinfo = __webpack_require__(359);
 
 var _profileinfo2 = _interopRequireDefault(_profileinfo);
 
-var _profilechange = __webpack_require__(361);
+var _profilechange = __webpack_require__(362);
 
 var _profilechange2 = _interopRequireDefault(_profilechange);
 
-var _reactRouterDom = __webpack_require__(27);
+var _reactRouterDom = __webpack_require__(24);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -45341,7 +45390,7 @@ var ProfileMain = function (_React$Component) {
 exports.default = ProfileMain;
 
 /***/ }),
-/* 358 */
+/* 359 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45361,11 +45410,11 @@ var _reactDom = __webpack_require__(9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _changeprofileinfobutton = __webpack_require__(359);
+var _changeprofileinfobutton = __webpack_require__(360);
 
 var _changeprofileinfobutton2 = _interopRequireDefault(_changeprofileinfobutton);
 
-var _startnewchatbutton = __webpack_require__(360);
+var _startnewchatbutton = __webpack_require__(361);
 
 var _startnewchatbutton2 = _interopRequireDefault(_startnewchatbutton);
 
@@ -45425,7 +45474,7 @@ var ProfileInfo = function (_React$Component) {
 exports.default = ProfileInfo;
 
 /***/ }),
-/* 359 */
+/* 360 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45445,7 +45494,7 @@ var _reactDom = __webpack_require__(9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _reactRouterDom = __webpack_require__(27);
+var _reactRouterDom = __webpack_require__(24);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -45486,7 +45535,7 @@ var ChangeProfileInfoButton = function (_React$Component) {
 exports.default = ChangeProfileInfoButton;
 
 /***/ }),
-/* 360 */
+/* 361 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45558,7 +45607,7 @@ var StartChatButton = function (_React$Component) {
 exports.default = StartChatButton;
 
 /***/ }),
-/* 361 */
+/* 362 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45578,9 +45627,9 @@ var _reactDom = __webpack_require__(9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _reactRouterDom = __webpack_require__(27);
+var _reactRouterDom = __webpack_require__(24);
 
-var _savechangesbutton = __webpack_require__(362);
+var _savechangesbutton = __webpack_require__(363);
 
 var _savechangesbutton2 = _interopRequireDefault(_savechangesbutton);
 
@@ -45711,7 +45760,7 @@ var ProfileChange = function (_React$Component) {
 exports.default = ProfileChange;
 
 /***/ }),
-/* 362 */
+/* 363 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45763,6 +45812,87 @@ var SaveChangesButton = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = SaveChangesButton;
+
+/***/ }),
+/* 364 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(9);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _reactBootstrap = __webpack_require__(28);
+
+var _reactRouterBootstrap = __webpack_require__(334);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ParticipantsList = function (_React$Component) {
+  _inherits(ParticipantsList, _React$Component);
+
+  function ParticipantsList() {
+    _classCallCheck(this, ParticipantsList);
+
+    return _possibleConstructorReturn(this, (ParticipantsList.__proto__ || Object.getPrototypeOf(ParticipantsList)).apply(this, arguments));
+  }
+
+  _createClass(ParticipantsList, [{
+    key: 'handleClick',
+    value: function handleClick() {
+      this.props.toggleModal();
+      this.props.toggleSidebar();
+    }
+  }, {
+    key: 'renderUserLink',
+    value: function renderUserLink(participant, i) {
+      return _react2.default.createElement(
+        _reactRouterBootstrap.LinkContainer,
+        { to: "profile/" + participant.id, onClick: this.handleClick.bind(this) },
+        _react2.default.createElement(
+          _reactBootstrap.MenuItem,
+          { eventKey: i },
+          participant.user
+        )
+      );
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { style: { marginRight: '30px', display: 'inline', float: 'right' } },
+        _react2.default.createElement(
+          _reactBootstrap.DropdownButton,
+          { bsStyle: 'success', title: 'Participants' },
+          this.props.chatParticipants.map(this.renderUserLink.bind(this))
+        )
+      );
+    }
+  }]);
+
+  return ParticipantsList;
+}(_react2.default.Component);
+
+exports.default = ParticipantsList;
 
 /***/ })
 /******/ ]);

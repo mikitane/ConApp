@@ -16,7 +16,7 @@ class PostSerializer(serializers.ModelSerializer):
 
 class LikeSerializer(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source='user.username')
-    id = serializers.ReadOnlyField(source='user.userprofile.id')
+    id = serializers.ReadOnlyField(source='user.id')
     image = serializers.ReadOnlyField(source='user.userprofile.image.url')
     class Meta:
         model = Like

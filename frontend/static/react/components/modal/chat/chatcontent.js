@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import {Modal} from 'react-bootstrap'
 import SingleChat from './chat.js'
 import NewMessageInput from './sendmessage.js'
+import ParticipantsList from './participantslist.js'
 
 export default class ChatContent extends React.Component {
   constructor(props){
@@ -77,13 +78,16 @@ export default class ChatContent extends React.Component {
     return(
       <Modal show={this.props.modalOpen} onHide={this.props.toggleModal}>
          <Modal.Header closeButton>
-           <Modal.Title>{this.props.modalTitle}</Modal.Title>
+           <Modal.Title><p style={{display:'inline'}}>{this.props.modalTitle}</p>
+             <ParticipantsList chatParticipants={this.props.chatParticipants}
+             toggleModal={this.props.toggleModal} toggleSidebar={this.props.toggleSidebar}/>
+           </Modal.Title>
          </Modal.Header>
-         <Modal.Body style={{overflow:'auto'}}>
+         <Modal.Body style={{overflow:'auto',height:'70vh'}}>
            <SingleChat allMessages={this.state.allMessages}
              chatId={this.props.chatId}
              currentUser={this.props.currentUser}
-             
+
              ></SingleChat>
          </Modal.Body>
          <Modal.Footer>

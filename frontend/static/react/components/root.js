@@ -21,6 +21,7 @@ export default class Root extends React.Component {
       modalOpen:false,
       currentUser:"",
       currentUserId:"",
+      chatParticipants:""
 
     };
     this.toggleSidebar = this.toggleSidebar.bind(this)
@@ -51,11 +52,12 @@ export default class Root extends React.Component {
     }));
   }
 
-  openChat(chatId,chatName){
+  openChat(chatId,chatName,participants){
     this.setState({
       modalContent:'chat',
       chatId:chatId,
       modalTitle:chatName,
+      chatParticipants:participants
     });
     this.toggleModal()
 
@@ -124,7 +126,10 @@ export default class Root extends React.Component {
            modalTitle={this.state.modalTitle} modalOpen={this.state.modalOpen}
            currentUser={this.state.currentUser}
            openChat={this.openChat} toggleModal={this.toggleModal}
-           postId={this.state.postId} updateSidebar={this.updateSidebar}>
+           postId={this.state.postId} updateSidebar={this.updateSidebar}
+           chatParticipants={this.state.chatParticipants}
+           toggleSidebar={this.toggleSidebar}>
+
          </ModalContent>
       </div>
     )

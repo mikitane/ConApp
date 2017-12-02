@@ -61,9 +61,7 @@ export default class SingleChat extends React.Component {
     key++
   }
   const messageListStyle = {
-    overflowY:'scroll',
     overflowX:'hidden',
-    height:'500px',
     paddingLeft:'15px',
     paddingRight:'15px',
     marginLeft:'10px',

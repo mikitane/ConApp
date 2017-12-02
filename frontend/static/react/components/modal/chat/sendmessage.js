@@ -35,7 +35,7 @@ export default class NewMessageInput extends React.Component {
     			</div>
     			<div className="col-xs-4">
 
-    			<button type="button" className="btn btn-primary"
+    			<button type="button"  className="btn btn-primary"
             onClick={this.handleSend}>Send</button>
     			</div>
     	</div>
