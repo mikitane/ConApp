@@ -1,6 +1,5 @@
 migrations
 __pycache__
-frontend/static/node_modules
 *.sqlite
 *.sql
 conversationapp/settings_secret.py
