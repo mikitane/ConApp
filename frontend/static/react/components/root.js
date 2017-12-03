@@ -109,7 +109,8 @@ export default class Root extends React.Component {
                 render={() => <FeedMain openLikeList= {this.openLikeList} />} />
                 <Route path="/profile/:id"
                 render={(props) => <ProfileMain {...this.props} {...props}
-                  openChat = {this.openChat} currentUser={this.state.currentUser}/>}
+                  openChat = {this.openChat} currentUser={this.state.currentUser}
+                updateSidebar={this.updateSidebar}/>}
                   />
               </Switch>
             </div>

@@ -47,7 +47,7 @@ export default class NewGroupChatContent extends React.Component {
         success: function(chat){
           this.props.updateSidebar()
           this.props.toggleModal()
-          this.props.openChat(chat.id,chatName)
+          this.props.openChat(chat.id,chatName,chat.participants)
         }.bind(this)
 
 

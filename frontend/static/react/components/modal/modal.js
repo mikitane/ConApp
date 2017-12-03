@@ -18,6 +18,7 @@ export default class ModalContent extends React.Component{
     } else if (this.props.modalContent == 'likes' && this.props.modalOpen==true) {
       content = <LikeListContent postId={this.props.postId} modalOpen={this.props.modalOpen}
                 toggleModal={this.props.toggleModal} modalOpen={this.props.modalOpen}
+                toggleSidebar={this.props.toggleSidebar}
                 modalTitle={this.props.modalTitle}></LikeListContent>
 
     } else if (this.props.modalContent == 'newgroupchat' && this.props.modalOpen==true) {

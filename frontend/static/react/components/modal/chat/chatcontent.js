@@ -79,8 +79,8 @@ export default class ChatContent extends React.Component {
       <Modal show={this.props.modalOpen} onHide={this.props.toggleModal}>
          <Modal.Header closeButton>
            <Modal.Title><p style={{display:'inline'}}>{this.props.modalTitle}</p>
-             <ParticipantsList chatParticipants={this.props.chatParticipants}
-             toggleModal={this.props.toggleModal} toggleSidebar={this.props.toggleSidebar}/>
+             {this.props.chatParticipants.length != 2 && <ParticipantsList chatParticipants={this.props.chatParticipants}
+             toggleModal={this.props.toggleModal} toggleSidebar={this.props.toggleSidebar}/>}
            </Modal.Title>
          </Modal.Header>
          <Modal.Body style={{overflow:'auto',height:'70vh'}}>

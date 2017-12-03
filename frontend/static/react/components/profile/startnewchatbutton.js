@@ -14,7 +14,8 @@ export default class StartChatButton extends React.Component {
 			contentType: "application/json",
 			success: function(chat){
 				var chatId = chat.id
-        this.props.openChat(chatId,this.props.userName)
+        this.props.updateSidebar()
+        this.props.openChat(chatId,this.props.userName,chat.participants)
 
 			}.bind(this)
 

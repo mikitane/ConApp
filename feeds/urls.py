@@ -1,6 +1,5 @@
 from django.conf.urls import url
 from feeds import views
-from django.contrib.auth.views import login, logout
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic.detail import DetailView
