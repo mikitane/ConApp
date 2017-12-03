@@ -31254,7 +31254,8 @@ var Root = function (_React$Component) {
       modalOpen: false,
       currentUser: "",
       currentUserId: "",
-      chatParticipants: ""
+      chatParticipants: "",
+      profileNeedsUpdate: false
 
     };
     _this.toggleSidebar = _this.toggleSidebar.bind(_this);
@@ -31263,6 +31264,7 @@ var Root = function (_React$Component) {
     _this.openCreateNewGroupChat = _this.openCreateNewGroupChat.bind(_this);
     _this.openLikeList = _this.openLikeList.bind(_this);
     _this.updateSidebar = _this.updateSidebar.bind(_this);
+    _this.updateProfileContent = _this.updateProfileContent.bind(_this);
     return _this;
   }
 
@@ -31340,6 +31342,15 @@ var Root = function (_React$Component) {
       });
     }
   }, {
+    key: 'updateProfileContent',
+    value: function updateProfileContent() {
+      this.setState(function (prevState) {
+        return {
+          profileNeedsUpdate: !prevState.profileNeedsUpdate
+        };
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
@@ -31367,7 +31378,9 @@ var Root = function (_React$Component) {
                 render: function render(props) {
                   return _react2.default.createElement(_profilemain2.default, _extends({}, _this2.props, props, {
                     openChat: _this2.openChat, currentUser: _this2.state.currentUser,
-                    updateSidebar: _this2.updateSidebar }));
+                    updateSidebar: _this2.updateSidebar,
+                    updateProfileContent: _this2.updateProfileContent,
+                    profileNeedsUpdate: _this2.state.profileNeedsUpdate }));
                 }
               })
             )
@@ -31385,7 +31398,8 @@ var Root = function (_React$Component) {
           openChat: this.openChat, toggleModal: this.toggleModal,
           postId: this.state.postId, updateSidebar: this.updateSidebar,
           chatParticipants: this.state.chatParticipants,
-          toggleSidebar: this.toggleSidebar })
+          toggleSidebar: this.toggleSidebar,
+          updateProfileContent: this.updateProfileContent })
       );
     }
   }]);
@@ -43331,12 +43345,13 @@ var ModalContent = function (_React$Component) {
           modalTitle: this.props.modalTitle, modalOpen: this.props.modalOpen,
           toggleModal: this.props.toggleModal, currentUser: this.props.currentUser,
           chatParticipants: this.props.chatParticipants,
-          toggleSidebar: this.props.toggleSidebar });
+          toggleSidebar: this.props.toggleSidebar,
+          updateProfileContent: this.updateProfileContent });
       } else if (this.props.modalContent == 'likes' && this.props.modalOpen == true) {
         var _React$createElement;
 
         content = _react2.default.createElement(_likelist2.default, (_React$createElement = { postId: this.props.postId, modalOpen: this.props.modalOpen,
-          toggleModal: this.props.toggleModal }, _defineProperty(_React$createElement, 'modalOpen', this.props.modalOpen), _defineProperty(_React$createElement, 'toggleSidebar', this.props.toggleSidebar), _defineProperty(_React$createElement, 'modalTitle', this.props.modalTitle), _React$createElement));
+          toggleModal: this.props.toggleModal }, _defineProperty(_React$createElement, 'modalOpen', this.props.modalOpen), _defineProperty(_React$createElement, 'toggleSidebar', this.props.toggleSidebar), _defineProperty(_React$createElement, 'modalTitle', this.props.modalTitle), _defineProperty(_React$createElement, 'updateProfileContent', this.props.updateProfileContent), _React$createElement));
       } else if (this.props.modalContent == 'newgroupchat' && this.props.modalOpen == true) {
         content = _react2.default.createElement(_newgroupchatcontent2.default, { modalTitle: this.props.modalTitle,
           modalOpen: this.props.modalOpen,
@@ -43482,7 +43497,8 @@ var ChatContent = function (_React$Component) {
               this.props.modalTitle
             ),
             this.props.chatParticipants.length != 2 && _react2.default.createElement(_participantslist2.default, { chatParticipants: this.props.chatParticipants,
-              toggleModal: this.props.toggleModal, toggleSidebar: this.props.toggleSidebar })
+              toggleModal: this.props.toggleModal, toggleSidebar: this.props.toggleSidebar,
+              updateProfileContent: this.updateProfileContent })
           )
         ),
         _react2.default.createElement(
@@ -43855,6 +43871,7 @@ var ParticipantsList = function (_React$Component) {
     value: function handleClick() {
       this.props.toggleModal();
       this.props.toggleSidebar();
+      this.props.updateProfileContent();
     }
   }, {
     key: 'renderUserLink',
@@ -44385,7 +44402,8 @@ var LikeListContent = function (_React$Component) {
 
           likeList.push(_react2.default.createElement(_likeduserbutton2.default, { key: user.id, id: user.id, image: user.image,
             name: user.user,
-            toggleModal: this.props.toggleModal }));
+            toggleModal: this.props.toggleModal,
+            updateProfileContent: this.props.updateProfileContent }));
         }
       } catch (err) {
         _didIteratorError = true;
@@ -44474,6 +44492,12 @@ var LikedUserButton = function (_React$Component) {
   }
 
   _createClass(LikedUserButton, [{
+    key: 'handleClick',
+    value: function handleClick() {
+      this.props.toggleModal();
+      this.props.updateProfileContent();
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
@@ -44481,7 +44505,7 @@ var LikedUserButton = function (_React$Component) {
         { to: '/profile/' + this.props.id },
         _react2.default.createElement(
           'button',
-          { className: 'list-group-item con-button', onClick: this.props.toggleModal },
+          { className: 'list-group-item con-button', onClick: this.handleClick.bind(this) },
           _react2.default.createElement('img', { className: 'conversation-image', src: this.props.image }),
           this.props.name
         )
@@ -45372,9 +45396,12 @@ var ProfileMain = function (_React$Component) {
   }
 
   _createClass(ProfileMain, [{
-    key: 'componentDidUpdate',
-    value: function componentDidUpdate() {
-      this.updateProfile();
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      if (nextProps.profileNeedsUpdate) {
+        this.updateProfile();
+        this.props.updateProfileContent();
+      }
     }
   }, {
     key: 'componentDidMount',

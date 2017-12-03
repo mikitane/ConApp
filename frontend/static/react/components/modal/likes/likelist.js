@@ -37,7 +37,8 @@ export default class LikeListContent extends React.Component {
     for (let user of this.state.allLikes['like_set']) {
       likeList.push(<LikedUserButton key={user.id} id={user.id} image={user.image}
                     name={user.user}
-                    toggleModal={this.props.toggleModal}>
+                    toggleModal={this.props.toggleModal}
+                    updateProfileContent = {this.props.updateProfileContent}>
 
                     </LikedUserButton>)
     }

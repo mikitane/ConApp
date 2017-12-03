@@ -8,6 +8,7 @@ export default class ParticipantsList extends React.Component {
   handleClick() {
     this.props.toggleModal()
     this.props.toggleSidebar()
+    this.props.updateProfileContent()
   }
 
   renderUserLink(participant,i) {

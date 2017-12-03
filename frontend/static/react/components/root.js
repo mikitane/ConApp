@@ -21,7 +21,8 @@ export default class Root extends React.Component {
       modalOpen:false,
       currentUser:"",
       currentUserId:"",
-      chatParticipants:""
+      chatParticipants:"",
+      profileNeedsUpdate:false
 
     };
     this.toggleSidebar = this.toggleSidebar.bind(this)
@@ -30,6 +31,7 @@ export default class Root extends React.Component {
     this.openCreateNewGroupChat = this.openCreateNewGroupChat.bind(this)
     this.openLikeList = this.openLikeList.bind(this)
     this.updateSidebar = this.updateSidebar.bind(this)
+    this.updateProfileContent = this.updateProfileContent.bind(this)
   }
 
   componentDidMount() {
@@ -93,6 +95,12 @@ export default class Root extends React.Component {
     }))
   }
 
+  updateProfileContent() {
+    this.setState((prevState) => ({
+      profileNeedsUpdate:!prevState.profileNeedsUpdate
+    }))
+  }
+
 
   render(){
 
@@ -110,7 +118,9 @@ export default class Root extends React.Component {
                 <Route path="/profile/:id"
                 render={(props) => <ProfileMain {...this.props} {...props}
                   openChat = {this.openChat} currentUser={this.state.currentUser}
-                updateSidebar={this.updateSidebar}/>}
+                updateSidebar={this.updateSidebar}
+                updateProfileContent={this.updateProfileContent}
+                profileNeedsUpdate={this.state.profileNeedsUpdate}/>}
                   />
               </Switch>
             </div>
@@ -129,7 +139,8 @@ export default class Root extends React.Component {
            openChat={this.openChat} toggleModal={this.toggleModal}
            postId={this.state.postId} updateSidebar={this.updateSidebar}
            chatParticipants={this.state.chatParticipants}
-           toggleSidebar={this.toggleSidebar}>
+           toggleSidebar={this.toggleSidebar}
+           updateProfileContent ={this.updateProfileContent}>
 
          </ModalContent>
       </div>

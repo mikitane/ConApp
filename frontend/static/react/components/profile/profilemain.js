@@ -14,8 +14,11 @@ export default class ProfileMain extends React.Component {
       this.saveProfileChanges = this.saveProfileChanges.bind(this)
     }
 
-    componentDidUpdate() {
-      this.updateProfile()
+    componentWillReceiveProps(nextProps) {
+      if (nextProps.profileNeedsUpdate) {
+        this.updateProfile()
+        this.props.updateProfileContent()
+      }
     }
 
     componentDidMount() {
@@ -24,7 +27,7 @@ export default class ProfileMain extends React.Component {
 
     updateProfile() {
       var id = this.props.match.params.id
-      
+
       $.ajax({
         type: 'GET',
         url: '/messages/user/'+id+'/api',
