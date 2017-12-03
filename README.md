@@ -31,9 +31,9 @@ The Chats app allows users to create new private and group chats. Only the parti
 - Babel
 - Webpack
 
+----------------------------------------------------------------------------------------------------------------------------------------------
 
-
-### TODO:
+## TODO:
 
 - Redux implementation
 - Post comments
