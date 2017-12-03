@@ -43861,7 +43861,7 @@ var ParticipantsList = function (_React$Component) {
     value: function renderUserLink(participant, i) {
       return _react2.default.createElement(
         _reactRouterBootstrap.LinkContainer,
-        { key: participant.id, to: "profile/" + participant.id, onClick: this.handleClick.bind(this) },
+        { key: participant.id, to: "/profile/" + participant.id, onClick: this.handleClick.bind(this) },
         _react2.default.createElement(
           _reactBootstrap.MenuItem,
           { eventKey: i },
@@ -45372,6 +45372,11 @@ var ProfileMain = function (_React$Component) {
   }
 
   _createClass(ProfileMain, [{
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate() {
+      this.updateProfile();
+    }
+  }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
       this.updateProfile();
@@ -45380,6 +45385,7 @@ var ProfileMain = function (_React$Component) {
     key: 'updateProfile',
     value: function updateProfile() {
       var id = this.props.match.params.id;
+
       $.ajax({
         type: 'GET',
         url: '/messages/user/' + id + '/api',

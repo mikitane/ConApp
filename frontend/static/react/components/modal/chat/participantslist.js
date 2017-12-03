@@ -12,7 +12,7 @@ export default class ParticipantsList extends React.Component {
 
   renderUserLink(participant,i) {
     return (
-      <LinkContainer key={participant.id} to={"profile/"+participant.id} onClick={this.handleClick.bind(this)}><MenuItem eventKey={i} >{participant.user}</MenuItem></LinkContainer>
+      <LinkContainer key={participant.id} to={"/profile/"+participant.id} onClick={this.handleClick.bind(this)}><MenuItem eventKey={i} >{participant.user}</MenuItem></LinkContainer>
     )
   }
 
