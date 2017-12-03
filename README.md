@@ -3,7 +3,7 @@
 Conversation App (ConApp) is a social network that consists of two main apps:
 
 * Feed
-* Personal messages
+* Chats
 
 ## Feed
 
@@ -40,4 +40,5 @@ The Chats app allows users to create new private and group chats. Only the parti
 - Update or delete own posts
 - Add new users to an existing group chat
 - Delete users from an existing group chat
+- Possibility to exit from a chat
 - Friendslist

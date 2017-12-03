@@ -16,7 +16,8 @@ export default class ProfileInfo extends React.Component {
          (<ChangeProfileInfoButton userId={this.props.userId}/>):
          (<StartChatButton openChat = {this.props.openChat}
                         userId={this.props.userId}
-                        userName={this.props.profile.username} />)}
+                        userName={this.props.profile.username}
+                      updateSidebar={this.props.updateSidebar} />)}
         </div>
     )
   }

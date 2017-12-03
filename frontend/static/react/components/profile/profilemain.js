@@ -75,7 +75,7 @@ export default class ProfileMain extends React.Component {
                                     currentUser={this.props.currentUser}
                                     userId={this.props.match.params.id}
                                   openChat = {this.props.openChat}
-                                updateSidebar={this.updateSidebar}/> } />
+                                updateSidebar={this.props.updateSidebar}/> } />
                   <Route exact path="/profile/:id/change"
                   render={() => <ProfileChange profile={this.state.profile}
                                     currentUser={this.props.currentUser}

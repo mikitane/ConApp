@@ -16,17 +16,9 @@ export default class UserSelection extends React.Component {
       key++
 
     }
-    const userListStyle = {
-      overflowY:'scroll',
-      overflowX:'visible',
-      height:'250px',
-      paddingLeft:'15px',
-      paddingRight:'15px',
-      marginLeft:'10px',
-      marginRight:'10px',
-    }
+
     return(
-      <div style={userListStyle}>{userList}</div>
+      <div >{userList}</div>
     )
 
   }

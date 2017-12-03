@@ -88,6 +88,16 @@ display:inline-block;
 	background-color:rgba(244, 241, 26,0.5);
 }
 
+.bubble.color4{
+
+	background-color:rgba(255, 170, 0,0.5);
+}
+
+.bubble.color5{
+
+	background-color:rgba(250, 0, 255,0.5);
+}
+
 .bubble::after {
 	content:"";
 	display:block;
@@ -138,6 +148,16 @@ display:inline-block;
 
 .bubble.color3::after{
 	border-right:15px solid rgba(244, 241, 26,0.5) ;
+
+}
+
+.bubble.color4::after{
+	border-right:15px solid rgba(255, 170, 0,0.5) ;
+
+}
+
+.bubble.color5::after{
+	border-right:15px solid rgba(250, 0, 255,0.5) ;
 
 }
 
@@ -232,6 +252,14 @@ display:inline-block;
 	height:40px;
 	width:40px;
 	margin-right:15px;
+}
+
+.modal-list {
+  overflowY:scroll;
+  overflowX:hidden;
+  height:500px;
+  paddingLeft:15px;
+  paddingRight:15px;
 }
 
 .special-font{

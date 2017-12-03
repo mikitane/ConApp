@@ -80,9 +80,11 @@ export default class NewGroupChatContent extends React.Component {
            <Modal.Title>{this.props.modalTitle}</Modal.Title>
          </Modal.Header>
          <Modal.Body style={{overflow:'auto'}}>
+           <div className="modal-list">
           <UserSelection currentUser={this.props.currentUser}
              allUsers={this.state.allUsers} selectUser={this.selectUser}>
           </UserSelection>
+          </div>
          </Modal.Body>
          <Modal.Footer>
           <NewGroupChatInput createNewGroupChat={this.createNewGroupChat}></NewGroupChatInput>

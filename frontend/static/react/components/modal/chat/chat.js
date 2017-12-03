@@ -47,7 +47,7 @@ export default class SingleChat extends React.Component {
     if (!(message.sender in messageColors) && message.sender_username != currentUser) {
       messageColors[message.sender] = color
       color += 1
-      if (color == 4){
+      if (color == 6){
         color = 1
       }
     }

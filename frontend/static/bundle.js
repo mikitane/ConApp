@@ -43604,7 +43604,7 @@ var SingleChat = function (_React$Component) {
           if (!(message.sender in messageColors) && message.sender_username != currentUser) {
             messageColors[message.sender] = color;
             color += 1;
-            if (color == 4) {
+            if (color == 6) {
               color = 1;
             }
           }
@@ -44020,8 +44020,12 @@ var NewGroupChatContent = function (_React$Component) {
         _react2.default.createElement(
           _reactBootstrap.Modal.Body,
           { style: { overflow: 'auto' } },
-          _react2.default.createElement(_userselection2.default, { currentUser: this.props.currentUser,
-            allUsers: this.state.allUsers, selectUser: this.selectUser })
+          _react2.default.createElement(
+            'div',
+            { className: 'modal-list' },
+            _react2.default.createElement(_userselection2.default, { currentUser: this.props.currentUser,
+              allUsers: this.state.allUsers, selectUser: this.selectUser })
+          )
         ),
         _react2.default.createElement(
           _reactBootstrap.Modal.Footer,
@@ -44114,18 +44118,9 @@ var UserSelection = function (_React$Component) {
         }
       }
 
-      var userListStyle = {
-        overflowY: 'scroll',
-        overflowX: 'visible',
-        height: '250px',
-        paddingLeft: '15px',
-        paddingRight: '15px',
-        marginLeft: '10px',
-        marginRight: '10px'
-      };
       return _react2.default.createElement(
         'div',
-        { style: userListStyle },
+        null,
         userList
       );
     }
@@ -44407,15 +44402,6 @@ var LikeListContent = function (_React$Component) {
         }
       }
 
-      var likeListStyle = {
-        overflowY: 'scroll',
-        overflowX: 'hidden',
-        height: '500px',
-        paddingLeft: '15px',
-        paddingRight: '15px'
-
-      };
-
       return _react2.default.createElement(
         _reactBootstrap.Modal,
         { show: this.props.modalOpen, onHide: this.props.toggleModal },
@@ -44433,7 +44419,7 @@ var LikeListContent = function (_React$Component) {
           { style: { overflow: 'auto' } },
           _react2.default.createElement(
             'div',
-            { style: likeListStyle },
+            { className: 'modal-list' },
             likeList
           )
         ),
@@ -45464,7 +45450,7 @@ var ProfileMain = function (_React$Component) {
                       currentUser: _this2.props.currentUser,
                       userId: _this2.props.match.params.id,
                       openChat: _this2.props.openChat,
-                      updateSidebar: _this2.updateSidebar });
+                      updateSidebar: _this2.props.updateSidebar });
                   } }),
                 _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/profile/:id/change',
                   render: function render() {
@@ -45561,7 +45547,8 @@ var ProfileInfo = function (_React$Component) {
         ),
         this.props.currentUser == this.props.profile.username ? _react2.default.createElement(_changeprofileinfobutton2.default, { userId: this.props.userId }) : _react2.default.createElement(_startnewchatbutton2.default, { openChat: this.props.openChat,
           userId: this.props.userId,
-          userName: this.props.profile.username })
+          userName: this.props.profile.username,
+          updateSidebar: this.props.updateSidebar })
       );
     }
   }]);

@@ -42,14 +42,7 @@ export default class LikeListContent extends React.Component {
                     </LikedUserButton>)
     }
 
-    const likeListStyle = {
-      overflowY:'scroll',
-      overflowX:'hidden',
-      height:'500px',
-      paddingLeft:'15px',
-      paddingRight:'15px',
 
-    }
 
     return(
       <Modal show={this.props.modalOpen} onHide={this.props.toggleModal}>
@@ -57,7 +50,7 @@ export default class LikeListContent extends React.Component {
            <Modal.Title>{this.props.modalTitle}</Modal.Title>
          </Modal.Header>
          <Modal.Body style={{overflow:'auto'}}>
-          <div style={likeListStyle}>
+          <div className="modal-list">
            {likeList}
          </div>
          </Modal.Body>
