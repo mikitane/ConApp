@@ -5,7 +5,7 @@ __pycache__
 conversationapp/settings_secret.py
 db.sqlite3
 *.pyc
-
+frontend/static/node_modules
 
 
 
