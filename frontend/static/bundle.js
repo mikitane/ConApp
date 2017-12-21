@@ -44136,7 +44136,7 @@ var UserSelection = function (_React$Component) {
       }
 
       return _react2.default.createElement(
-        'div',
+        'ul',
         null,
         userList
       );
@@ -44216,10 +44216,14 @@ var UserSelectionButton = function (_React$Component) {
       }
 
       return _react2.default.createElement(
-        'button',
-        { className: 'btn select-user', style: btnStyle, onClick: this.handleClick },
-        _react2.default.createElement('img', { className: 'conversation-image', src: this.props.user.image }),
-        this.props.user.username
+        'div',
+        null,
+        _react2.default.createElement(
+          'button',
+          { className: 'btn select-user', style: btnStyle, onClick: this.handleClick },
+          _react2.default.createElement('img', { className: 'conversation-image', src: this.props.user.image }),
+          this.props.user.username
+        )
       );
     }
   }]);
@@ -45389,7 +45393,11 @@ var ProfileMain = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (ProfileMain.__proto__ || Object.getPrototypeOf(ProfileMain)).call(this, props));
 
-    _this.state = { profile: false };
+    _this.state = {
+      profile: false,
+      redirectBack: false,
+      posting: false
+    };
     _this.updateProfile = _this.updateProfile.bind(_this);
     _this.saveProfileChanges = _this.saveProfileChanges.bind(_this);
     return _this;
@@ -45433,6 +45441,9 @@ var ProfileMain = function (_React$Component) {
       }
       fd.append('phone', phone);
       fd.append('country', country);
+      this.setState({
+        posting: true
+      });
 
       $.ajax({
         url: '/messages/user/' + id + '/api/',
@@ -45443,7 +45454,8 @@ var ProfileMain = function (_React$Component) {
 
         success: function (profile) {
           this.setState({
-            profile: profile
+            profile: profile,
+            posting: false
           });
         }.bind(this)
       });
@@ -45459,6 +45471,7 @@ var ProfileMain = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: 'col-md-8 col-md-offset-2' },
+          this.state.posting && _react2.default.createElement('div', { className: 'loader' }),
           _react2.default.createElement(
             'div',
             { className: 'container-fluid', style: { marginTop: '10vh' } },
@@ -45771,8 +45784,8 @@ var ProfileChange = function (_React$Component) {
     _this.state = {
       phoneValue: _this.props.profile.phone,
       countryValue: _this.props.profile.country,
-      image: "",
-      redirect: false
+      image: ""
+
     };
     _this.handlePhoneChange = _this.handlePhoneChange.bind(_this);
     _this.handleCountryChange = _this.handleCountryChange.bind(_this);

@@ -10,7 +10,7 @@ export default class ProfileChange extends React.Component {
       phoneValue:this.props.profile.phone,
       countryValue:this.props.profile.country,
       image:"",
-      redirect:false,
+
     }
     this.handlePhoneChange = this.handlePhoneChange.bind(this)
     this.handleCountryChange = this.handleCountryChange.bind(this)
@@ -45,6 +45,9 @@ export default class ProfileChange extends React.Component {
     this.setState({
       redirect:true
     })
+
+
+
   }
 
   render() {

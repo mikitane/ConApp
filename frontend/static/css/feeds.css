@@ -58,7 +58,6 @@ border:2px solid #006daf;
 border-radius:5px;
 background-color:#e8f0ff;
 min-width:100px;
-display:inline-block;
 }
 /* Conversation speech bubbles */
 .bubble {
@@ -227,7 +226,7 @@ display:inline-block;
   background: -webkit-linear-gradient(left,rgba(4, 100, 244,0.9),rgba(0,160,255,0.5),rgba(0,160,255,0.4),rgba(0,160,255,0.5), rgba(4, 100, 244,0.9)); /*Safari 5.1-6*/
   background: -o-linear-gradient(right,rgba(4, 100, 244,0.9),rgba(0,160,255,0.5),rgba(0,160,255,0.4),rgba(0,160,255,0.5), rgba(4, 100, 244,0.9)); /*Opera 11.1-12*/
   background: -moz-linear-gradient(right,rgba(4, 100, 244,0.9),rgba(0,160,255,0.5),rgba(0,160,255,0.4),rgba(0,160,255,0.5), rgba(4, 100, 244,0.9)); /*Fx 3.6-15*/
-  background: linear-gradient(to right, rgba(4, 100, 244,0.9),rgba(0,160,255,0.5),rgba(0,160,255,0.4),rgba(0,160,255,0.5), rgba(4, 100, 244,0.9)); /*Standard*/
+  background: linear-gradient(to right, rgba(4, 100, 244,0.9),rgba(0,160,255,0.6),rgba(0,160,255,0.5),rgba(0,160,255,0.6), rgba(4, 100, 244,0.9)); /*Standard*/
 }
 
 /*  background: linear-gradient(to right, rgba(0,160,255,0.9),rgba(0,160,255,0.5),rgba(0,160,255,0.2),rgba(0,160,255,0.5), rgba(0,160,255,0.9)); /*Standard*/
@@ -299,4 +298,22 @@ display:inline-block;
   display:inline;
   margin-left:30px;
   margin-right:5px
+}
+
+.loader {
+  position: absolute;
+  z-index: 1;
+  border: 16px solid #000000;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  top:50%;
+  left:45%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

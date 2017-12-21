@@ -18,7 +18,7 @@ export default class UserSelection extends React.Component {
     }
 
     return(
-      <div >{userList}</div>
+      <ul >{userList}</ul>
     )
 
   }

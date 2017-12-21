@@ -33,10 +33,12 @@ render(){
   }
 
   return(
-    <button className="btn select-user" style={btnStyle} onClick={this.handleClick}>
-    <img className="conversation-image" src={this.props.user.image}>
-    </img>{this.props.user.username}
-    </button>
+    <div>
+      <button className="btn select-user" style={btnStyle} onClick={this.handleClick}>
+      <img className="conversation-image" src={this.props.user.image}>
+      </img>{this.props.user.username}
+      </button>
+    </div>
     )
   }
 }
