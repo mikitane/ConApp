@@ -38,7 +38,10 @@ export default class Feed extends React.Component {
     var postList = []
     for (let post of this.props.posts) {
 
-      postList.push(<Post key={post.id} post={post} openLikeList={this.props.openLikeList}>
+      postList.push(<Post key={post.id} post={post}
+                    openLikeList={this.props.openLikeList}
+                    deletePost={this.props.deletePost}
+                    currentUser={this.props.currentUser}>
                     </Post>)
 
     }

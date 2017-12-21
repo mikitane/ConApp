@@ -7,7 +7,8 @@ export default class FeedMain extends React.Component {
 
   render() {
     return(
-      <FeedContent openLikeList={this.props.openLikeList}></FeedContent>
+      <FeedContent openLikeList={this.props.openLikeList}
+        currentUser={this.props.currentUser}></FeedContent>
     )
   }
 

@@ -114,7 +114,8 @@ export default class Root extends React.Component {
             <div className="col-md-6 col-md-offset-3">
               <Switch>
                 <Route exact path="/"
-                render={() => <FeedMain openLikeList= {this.openLikeList} />} />
+                render={() => <FeedMain openLikeList= {this.openLikeList}
+                              currentUser={this.state.currentUser} />} />
                 <Route path="/profile/:id"
                 render={(props) => <ProfileMain {...this.props} {...props}
                   openChat = {this.openChat} currentUser={this.state.currentUser}

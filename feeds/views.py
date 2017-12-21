@@ -28,23 +28,32 @@ class PostView(APIView):
         serializer = PostSerializer(posts,many=True)
 
         return Response(serializer.data)
-    
+
     # Creates a new post.
     def post(self,request):
-        print(request.data)
         _data = request.data.copy()
-        print(_data)
         _data['user'] = request.user.id
-        
+
         serializer = PostSerializer(data=_data)
         if serializer.is_valid():
             serializer.save()
-            
+
             posts = Post.objects.all()
             serializer = PostSerializer(posts,many=True)
             return Response(serializer.data)
         else:
             return HttpResponse('Failed')
+
+    def delete(self,request):
+        print(request.data)
+        id = request.data['id']
+        post = Post.objects.get(id=id)
+        if post.user == request.user:
+            print("Onnistui")
+            post.delete()
+            return Response({"id":id})
+        else:
+            return Response(status=status.HTTP_403_FORBIDDEN)
 
 
 class PostLikeView(APIView):
@@ -53,7 +62,7 @@ class PostLikeView(APIView):
         posts = Post.objects.all()
         serializer = PostLikeSerializer(posts,context={'request': request},many=True)
 
-        return Response(serializer.data)                                            
+        return Response(serializer.data)
 
 
 class SinglePostLikeView(APIView):
@@ -66,7 +75,7 @@ class SinglePostLikeView(APIView):
 
     # Creates a new like.
     def put(self,request,*args,**kwargs):
-        
+
         current_post = Post.objects.get(pk=kwargs['pk'])
         likes = current_post.get_likes()
         for like in likes:
@@ -82,7 +91,7 @@ class SinglePostLikeView(APIView):
 def log_out(request):
     logout(request)
     return redirect('home')
-    
+
 
 def register(request):
     if request.method =='POST':
@@ -108,15 +117,12 @@ def profile_change(request):
             form = ProfileForm(request.POST,request.FILES,instance=profile)
             if form.is_valid():
                 form.save()
-                
+
                 return redirect('own_profile')
-                
+
         else:
-            
+
             form = ProfileForm(instance=profile)
             return render(request,'feeds/profile_change.html',{'form':form})
     else:
         return redirect('/')
-    
-
-

@@ -49,6 +49,11 @@
 	background-color:transparent;
 }
 
+.deletePostButton {
+  background-color:transparent;
+  float:right;
+}
+
 .select-user {
 
 margin-right:10px;

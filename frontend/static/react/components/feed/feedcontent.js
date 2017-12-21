@@ -12,6 +12,7 @@ export default class FeedContent extends React.Component {
     }
     this.updatePosts = this.updatePosts.bind(this)
     this.sendNewPost = this.sendNewPost.bind(this)
+    this.deletePost = this.deletePost.bind(this)
   }
 
   componentDidMount() {
@@ -49,6 +50,36 @@ export default class FeedContent extends React.Component {
 
   }
 
+  deletePost(id) {
+    var info = {id:id}
+
+
+    $.ajax({
+
+		type: 'DELETE',
+		url: '/posts/api/',
+    dataType:'json',
+		data: JSON.stringify(info),
+    contentType: "application/json; charset=utf-8",
+		success: function(deletedPost){
+      var posts = this.state.allPosts
+      posts.forEach((post)=> {
+        if (post.id == deletedPost.id) {
+          var index = posts.indexOf(post)
+          posts.splice(index,1)
+          console.log(posts)
+          this.setState({
+            allPosts:posts
+          })
+        }
+      })
+		}.bind(this)
+
+		});
+
+
+  }
+
 
 
 
@@ -56,7 +87,8 @@ export default class FeedContent extends React.Component {
 
     return(
       <Feed posts={this.state.allPosts} openLikeList={this.props.openLikeList}
-            sendNewPost={this.sendNewPost}>
+            sendNewPost={this.sendNewPost} deletePost={this.deletePost}
+            currentUser={this.props.currentUser}>
 
       </Feed>
 

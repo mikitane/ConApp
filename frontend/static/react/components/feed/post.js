@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import LikeContent from './likecontent.js'
+import DeletePostButton from './deletepostbutton.js'
 import {Link} from 'react-router-dom'
 
 export default class Post extends React.Component {
@@ -15,7 +16,11 @@ export default class Post extends React.Component {
 		<img className="post-image" src={this.props.post.image} ></img>
 		  </div>
 		<div className="col-sm-10">
-		<p><b>{this.props.post.header}</b></p>
+      <div >
+        <p style={{display:"inline-block"}}><b>{this.props.post.header}</b></p>
+        {this.props.currentUser==this.props.post.username && <DeletePostButton
+        id={this.props.post.id} deletePost={this.props.deletePost}/>}
+      </div>
 
 		<p>{this.props.post.text}</p>
 		<div className="post-info">
