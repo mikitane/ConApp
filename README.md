@@ -37,7 +37,7 @@ The Chats app allows users to create new private and group chats. Only the parti
 
 - Redux implementation
 - Post comments
-- Update or delete own posts
+- Update own posts
 - Add new users to an existing group chat
 - Delete users from an existing group chat
 - Possibility to exit from a chat
