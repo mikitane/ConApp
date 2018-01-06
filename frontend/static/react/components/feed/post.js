@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import LikeContent from './likecontent.js'
-import DeletePostButton from './deletepostbutton.js'
+import DeletePostButton from './deletebutton.js'
 import {Link} from 'react-router-dom'
 
 export default class Post extends React.Component {
