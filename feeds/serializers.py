@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from feeds.models import Post, Like
+from feeds.models import Post, Like, PostComment
 from django.contrib.auth.models import User
 
 
@@ -7,10 +7,16 @@ class PostSerializer(serializers.ModelSerializer):
     image = serializers.ReadOnlyField(source='user.userprofile.image.url')
     username = serializers.ReadOnlyField(source='user.username')
     created = serializers.DateTimeField(format='%d.%m.%Y at %H:%M',required=False, read_only=True)
+    comments_count = serializers.SerializerMethodField()
     class Meta:
         model = Post
-        fields = ('user','username','id','header','text','created','image')
+        fields = ('user','username','id','header','text','created','image',
+                    'comments_count')
 
+    def get_comments_count(self,obj):
+        comments = obj.comments.all()
+        count = comments.count()
+        return count
 
 
 
@@ -22,8 +28,8 @@ class LikeSerializer(serializers.ModelSerializer):
         model = Like
         fields = ('user','id','image')
 
-    
-    
+
+
 
 
 class PostLikeSerializer(serializers.ModelSerializer):
@@ -42,10 +48,9 @@ class PostLikeSerializer(serializers.ModelSerializer):
         return False
 
 
-
-    
-
-
-    
-        
-        
+class PostCommentSerializer(serializers.ModelSerializer):
+    username = serializers.ReadOnlyField(source='user.username')
+    image = serializers.ReadOnlyField(source='user.userprofile.image.url')
+    class Meta:
+        model = PostComment
+        fields = ('id','post','user','username','image','text','created')

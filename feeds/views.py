@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import login, logout
-from feeds.models import UserProfile, Post, Like
+from feeds.models import UserProfile, Post, Like, PostComment
 from feeds.forms import ProfileForm, PostForm
 from django.contrib.auth.models import User
 
@@ -10,7 +10,7 @@ from django.views.generic.detail import DetailView
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from feeds.serializers import PostLikeSerializer,PostSerializer
+from feeds.serializers import PostLikeSerializer,PostSerializer,PostCommentSerializer
 
 def index(request):
     if request.user.is_authenticated():
@@ -54,6 +54,32 @@ class PostView(APIView):
             return Response({"id":id})
         else:
             return Response(status=status.HTTP_403_FORBIDDEN)
+
+class PostCommentsView(APIView):
+    # Sends data of all comments of single post to user.
+    def get(self,request,*args,**kwargs):
+        comments = PostComment.objects.filter(post=kwargs['pk'])
+        serializer = PostCommentSerializer(comments,many=True)
+
+        return Response(serializer.data)
+
+    # Creates a new post and responses with refreshed comments.
+    def post(self,request,*args,**kwargs):
+        _data = request.data.copy()
+        _data['user'] = request.user.id
+        _data['post'] = int(kwargs['pk'])
+        print(_data)
+        serializer = PostCommentSerializer(data=_data)
+        if serializer.is_valid():
+            serializer.save()
+
+            comments = PostComment.objects.filter(post=kwargs['pk'])
+            serializer = PostCommentSerializer(comments,many=True)
+            return Response(serializer.data)
+        else:
+            return HttpResponse('Failed')
+
+
 
 
 class PostLikeView(APIView):

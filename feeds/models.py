@@ -25,7 +25,7 @@ def create_profile(sender, **kwargs):
     if kwargs['created']:
         user_profile = UserProfile.objects.create(user = kwargs['instance'])
 
-        
+
 post_save.connect(create_profile, sender=User)
 
 
@@ -49,3 +49,9 @@ class Post(models.Model):
 class Like(models.Model):
     user = models.ForeignKey(User)
     post = models.ForeignKey(Post)
+
+class PostComment(models.Model):
+    user = models.ForeignKey(User)
+    post = models.ForeignKey(Post,related_name='comments')
+    text = models.CharField(max_length=150,default='')
+    created = models.DateTimeField(auto_now_add=True)
