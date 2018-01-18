@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import LikeContent from './likecontent.js'
 import DeletePostButton from './deletebutton.js'
+import CommentButton from './commentbutton.js'
 import {Link} from 'react-router-dom'
 
 export default class Post extends React.Component {
@@ -27,10 +28,15 @@ export default class Post extends React.Component {
       <Link to={'/profile/'+this.props.post.user} style={{marginRight:'5px'}}>
 
       {this.props.post.username}
-    </Link><small>{this.props.post.created}</small>
-      <LikeContent id={this.props.post.id}
-        openLikeList={this.props.openLikeList}>
-      </LikeContent>
+      </Link><small>{this.props.post.created}</small>
+
+      <div className="like-comment-box">
+        <CommentButton count={this.props.post.comments_count} />
+
+        <LikeContent id={this.props.post.id}
+          openLikeList={this.props.openLikeList}>
+        </LikeContent>
+      </div>
 			</div>
 		</div>
 		</div>

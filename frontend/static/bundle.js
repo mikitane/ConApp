@@ -31215,7 +31215,7 @@ var _feedmain = __webpack_require__(352);
 
 var _feedmain2 = _interopRequireDefault(_feedmain);
 
-var _profilemain = __webpack_require__(359);
+var _profilemain = __webpack_require__(361);
 
 var _profilemain2 = _interopRequireDefault(_profilemain);
 
@@ -44726,7 +44726,7 @@ var _post = __webpack_require__(355);
 
 var _post2 = _interopRequireDefault(_post);
 
-var _postinputform = __webpack_require__(358);
+var _postinputform = __webpack_require__(360);
 
 var _postinputform2 = _interopRequireDefault(_postinputform);
 
@@ -44884,9 +44884,13 @@ var _likecontent = __webpack_require__(356);
 
 var _likecontent2 = _interopRequireDefault(_likecontent);
 
-var _deletepostbutton = __webpack_require__(365);
+var _deletebutton = __webpack_require__(358);
 
-var _deletepostbutton2 = _interopRequireDefault(_deletepostbutton);
+var _deletebutton2 = _interopRequireDefault(_deletebutton);
+
+var _commentbutton = __webpack_require__(359);
+
+var _commentbutton2 = _interopRequireDefault(_commentbutton);
 
 var _reactRouterDom = __webpack_require__(24);
 
@@ -44937,7 +44941,7 @@ var Post = function (_React$Component) {
                   this.props.post.header
                 )
               ),
-              this.props.currentUser == this.props.post.username && _react2.default.createElement(_deletepostbutton2.default, {
+              this.props.currentUser == this.props.post.username && _react2.default.createElement(_deletebutton2.default, {
                 id: this.props.post.id, deletePost: this.props.deletePost })
             ),
             _react2.default.createElement(
@@ -44958,8 +44962,13 @@ var Post = function (_React$Component) {
                 null,
                 this.props.post.created
               ),
-              _react2.default.createElement(_likecontent2.default, { id: this.props.post.id,
-                openLikeList: this.props.openLikeList })
+              _react2.default.createElement(
+                'div',
+                { className: 'like-comment-box' },
+                _react2.default.createElement(_commentbutton2.default, { count: this.props.post.comments_count }),
+                _react2.default.createElement(_likecontent2.default, { id: this.props.post.id,
+                  openLikeList: this.props.openLikeList })
+              )
             )
           )
         )
@@ -45132,7 +45141,7 @@ var Likes = function (_React$Component) {
       if (this.props.userInLikes) {
         buttons = _react2.default.createElement(
           'div',
-          null,
+          { style: { display: "inline" } },
           _react2.default.createElement(
             'button',
             { type: 'button', className: 'btn  btn-xs like-count',
@@ -45155,7 +45164,7 @@ var Likes = function (_React$Component) {
       } else {
         buttons = _react2.default.createElement(
           'div',
-          null,
+          { style: { display: "inline" } },
           _react2.default.createElement(
             'button',
             { type: 'button', className: 'btn  btn-xs like-count',
@@ -45179,7 +45188,7 @@ var Likes = function (_React$Component) {
 
       return _react2.default.createElement(
         'div',
-        { className: 'like-box' },
+        { style: { display: "inline" } },
         buttons
       );
     }
@@ -45192,6 +45201,112 @@ exports.default = Likes;
 
 /***/ }),
 /* 358 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var DeletePostButton = function (_React$Component) {
+  _inherits(DeletePostButton, _React$Component);
+
+  function DeletePostButton() {
+    _classCallCheck(this, DeletePostButton);
+
+    return _possibleConstructorReturn(this, (DeletePostButton.__proto__ || Object.getPrototypeOf(DeletePostButton)).apply(this, arguments));
+  }
+
+  _createClass(DeletePostButton, [{
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      return _react2.default.createElement(
+        "button",
+        { className: "btn deletePostButton", onClick: function onClick() {
+            return _this2.props.deletePost(_this2.props.id);
+          } },
+        _react2.default.createElement("span", { className: "glyphicon glyphicon-remove" })
+      );
+    }
+  }]);
+
+  return DeletePostButton;
+}(_react2.default.Component);
+
+exports.default = DeletePostButton;
+
+/***/ }),
+/* 359 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var CommentButton = function (_React$Component) {
+  _inherits(CommentButton, _React$Component);
+
+  function CommentButton() {
+    _classCallCheck(this, CommentButton);
+
+    return _possibleConstructorReturn(this, (CommentButton.__proto__ || Object.getPrototypeOf(CommentButton)).apply(this, arguments));
+  }
+
+  _createClass(CommentButton, [{
+    key: "render",
+    value: function render() {
+      return _react2.default.createElement(
+        "button",
+        { className: "btn btn-xs btn-primary comment" },
+        _react2.default.createElement("span", { className: "glyphicon glyphicon-comment",
+          style: { marginRight: "10px" } }),
+        this.props.count
+      );
+    }
+  }]);
+
+  return CommentButton;
+}(_react2.default.Component);
+
+exports.default = CommentButton;
+
+/***/ }),
+/* 360 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45385,7 +45500,7 @@ var PostInputForm = function (_React$Component) {
 exports.default = PostInputForm;
 
 /***/ }),
-/* 359 */
+/* 361 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45405,11 +45520,11 @@ var _reactDom = __webpack_require__(9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _profileinfo = __webpack_require__(360);
+var _profileinfo = __webpack_require__(362);
 
 var _profileinfo2 = _interopRequireDefault(_profileinfo);
 
-var _profilechange = __webpack_require__(363);
+var _profilechange = __webpack_require__(365);
 
 var _profilechange2 = _interopRequireDefault(_profilechange);
 
@@ -45558,7 +45673,7 @@ var ProfileMain = function (_React$Component) {
 exports.default = ProfileMain;
 
 /***/ }),
-/* 360 */
+/* 362 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45578,11 +45693,11 @@ var _reactDom = __webpack_require__(9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _changeprofileinfobutton = __webpack_require__(361);
+var _changeprofileinfobutton = __webpack_require__(363);
 
 var _changeprofileinfobutton2 = _interopRequireDefault(_changeprofileinfobutton);
 
-var _startnewchatbutton = __webpack_require__(362);
+var _startnewchatbutton = __webpack_require__(364);
 
 var _startnewchatbutton2 = _interopRequireDefault(_startnewchatbutton);
 
@@ -45643,7 +45758,7 @@ var ProfileInfo = function (_React$Component) {
 exports.default = ProfileInfo;
 
 /***/ }),
-/* 361 */
+/* 363 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45704,7 +45819,7 @@ var ChangeProfileInfoButton = function (_React$Component) {
 exports.default = ChangeProfileInfoButton;
 
 /***/ }),
-/* 362 */
+/* 364 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45777,7 +45892,7 @@ var StartChatButton = function (_React$Component) {
 exports.default = StartChatButton;
 
 /***/ }),
-/* 363 */
+/* 365 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45799,7 +45914,7 @@ var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var _reactRouterDom = __webpack_require__(24);
 
-var _savechangesbutton = __webpack_require__(364);
+var _savechangesbutton = __webpack_require__(366);
 
 var _savechangesbutton2 = _interopRequireDefault(_savechangesbutton);
 
@@ -45930,7 +46045,7 @@ var ProfileChange = function (_React$Component) {
 exports.default = ProfileChange;
 
 /***/ }),
-/* 364 */
+/* 366 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45982,60 +46097,6 @@ var SaveChangesButton = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = SaveChangesButton;
-
-/***/ }),
-/* 365 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var DeletePostButton = function (_React$Component) {
-  _inherits(DeletePostButton, _React$Component);
-
-  function DeletePostButton() {
-    _classCallCheck(this, DeletePostButton);
-
-    return _possibleConstructorReturn(this, (DeletePostButton.__proto__ || Object.getPrototypeOf(DeletePostButton)).apply(this, arguments));
-  }
-
-  _createClass(DeletePostButton, [{
-    key: "render",
-    value: function render() {
-      var _this2 = this;
-
-      return _react2.default.createElement(
-        "button",
-        { className: "btn deletePostButton", onClick: function onClick() {
-            return _this2.props.deletePost(_this2.props.id);
-          } },
-        _react2.default.createElement("span", { className: "glyphicon glyphicon-remove" })
-      );
-    }
-  }]);
-
-  return DeletePostButton;
-}(_react2.default.Component);
-
-exports.default = DeletePostButton;
 
 /***/ })
 /******/ ]);

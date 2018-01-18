@@ -294,14 +294,15 @@ min-width:100px;
   width:50px
 }
 
-.like-box {
+.like-comment-box {
+  display: inline;
   float:right;
   margin-right:50px
 }
 
 .like-count {
   display:inline;
-  margin-left:30px;
+  margin-left:25px;
   margin-right:5px
 }
 
@@ -321,4 +322,10 @@ min-width:100px;
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+.comment {
+  display: inline;
+  margin-left:15px;
+
 }

@@ -16,7 +16,7 @@ render() {
   var buttons = ""
 
   if (this.props.userInLikes) {
-    buttons = <div>
+    buttons = <div style={{display:"inline"}}>
               <button type="button" className="btn  btn-xs like-count"
               onClick={this.handleLikeModal.bind(this)}>
               {this.props.likeCount}
@@ -30,7 +30,7 @@ render() {
               </button>
             </div>
   } else {
-    buttons = <div>
+    buttons = <div style={{display:"inline"}}>
               <button type="button" className="btn  btn-xs like-count"
               onClick={this.handleLikeModal.bind(this)}>
               {this.props.likeCount}
@@ -46,9 +46,11 @@ render() {
   }
 
   return(
-    <div className="like-box">
+    <div style={{display:"inline"}}>
       {buttons}
     </div>
+
+
 
   )
 }
