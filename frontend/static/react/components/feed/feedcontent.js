@@ -88,7 +88,8 @@ export default class FeedContent extends React.Component {
     return(
       <Feed posts={this.state.allPosts} openLikeList={this.props.openLikeList}
             sendNewPost={this.sendNewPost} deletePost={this.deletePost}
-            currentUser={this.props.currentUser}>
+            currentUser={this.props.currentUser}
+            openPostComments={this.props.openPostComments}>
 
       </Feed>
 

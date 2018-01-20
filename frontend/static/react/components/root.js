@@ -32,6 +32,7 @@ export default class Root extends React.Component {
     this.openLikeList = this.openLikeList.bind(this)
     this.updateSidebar = this.updateSidebar.bind(this)
     this.updateProfileContent = this.updateProfileContent.bind(this)
+    this.openPostComments = this.openPostComments.bind(this)
   }
 
   componentDidMount() {
@@ -82,6 +83,14 @@ export default class Root extends React.Component {
     this.toggleModal()
   }
 
+  openPostComments(postId) {
+    this.setState({
+      modalContent:'postcomments',
+      postId:postId
+    })
+    this.toggleModal()
+  }
+
   toggleSidebar() {
     this.setState((prevState) => ({
       sideBarOpen:!prevState.sideBarOpen,
@@ -115,6 +124,7 @@ export default class Root extends React.Component {
               <Switch>
                 <Route exact path="/"
                 render={() => <FeedMain openLikeList= {this.openLikeList}
+                              openPostComments={this.openPostComments}
                               currentUser={this.state.currentUser} />} />
                 <Route path="/profile/:id"
                 render={(props) => <ProfileMain {...this.props} {...props}

@@ -51,6 +51,7 @@ class PostLikeSerializer(serializers.ModelSerializer):
 class PostCommentSerializer(serializers.ModelSerializer):
     username = serializers.ReadOnlyField(source='user.username')
     image = serializers.ReadOnlyField(source='user.userprofile.image.url')
+    created = serializers.DateTimeField(format='%d.%m.%Y at %H:%M',required=False, read_only=True)
     class Meta:
         model = PostComment
         fields = ('id','post','user','username','image','text','created')

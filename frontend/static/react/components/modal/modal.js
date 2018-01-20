@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import ChatContent from './chat/chatcontent.js'
 import NewGroupChatContent from './newgroupchat/newgroupchatcontent.js'
 import LikeListContent from './likes/likelist.js'
+import PostCommentsContent from './postcomments/postcommentscontent.js'
 
 export default class ModalContent extends React.Component{
   render(){
@@ -31,6 +32,10 @@ export default class ModalContent extends React.Component{
 
       </NewGroupChatContent>
 
+    } else if (this.props.modalContent == 'postcomments' && this.props.modalOpen==true) {
+      content = <PostCommentsContent id={this.props.postId} modalOpen={this.props.modalOpen}
+      toggleModal={this.props.toggleModal} currentUser={this.props.currentUser}
+      updateProfileContent = {this.props.updateProfileContent}/>
     }
 
     return(

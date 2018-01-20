@@ -31,7 +31,9 @@ export default class Post extends React.Component {
       </Link><small>{this.props.post.created}</small>
 
       <div className="like-comment-box">
-        <CommentButton count={this.props.post.comments_count} />
+        <CommentButton count={this.props.post.comments_count}
+          id={this.props.post.id}
+        openPostComments={this.props.openPostComments} />
 
         <LikeContent id={this.props.post.id}
           openLikeList={this.props.openLikeList}>
